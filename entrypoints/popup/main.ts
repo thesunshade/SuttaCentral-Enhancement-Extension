@@ -1,24 +1,18 @@
-import './style.css';
-import typescriptLogo from '@/assets/typescript.svg';
-import viteLogo from '/wxt.svg';
-import { setupCounter } from '@/components/counter';
+import "./style.css";
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
+document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
-    <a href="https://wxt.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="WXT logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>WXT + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the WXT and TypeScript logos to learn more
-    </p>
-  </div>
-`;
+  <p>The following are some features:</p>
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!);
+  <h3>On Sutta Central.net</h3>
+
+    <li>changes the theme to “Shamrock Shake”</li>
+    <li>Reading time given on text pages</li>
+    <li>on all pages <kbd>l</kbd> will copy a link to the current page in a nice markdown format suitable for pasting on forums, e.g. <code>[DN 1 Brahmajālasutta](https://suttacentral.net/dn1/en/sujato)</code></li>
+    <li>on text pages <kbd>c</kbd> will copy the heading and body of the text (aka sutta) to the clipboard. If the root is visible it will copy that too. If notes are turned on (even on asterisks) that will get copied too.</li>
+    <li>Current site language is persistently displayed above the three dot menu icon</li>
+    <li>There is a mockup of a new navigation menu.</li>
+    <h3>On All sites</h3>
+    <li>Hovering with the mouse over a link to suttas on SuttaCentral.net will pop up the blurb for that sutta.</li>
+</div>
+`;

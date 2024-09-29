@@ -1,12 +1,23 @@
+# Development
 
+## Start server
+
+### Chrome
+
+```
+pnpm dev
+```
 
 ## Create package
 
 ### Chrome
+
 ```
 pnpm zip
 ```
+
 ### Firefox
+
 ```
 pnpm zip -b firefox
 ```
