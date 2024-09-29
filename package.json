@@ -1,6 +1,5 @@
 {
-  "name": "wxt-starter",
-  "description": "manifest.json description",
+  "description": "A collection of enhancements for SuttaCentral.net and related websites",
   "private": true,
   "version": "0.0.0",
   "type": "module",

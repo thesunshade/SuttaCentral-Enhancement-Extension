@@ -23,10 +23,13 @@ function injectShadowStyles(shadowRoot: ShadowRoot) {
       box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
       padding: 10px;
       z-index: 1000;
-      width: 250px;
+      width: 550px;
+      height: 450px;
+      overflow:auto;
       border: 1px solid #ccc;
       margin: 0;
       list-style: none;
+      color:black;
     }
   `;
   shadowRoot.appendChild(style);
