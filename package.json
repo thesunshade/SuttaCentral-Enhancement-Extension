@@ -16,5 +16,8 @@
   "devDependencies": {
     "typescript": "^5.5.4",
     "wxt": "^0.19.1"
+  },
+  "dependencies": {
+    "qr-creator": "^1.0.0"
   }
 }
