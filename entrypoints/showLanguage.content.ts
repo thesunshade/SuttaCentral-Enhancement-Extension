@@ -13,14 +13,17 @@ export default defineContentScript({
     languageDiv.style.padding = "2px";
     languageDiv.style.border = "0px solid #ccc";
     languageDiv.style.borderRadius = "5px";
+    languageDiv.style.cursor = "default";
     languageDiv.style.zIndex = "1000"; // Make sure it appears on top
 
     // Function to update the language display
     const updateLanguageDisplay = () => {
       try {
         const reduxState = JSON.parse(localStorage.reduxState);
-        const language = reduxState.siteLanguage || "Language not set"; // Fallback if siteLanguage is not found
+        const language = reduxState.siteLanguage || "—"; // Fallback if siteLanguage is not found
+        const languageFull = reduxState.fullSiteLanguageName || "Language not set";
         languageDiv.textContent = `${language.toUpperCase()}`;
+        languageDiv.title = languageFull;
       } catch (error) {
         console.error("Failed to parse reduxState:", error);
       }

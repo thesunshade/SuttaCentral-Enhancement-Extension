@@ -1,9 +1,16 @@
 import { blurbs } from "./ddBlurbs.content/blurbs.js";
+import { allSuttasPaliNameDictionary } from "./ddBlurbs.content/allSuttasPaliNameDictionary.js";
 
 export default defineContentScript({
   matches: ["<all_urls>"],
+  excludeMatches: ["*://index.readingfaithfully.org/*"],
   main() {
     console.info("💬 Sutta blurbs displayed on hover");
+
+    function caseify(lowercaseId: string) {
+      let casedId = lowercaseId.replace("snp", "Snp").replace("sn", "SN").replace("dn", "DN").replace("mn", "MN").replace("an", "AN").replace("kp", "Kp").replace("dhp", "Dhp").replace("ud", "Ud").replace("iti", "Iti").replace("vv", "VV").replace("pv", "Pv").replace("thag", "Thag").replace("thig", "Thig");
+      return casedId;
+    }
 
     let toastTimeout: NodeJS.Timeout | null = null;
     let hoveringToast = false;
@@ -44,7 +51,7 @@ export default defineContentScript({
     };
 
     const showToast = (toast: HTMLElement, message: string) => {
-      toast.innerText = message;
+      toast.innerHTML = message;
       toast.style.display = "block";
     };
 
@@ -70,13 +77,16 @@ export default defineContentScript({
     // Event listeners for detecting link hover
     document.addEventListener("mouseover", event => {
       const target = event.target as HTMLAnchorElement;
-      if (target.tagName === "A" && target.href.includes("suttacentral.net")) {
+      if (target.tagName === "A" && target.href.includes("suttacentral.net") && !target.classList.contains("sc")) {
         hoveringLink = true;
         const idMatch = target.href.match(/suttacentral\.net\/([^\/]+)/);
         if (idMatch) {
           const id = idMatch[1]; // Extract the ID from the URL
-          const message = blurbs[id]; // Look up the message from blurbs.js
-          if (message) {
+          const blurb = blurbs[id]; // Look up the message from blurbs.js
+          const casedId = caseify(id);
+          const name: string = allSuttasPaliNameDictionary[casedId];
+          const message = `<em><strong>${casedId.replace(/(\d)/, " $1")} ${name}</strong></em> ${blurb}`;
+          if (blurb) {
             toastTimeout = setTimeout(() => showToast(toast, message), 400); // Delay of 400ms
           }
         }

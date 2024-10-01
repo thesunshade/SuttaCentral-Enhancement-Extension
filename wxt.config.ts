@@ -8,5 +8,6 @@ export default defineConfig({
       default_title: "SuttaCentral Enhancement Extension",
     },
     permissions: ["clipboardWrite"],
+    omnibox: { keyword: "sc" },
   },
 });
