@@ -3,7 +3,7 @@ import { ids } from "./random.content/ids.js";
 export default defineContentScript({
   matches: ["*://suttacentral.net/?lang=en"],
   main() {
-    console.info("💥 random sutta is active");
+    console.info("💥 random sutta is active, popu");
 
     // Recursive function to search for an element inside shadow DOMs
     function searchElementRecursively(selector: string, root: Document | ShadowRoot): Element | null {
@@ -22,7 +22,6 @@ export default defineContentScript({
     }
 
     // Function to create link to random sutta
-
     function randomSuttaUrl() {
       const idList = Object.values(ids).flat();
       const randomNumber = Math.floor(Math.random() * idList.length);
@@ -36,6 +35,11 @@ export default defineContentScript({
       const liElement = document.createElement("li");
       liElement.classList.add("random-item");
       liElement.innerHTML = `<a href="${newRandomSuttaUrl}">Random Sutta</a>`;
+      // Remove the existing random item if it exists to ensure we are always creating a fresh one
+      const existingRandomItem = ulElement.querySelector("li.random-item");
+      if (existingRandomItem) {
+        existingRandomItem.remove();
+      }
       ulElement.appendChild(liElement);
     }
 
@@ -49,16 +53,15 @@ export default defineContentScript({
           const navElement = searchElementRecursively("nav", shadowRoot);
           if (navElement) {
             const ulElement = navElement.querySelector("ul");
-            const existingRandomItem = ulElement?.querySelector("li.random-item");
-            if (!existingRandomItem && ulElement) {
-              insertRandomItem(ulElement); // Call the function to insert the item
+            if (ulElement) {
+              insertRandomItem(ulElement); // Call the function to insert or update the item
             }
           }
         }
       }
     }
 
-    // MutationObserver to watch for changes in the document
+    // Function to observe DOM changes
     function observeDomChanges() {
       const observer = new MutationObserver(() => {
         findNavInShadowDOM();
@@ -67,9 +70,21 @@ export default defineContentScript({
       observer.observe(document, { childList: true, subtree: true });
     }
 
+    // Listen for history changes (pushState, popState)
+    function observeHistoryChanges() {
+      // Re-run the script whenever the history state changes
+      window.addEventListener("popstate", findNavInShadowDOM);
+      const originalPushState = history.pushState;
+      history.pushState = function (...args) {
+        originalPushState.apply(this, args);
+        findNavInShadowDOM();
+      };
+    }
+
     // Start observing when the page loads
     document.addEventListener("DOMContentLoaded", () => {
       observeDomChanges();
+      observeHistoryChanges(); // Observe history changes
       findNavInShadowDOM(); // Initial search
     });
   },

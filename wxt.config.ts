@@ -4,10 +4,10 @@ import { defineConfig } from "wxt";
 export default defineConfig({
   manifest: {
     name: "SuttaCentral Enhancement Extension",
-    action: {
-      default_title: "SuttaCentral Enhancement Extension",
-    },
     permissions: ["clipboardWrite"],
     omnibox: { keyword: "sc" },
+  },
+  zip: {
+    name: "SC-Enhancement",
   },
 });
