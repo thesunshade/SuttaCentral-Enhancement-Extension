@@ -4,7 +4,7 @@ import { defineConfig } from "wxt";
 export default defineConfig({
   manifest: {
     name: "SuttaCentral Enhancement Extension",
-    permissions: ["clipboardWrite"],
+    permissions: ["clipboardWrite", "contextMenus", "tabs"],
     omnibox: { keyword: "sc" },
   },
   zip: {
