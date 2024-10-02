@@ -18,16 +18,37 @@ interface SuttaplexData {
   translations: Translation[];
 }
 
-let lastArticleContent = ""; // Variable to store the last known article content
-
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
     console.info("➕ show other translations active");
+
+    let lastProcessedState: string | null = null;
+    let debounceTimer: NodeJS.Timeout | null = null;
+
+    function debounce(func: () => void, delay: number) {
+      return () => {
+        if (debounceTimer) clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(func, delay);
+      };
+    }
+
+    const debouncedRunScript = debounce(runScript, 500); // Wait 500ms after last state change
+
+    function processStateChange() {
+      const currentState = localStorage.reduxState;
+      if (currentState !== lastProcessedState) {
+        lastProcessedState = currentState;
+        debouncedRunScript();
+      }
+    }
+
     function runScript() {
       const reduxState: ReduxState = JSON.parse(localStorage.reduxState);
       const { siteLanguage } = reduxState;
       const { uid, lang: language, authorUid } = reduxState.suttaPublicationInfo;
+
+      //   console.log("Running script with:", { uid, language, authorUid });
 
       function fetchSuttaplex(uid: string, language: string): Promise<SuttaplexData[]> {
         const url = `https://suttacentral.net/api/suttaplex/${uid}?language=${language}`;
@@ -40,7 +61,7 @@ export default defineContentScript({
             return response.json();
           })
           .catch(error => {
-            // console.error("There was a problem with the fetch operation:", error);
+            console.error("There was a problem with the fetch operation:", error);
             return [];
           });
       }
@@ -52,58 +73,61 @@ export default defineContentScript({
       fetchSuttaplex(uid, siteLanguage).then(data => {
         if (data.length > 0) {
           const translations = data[0].translations;
-          const translationCount = countTranslations(translations, language, authorUid);
+          const translationCount = countTranslations(translations, siteLanguage, authorUid);
           //   console.log(`Number of translations in ${language} not by ${authorUid}: ${translationCount}`);
 
-          setTimeout(() => {
-            const parallelButton = querySelectorDeep("#btnShowParallels");
-            if (parallelButton) {
-              let otherCount = parallelButton.querySelector(".otherCount");
-
-              if (!otherCount) {
-                otherCount = document.createElement("translation-counter");
-                otherCount.classList.add("otherCount");
-                otherCount.style.backgroundColor = "var(--sc-primary-color-dark)";
-                otherCount.style.fontSize = ".8rem";
-                otherCount.style.borderRadius = "5px";
-                otherCount.style.color = "white";
-                otherCount.style.position = "absolute";
-                otherCount.style.top = "6px";
-                otherCount.style.right = "-5px";
-                otherCount.style.height = "1rem";
-                otherCount.style.width = "1.2rem";
-                otherCount.style.padding = "4px 4px auto auto";
-                otherCount.style.zIndex = "5000";
-
-                parallelButton.style.position = "relative";
-                parallelButton.appendChild(otherCount);
-              }
-
-              otherCount.innerHTML = `+${translationCount}`;
-            }
-          }, 1000);
+          updateParallelButton(translationCount);
         }
       });
     }
 
-    // Polling mechanism
-    setInterval(() => {
-      const article = querySelectorDeep("article");
-      if (article) {
-        const currentContent = article.innerHTML;
+    function updateParallelButton(translationCount: number) {
+      const parallelButton = querySelectorDeep("#btnShowParallels");
+      if (parallelButton) {
+        let otherCount = parallelButton.querySelector(".otherCount") as HTMLElement;
 
-        // Check if the article content has changed
-        if (currentContent !== lastArticleContent) {
-          //   console.log("Article content changed, re-running script...");
-          lastArticleContent = currentContent; // Update last known content
-          runScript(); // Call the runScript function to check for translations
+        if (!otherCount) {
+          otherCount = document.createElement("translation-counter");
+          otherCount.classList.add("otherCount");
+          otherCount.style.cssText = `
+            background-color: var(--sc-primary-color-dark);
+            font-size: .8rem;
+            border-radius: 5px;
+            color: white;
+            position: absolute;
+            top: 6px;
+            right: -5px;
+            height: 1rem;
+            width: 1.2rem;
+            padding: 4px 4px auto auto;
+            z-index: 5000;
+          `;
+
+          parallelButton.style.position = "relative";
+          parallelButton.appendChild(otherCount);
         }
-      } else {
-        // console.warn("No article found on the page.");
+
+        otherCount.innerHTML = `+${translationCount}`;
       }
-    }, 2000); // Check every 2 seconds
+    }
+
+    // Set up a MutationObserver to watch for changes in localStorage
+    const observer = new MutationObserver(() => {
+      processStateChange();
+    });
+
+    observer.observe(document, { subtree: true, childList: true });
+
+    // Also check periodically in case the MutationObserver misses something
+    setInterval(processStateChange, 1000);
 
     // Run the script initially
     runScript();
+
+    // Clean up function
+    return () => {
+      if (debounceTimer) clearTimeout(debounceTimer);
+      observer.disconnect();
+    };
   },
 });
