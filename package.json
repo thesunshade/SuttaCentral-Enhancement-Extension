@@ -18,6 +18,7 @@
     "wxt": "^0.19.1"
   },
   "dependencies": {
-    "qr-creator": "^1.0.0"
+    "qr-creator": "^1.0.0",
+    "query-selector-shadow-dom": "^1.0.1"
   }
 }

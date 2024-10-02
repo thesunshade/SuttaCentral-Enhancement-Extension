@@ -1,0 +1,36 @@
+.qr-url-label {
+    text-align: center;
+}
+
+.qr-url {
+    word-break: break-all;
+    font-family: monospace;
+    margin: 5px auto;
+    max-width: 300px;
+}
+
+#qr-code {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.qr-button-area {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.qr-button {
+    background-color: rgb(227, 227, 227) !important;
+    border: solid 2px black !important;
+    color: black !important;
+    border-radius: 15px !important;
+    padding: 1px 4px 3px !important;
+    margin: 5px !important
+}
+
+.qr-button:hover {
+    background-color: black !important;
+    border: solid 2px rgb(227, 227, 227) !important;
+    color: rgb(227, 227, 227) !important;
+}

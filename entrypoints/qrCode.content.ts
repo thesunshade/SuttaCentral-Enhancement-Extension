@@ -1,4 +1,5 @@
 import QrCreator from "qr-creator";
+import "./qrCode.content/qrCode.css";
 
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
@@ -37,37 +38,44 @@ export default defineContentScript({
 
       // Display the URL
       const urlText = document.createElement("p");
-      urlText.textContent = `QR Code for: ${url}`;
-      urlText.style.wordBreak = "break-all"; // Ensure long URLs are wrapped
+      urlText.innerHTML = `
+    <div class="qr-url-area">
+        <div class="qr-url-label">QR code for:
+        </div>
+        <div class="qr-url">${url}
+        </div>
+    </div>`;
       popup.appendChild(urlText);
 
       // Create a close button
       const closeButton = document.createElement("button");
       closeButton.textContent = "Close";
-      closeButton.style.marginTop = "10px";
+      closeButton.classList.add("qr-button");
 
       // Add close functionality to the button
       closeButton.addEventListener("click", () => {
-        document.body.removeChild(popup);
+        closePopup();
       });
 
       // Create a copy button
       const copyButton = document.createElement("button");
       copyButton.textContent = "Copy QR Code";
-      copyButton.style.marginTop = "10px";
-      copyButton.style.marginLeft = "10px";
+      copyButton.classList.add("qr-button");
 
       // Create save button
       const saveButton = document.createElement("button");
       saveButton.textContent = "Save QR Code";
-      saveButton.style.marginTop = "10px";
-      saveButton.style.marginLeft = "10px";
+      saveButton.classList.add("qr-button");
+
+      const qrButtonArea = document.createElement("div");
+      qrButtonArea.classList.add("qr-button-area");
+      qrButtonArea.appendChild(copyButton);
+      qrButtonArea.appendChild(saveButton);
+      qrButtonArea.appendChild(closeButton);
 
       // Append QR code div and buttons
       popup.appendChild(qrCodeDiv);
-      popup.appendChild(copyButton);
-      popup.appendChild(saveButton);
-      popup.appendChild(closeButton);
+      popup.appendChild(qrButtonArea);
 
       // Append the popup to the body
       document.body.appendChild(popup);
@@ -117,6 +125,27 @@ export default defineContentScript({
           link.click();
         }
       });
+
+      // Close the popup when clicking outside of it
+      document.addEventListener("click", event => {
+        if (!popup.contains(event.target as Node)) {
+          closePopup();
+        }
+      });
+
+      // Close the popup when pressing the Escape key
+      document.addEventListener("keydown", (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+          closePopup();
+        }
+      });
+
+      // Function to close the popup
+      function closePopup() {
+        if (popup && popup.parentElement) {
+          document.body.removeChild(popup);
+        }
+      }
     }
   },
 });
