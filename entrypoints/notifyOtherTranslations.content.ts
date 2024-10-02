@@ -86,27 +86,37 @@ export default defineContentScript({
       if (parallelButton) {
         let otherCount = parallelButton.querySelector(".otherCount") as HTMLElement;
 
+        // If translationCount is 0, remove the otherCount element if it exists
+        if (translationCount === 0) {
+          if (otherCount) {
+            otherCount.remove();
+          }
+          return; // No need to proceed if translationCount is 0
+        }
+
+        // If translationCount is greater than 0, update or create the otherCount element
         if (!otherCount) {
           otherCount = document.createElement("translation-counter");
           otherCount.classList.add("otherCount");
           otherCount.style.cssText = `
-            background-color: var(--sc-primary-color-dark);
-            font-size: .8rem;
-            border-radius: 5px;
-            color: white;
-            position: absolute;
-            top: 6px;
-            right: -5px;
-            height: 1rem;
-            width: 1.2rem;
-            padding: 4px 4px auto auto;
-            z-index: 5000;
-          `;
+              background-color: var(--sc-primary-color-dark);
+              font-size: .8rem;
+              border-radius: 5px;
+              color: white;
+              position: absolute;
+              top: 6px;
+              right: -5px;
+              height: 1rem;
+              width: 1.2rem;
+              padding: 4px 4px auto auto;
+              z-index: 5000;
+            `;
 
           parallelButton.style.position = "relative";
           parallelButton.appendChild(otherCount);
         }
 
+        // Update the content with the translation count
         otherCount.innerHTML = `+${translationCount}`;
       }
     }

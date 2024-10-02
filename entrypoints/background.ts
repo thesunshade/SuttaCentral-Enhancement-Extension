@@ -93,4 +93,60 @@ export default defineBackground(() => {
   }
 
   omniboxFeature();
+
+  chrome.runtime.onInstalled.addListener(() => {
+    // SuttaCentral
+    chrome.contextMenus.create({
+      id: "searchSuttaCentral",
+      title: "🔍 Search SuttaCentral for '%s'",
+      contexts: ["selection"],
+    });
+
+    // D&D
+    chrome.contextMenus.create({
+      id: "searchDD",
+      title: "🗣️ Search D&&D for '%s'",
+      contexts: ["selection"],
+    });
+    // regular citation Suttaplex
+    chrome.contextMenus.create({
+      id: "goToCitationSuttaplex",
+      title: "📕 Go to Suttaplex for citation: '%s'",
+      contexts: ["selection"],
+    });
+    // regular citation text
+    chrome.contextMenus.create({
+      id: "goToCitation",
+      title: "📙 Go to citation: '%s'",
+      contexts: ["selection"],
+    });
+    // PTS citation
+    chrome.contextMenus.create({
+      id: "searchPtsCitation",
+      title: "📗 Lookup PTS citation for '%s'",
+      contexts: ["selection"],
+    });
+  });
+
+  chrome.contextMenus.onClicked.addListener((info, tab) => {
+    if (info.menuItemId === "searchSuttaCentral" && info.selectionText) {
+      const searchUrl = `https://suttacentral.net/search?query=${encodeURIComponent(info.selectionText)}`;
+      chrome.tabs.create({ url: searchUrl });
+    } else if (info.menuItemId === "searchDD" && info.selectionText) {
+      const searchUrl = `https://discourse.suttacentral.net/search?q=${encodeURIComponent(info.selectionText)}`;
+      chrome.tabs.create({ url: searchUrl });
+    } else if (info.menuItemId === "goToCitationSuttaplex" && info.selectionText) {
+      const citation = encodeURIComponent(info.selectionText.replace(/ /g, "").trim());
+      const searchUrl = `https://suttacentral.net/${citation}`;
+      chrome.tabs.create({ url: searchUrl });
+    } else if (info.menuItemId === "goToCitation" && info.selectionText) {
+      const citation = encodeURIComponent(info.selectionText.replace(/ /g, "").trim());
+      console.log(citation);
+      const searchUrl = `https://suttacentral.net/${citation}/en/sujato`;
+      chrome.tabs.create({ url: searchUrl });
+    } else if (info.menuItemId === "searchPtsCitation" && info.selectionText) {
+      const searchUrl = `https://suttacentral.net/search?query=volpage:${encodeURIComponent(info.selectionText)}`;
+      chrome.tabs.create({ url: searchUrl });
+    }
+  });
 });
