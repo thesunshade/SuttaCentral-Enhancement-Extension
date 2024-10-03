@@ -1,5 +1,6 @@
 import QrCreator from "qr-creator";
 import "./qrCode.content/qrCode.css";
+import isInputFocused from "./functions/isInputFocused";
 
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
@@ -12,11 +13,6 @@ export default defineContentScript({
         createQrCodePopup(url);
       }
     });
-
-    function isInputFocused(): boolean {
-      const activeElement = document.activeElement;
-      return activeElement instanceof HTMLInputElement || activeElement instanceof HTMLTextAreaElement;
-    }
 
     function createQrCodePopup(url: string) {
       // Create the popup div

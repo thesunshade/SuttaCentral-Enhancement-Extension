@@ -77,7 +77,7 @@ export default defineContentScript({
       fetchParallels(uid).then(data => {
         if (data) {
           const paliCount = countPliLang(data);
-          console.log(`Number of Pali parallels: ${paliCount}`);
+          // console.log(`Number of Pali parallels: ${paliCount}`);
           updateParallelButton(paliCount);
         }
       });

@@ -25,12 +25,12 @@ export default defineContentScript({
           style.id = "side-by-side-styles";
           style.textContent = sideBySideStyles;
           document.head.appendChild(style);
-          console.info("Side-by-side layout CSS added.");
+          // console.log("Side-by-side layout CSS added.");
         }
       } else {
         if (styleElement) {
           styleElement.remove();
-          console.info("Side-by-side layout CSS removed.");
+          // console.log("Side-by-side layout CSS removed.");
         }
       }
     };
@@ -59,7 +59,7 @@ export default defineContentScript({
         if (index < segments.length) {
           requestAnimationFrame(swapBatch); // Schedule the next batch
         } else {
-          console.info("All .segment swaps completed.");
+          // console.log("All .segment swaps completed.");
         }
       };
 
@@ -68,7 +68,7 @@ export default defineContentScript({
 
     // Function to detect navigation changes
     const onNavigation = () => {
-      console.info("Page navigation detected, applying progressive swap and checking layout...");
+      // console.log("Page navigation detected, applying progressive swap and checking layout...");
       const mainElement = document.querySelector("main");
 
       if (mainElement) {

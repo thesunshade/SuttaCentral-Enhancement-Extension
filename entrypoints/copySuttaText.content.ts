@@ -1,3 +1,5 @@
+import isInputFocused from "./functions/isInputFocused";
+
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
@@ -27,11 +29,6 @@ export default defineContentScript({
           });
       }
     });
-
-    function isInputFocused(): boolean {
-      const activeElement = document.activeElement;
-      return activeElement instanceof HTMLInputElement || activeElement instanceof HTMLTextAreaElement;
-    }
 
     // Function to display a temporary notification on the page
     function showToastNotification(message: string) {
