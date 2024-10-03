@@ -246,3 +246,5 @@ body{
 // --sc-on-tertiary-secondary-text-color: #675d4f;
 // --sc-dark-fixed-background-color: #544f4f;
 // --sc-darker-fixed-background-color: hsl(28deg 100% 9.29%);
+
+// https://github.com/suttacentral/bilara/blob/master/client/src/styles/themes.js
