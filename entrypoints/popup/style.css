@@ -35,7 +35,12 @@ kbd {
 
 #app {
   max-width: 1280px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   padding: 1rem;
 
+}
+
+li {
+  margin-left: .5rem
+    /* only really needed for FF */
 }

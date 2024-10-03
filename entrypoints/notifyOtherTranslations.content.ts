@@ -72,6 +72,7 @@ export default defineContentScript({
 
       fetchSuttaplex(uid, siteLanguage).then(data => {
         if (data.length > 0) {
+          console.log(data);
           const translations = data[0].translations;
           const translationCount = countTranslations(translations, siteLanguage, authorUid);
           //   console.log(`Number of translations in ${language} not by ${authorUid}: ${translationCount}`);
