@@ -16,7 +16,7 @@ body{
 --sc-primary-color-light-transparent: #f9101066!important;
 --sc-primary-color-dark: #9f0404!important;
 --sc-primary-accent-color: #ffba63!important;
---sc-primary-accent-color-light: #ffd39c!important;
+--sc-primary-accent-color-light: #ca9c64!important;
 --sc-secondary-accent-color: #C03030!important;
 --sc-secondary-accent-color-light: #CC5959!important;
 --sc-primary-background-color: #fff5f5!important;
@@ -119,7 +119,7 @@ body{
 // --sc-primary-color-light-transparent: #f9101066!important;
 // --sc-primary-color-dark: #9f0404!important;
 // --sc-primary-accent-color: #ffba63!important;
-// --sc-primary-accent-color-light: #ffd39c!important;
+// --sc-primary-accent-color-light: #ca9c64!important;
 // --sc-secondary-accent-color: #C03030!important;
 // --sc-secondary-accent-color-light: #CC5959!important;
 // --sc-primary-background-color: #fff5f5!important;
