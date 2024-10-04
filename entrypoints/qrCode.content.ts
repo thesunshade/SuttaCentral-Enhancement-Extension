@@ -1,6 +1,8 @@
 import QrCreator from "qr-creator";
 import "./qrCode.content/qrCode.css";
 import isInputFocused from "./functions/isInputFocused";
+import showToastNotification from "./functions/showToastNotification";
+import onlyPressed from "./functions/onlyPressed";
 
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
@@ -8,7 +10,7 @@ export default defineContentScript({
     console.info("📱 'q' to copy QR code generator active ");
 
     document.addEventListener("keydown", (event: KeyboardEvent) => {
-      if (event.key === "q" && !isInputFocused()) {
+      if (onlyPressed(event, "q") && !isInputFocused()) {
         const url = window.location.href;
         createQrCodePopup(url);
       }
@@ -99,10 +101,7 @@ export default defineContentScript({
             qrCanvas.toBlob(blob => {
               if (blob) {
                 const clipboardItem = new ClipboardItem({ "image/png": blob });
-                navigator.clipboard.write([clipboardItem]).then(
-                  () => alert("QR code copied to clipboard!"),
-                  () => alert("Failed to copy QR code.")
-                );
+                navigator.clipboard.write([clipboardItem]).then(() => showToastNotification("QR code copied to clipboard!"));
               } else {
                 alert("Failed to convert QR code to blob.");
               }

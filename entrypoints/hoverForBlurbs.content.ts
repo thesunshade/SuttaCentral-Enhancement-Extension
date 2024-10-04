@@ -76,10 +76,12 @@ export default defineContentScript({
 
     // Event listeners for detecting link hover
     document.addEventListener("mouseover", event => {
-      const target = event.target as HTMLAnchorElement;
-      if (target.tagName === "A" && target.href.includes("suttacentral.net") && !target.classList.contains("sc")) {
+      const target = event.target as HTMLElement;
+      const anchor = target.closest("a") as HTMLAnchorElement; // Find the nearest <a> element
+
+      if (anchor && anchor.href.includes("suttacentral.net") && !anchor.classList.contains("sc")) {
         hoveringLink = true;
-        const idMatch = target.href.match(/suttacentral\.net\/([^\/]+)/);
+        const idMatch = anchor.href.match(/suttacentral\.net\/([^\/]+)/);
         if (idMatch) {
           const id = idMatch[1]; // Extract the ID from the URL
           const blurb = blurbs[id]; // Look up the message from blurbs.js

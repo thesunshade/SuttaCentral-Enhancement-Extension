@@ -1,4 +1,5 @@
 import isInputFocused from "./functions/isInputFocused";
+import onlyPressed from "./functions/onlyPressed";
 
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
@@ -6,8 +7,7 @@ export default defineContentScript({
     console.info("⏱️ Press 'h' to display reading time");
 
     document.addEventListener("keydown", (event: KeyboardEvent) => {
-      console.log(event.key);
-      if (event.key === "h" && !isInputFocused()) {
+      if (onlyPressed(event, "h") && !isInputFocused()) {
         insertReadingTime();
       }
     });

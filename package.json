@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "qr-creator": "^1.0.0",
-    "query-selector-shadow-dom": "^1.0.1"
+    "query-selector-shadow-dom": "^1.0.1",
+    "vite-plugin-remove-console": "^2.2.0"
   }
 }
