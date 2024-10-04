@@ -3,7 +3,7 @@ import { allSuttasPaliNameDictionary } from "./ddBlurbs.content/allSuttasPaliNam
 
 export default defineContentScript({
   matches: ["<all_urls>"],
-  excludeMatches: ["*://index.readingfaithfully.org/*"],
+  excludeMatches: ["*://index.readingfaithfully.org/*", "*://sutta.readingfaithfully.org/*"],
   main() {
     console.info("💬 Sutta blurbs displayed on hover");
 
@@ -13,8 +13,6 @@ export default defineContentScript({
     }
 
     let toastTimeout: NodeJS.Timeout | null = null;
-    let hoveringToast = false;
-    let hoveringLink = false;
     let hideTimeout: NodeJS.Timeout | null = null;
 
     // Create the toast element
@@ -30,21 +28,15 @@ export default defineContentScript({
       toast.style.borderRadius = "5px";
       toast.style.zIndex = "1000";
       toast.style.display = "none";
-      toast.style.maxWidth = "300px"; // Set max width to 300px
+      toast.style.maxWidth = "300px";
       document.body.appendChild(toast);
 
-      // Add event listener to detect mouse hovering over the toast
-      toast.addEventListener("mouseover", () => {
-        hoveringToast = true;
-        if (hideTimeout) {
-          clearTimeout(hideTimeout); // Prevent the toast from hiding when hovering over it
-        }
+      // Detect mouse entering and leaving the toast
+      toast.addEventListener("mouseenter", () => {
+        if (hideTimeout) clearTimeout(hideTimeout); // Prevent hiding when entering toast
       });
-      toast.addEventListener("mouseout", () => {
-        hoveringToast = false;
-        if (!hoveringLink) {
-          hideToastWithDelay(toast); // Hide when moving out of both toast and link
-        }
+      toast.addEventListener("mouseleave", () => {
+        hideToastWithDelay(toast); // Hide when leaving toast
       });
 
       return toast;
@@ -58,50 +50,43 @@ export default defineContentScript({
     const hideToast = (toast: HTMLElement) => {
       toast.style.display = "none";
       if (toastTimeout) {
-        clearTimeout(toastTimeout); // Clear timeout if hiding before it shows
+        clearTimeout(toastTimeout); // Clear timeout if hiding early
         toastTimeout = null;
       }
     };
 
     const hideToastWithDelay = (toast: HTMLElement) => {
-      hideTimeout = setTimeout(() => {
-        if (!hoveringLink && !hoveringToast) {
-          hideToast(toast);
-        }
-      }, 100); // Small delay before hiding to allow moving between link and toast
+      hideTimeout = setTimeout(() => hideToast(toast), 100); // Small delay before hiding
     };
 
     // Initialize the toast
     const toast = createToast();
 
-    // Event listeners for detecting link hover
+    // Event listener for link hover
     document.addEventListener("mouseover", event => {
       const target = event.target as HTMLElement;
-      const anchor = target.closest("a") as HTMLAnchorElement; // Find the nearest <a> element
+      const anchor = target.closest("a") as HTMLAnchorElement;
 
       if (anchor && anchor.href.includes("suttacentral.net") && !anchor.classList.contains("sc")) {
-        hoveringLink = true;
         const idMatch = anchor.href.match(/suttacentral\.net\/([^\/]+)/);
         if (idMatch) {
-          const id = idMatch[1]; // Extract the ID from the URL
-          const blurb = blurbs[id]; // Look up the message from blurbs.js
+          const id = idMatch[1];
+          const blurb = blurbs[id];
           const casedId = caseify(id);
           const name: string = allSuttasPaliNameDictionary[casedId];
           const message = `<em><strong>${casedId.replace(/(\d)/, " $1")} ${name}</strong></em> ${blurb}`;
           if (blurb) {
-            toastTimeout = setTimeout(() => showToast(toast, message), 400); // Delay of 400ms
+            toastTimeout = setTimeout(() => showToast(toast, message), 400);
           }
         }
       }
     });
 
+    // Listener to detect exiting the <a> tag and its children
     document.addEventListener("mouseout", event => {
-      const target = event.target as HTMLAnchorElement;
-      if (target.tagName === "A" && target.href.includes("suttacentral.net")) {
-        hoveringLink = false;
-        if (!hoveringToast) {
-          hideToastWithDelay(toast); // Delay hiding the toast unless hovering over it
-        }
+      const target = event.target as HTMLElement;
+      if (target.tagName === "A" || target.closest("a")) {
+        hideToastWithDelay(toast);
       }
     });
   },

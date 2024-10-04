@@ -5,6 +5,23 @@ export default defineContentScript({
   main() {
     console.info("✂️ selecting one language alt");
 
+    const keyStyle = `margin: 0px 0.1em;
+ padding: 0.1em 0.4em;
+ font-weight:bold;
+ border-radius: 3px;
+ border: 1px solid rgb(204, 204, 204);
+ color: rgb(51, 51, 51);
+ font-family: Arial,Helvetica,sans-serif;
+ font-size: 1rem;
+ display: inline-block;
+ box-shadow: 0px 1px 0px rgba(0,0,0,0.2), inset 0px 0px 0px 2px #ffffff;
+ background-color: rgb(247, 247, 247);
+ -moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2), 0 0 0 2px #ffffff inset;
+ -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2), 0 0 0 2px #ffffff inset;
+ -moz-border-radius: 3px;
+ -webkit-border-radius: 3px;
+ text-shadow: 0 1px 0 #fff;`;
+
     // Initial state
     let isRootDisabled = false;
     let isTranslationDisabled = false;
@@ -32,6 +49,7 @@ export default defineContentScript({
     function createToast(): HTMLElement {
       const toast = document.createElement("div");
       toast.id = "selection-toast";
+      toast.style.maxWidth = "20rem";
       toast.style.position = "fixed";
       toast.style.textAlign = "center";
       toast.style.bottom = "20px";
@@ -54,9 +72,9 @@ export default defineContentScript({
       setUserSelectNone(".translation", isTranslationDisabled);
 
       if (isRootDisabled) {
-        showToast("Selecting only translation.<br>Press <kbd style='background-color:black;color:white;border-radius:3px;padding:0 2px 2px'>.</kbd> to enable selecting root again.");
+        showToast(`Selecting only translation.<br>Press <kbd style='${keyStyle}'>.</kbd> to enable selecting root again.`);
       } else if (isTranslationDisabled) {
-        showToast("Selecting only root. Press <kbd style='background-color:black;color:white;border-radius:3px;padding:0 2px 4px'>,</kbd> to enable selecting translation again.");
+        showToast(`Selecting only root. Press <kbd style='${keyStyle}'>,</kbd> to enable selecting translation again.`);
       } else {
         const toast = document.getElementById("selection-toast") as HTMLElement;
         if (toast) toast.style.display = "none"; // Hide toast when both are enabled

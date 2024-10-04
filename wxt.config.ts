@@ -12,7 +12,7 @@ export default defineConfig({
   zip: {
     name: "SC-Enhancement",
   },
-  vite: () => ({
-    plugins: [removeConsole({ includes: ["log"] })],
+  vite: configEnv => ({
+    plugins: [configEnv.mode === "production" && removeConsole({ includes: ["log"] })],
   }),
 });
