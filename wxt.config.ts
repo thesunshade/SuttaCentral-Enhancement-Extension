@@ -11,7 +11,7 @@ export default defineConfig({
   zip: {
     name: "SC-Enhancement",
   },
-  // vite: () => ({
-  //   plugins: [removeConsole({ includes: ["log"] })],
-  // }),
+  vite: () => ({
+    plugins: [removeConsole({ includes: ["log"] })],
+  }),
 });

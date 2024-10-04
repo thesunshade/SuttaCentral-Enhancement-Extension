@@ -20,6 +20,11 @@ export default defineContentScript({
 
       const alphabetSelect = innerSetting.querySelector("#selPaliScripts");
       alphabetSelect.style.width = "inherit";
+
+      const paliWordLookup = innerSetting.querySelectorAll(".form-controls.two-column");
+      paliWordLookup.forEach(element => {
+        element.style.columnCount = "1";
+      });
     }, 2000);
   },
 });
