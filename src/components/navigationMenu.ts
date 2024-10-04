@@ -1,4 +1,4 @@
-export function NavigationMenu(): string {
+export default function NavigationMenu(): string {
   return `
       		<nav class=" scc-links">	
 		<ul class=" list-unstyled mb-0">	
