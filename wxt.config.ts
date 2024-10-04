@@ -1,4 +1,5 @@
 import { defineConfig } from "wxt";
+import removeConsole from "vite-plugin-remove-console";
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
@@ -10,4 +11,7 @@ export default defineConfig({
   zip: {
     name: "SC-Enhancement",
   },
+  // vite: () => ({
+  //   plugins: [removeConsole({ includes: ["log"] })],
+  // }),
 });
