@@ -3,6 +3,7 @@ import removeConsole from "vite-plugin-remove-console";
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
+  srcDir: "src",
   manifest: {
     name: "SuttaCentral Enhancement Extension",
     permissions: ["clipboardWrite", "contextMenus", "tabs"],
