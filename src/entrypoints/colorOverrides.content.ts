@@ -2,7 +2,7 @@ export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
     function changeColors() {
-      console.info("🎨 Theme: Grimace");
+      console.log("🎨 Theme: Burglar");
     }
     changeColors();
 
@@ -11,25 +11,26 @@ export default defineContentScript({
     styleTag.textContent = `
 
 body{
---sc-primary-color: #c60505!important;
---sc-primary-color-light: #f91010!important;
---sc-primary-color-light-transparent: #f9101066!important;
---sc-primary-color-dark: #9f0404!important;
---sc-primary-accent-color: #ffba63!important;
---sc-primary-accent-color-light: #ca9c64!important;
+--scrollbar-width: 17px!important;
+--sc-primary-color: #666!important;
+--sc-primary-color-light: #858585!important;
+--sc-primary-color-light-transparent: #85858566!important;
+--sc-primary-color-dark: #525252!important;
+--sc-primary-accent-color: #000!important;
+--sc-primary-accent-color-light: #5aa8f2!important;
 --sc-secondary-accent-color: #C03030!important;
 --sc-secondary-accent-color-light: #CC5959!important;
---sc-primary-background-color: #fff5f5!important;
+--sc-primary-background-color: #fafafa!important;
 --sc-on-primary-primary-text-color: #201b13!important;
---sc-on-primary-secondary-text-color: #7c6e6e!important;
+--sc-on-primary-secondary-text-color: #7c766f!important;
 --sc-secondary-background-color: #fffbff!important;
 --sc-on-secondary-primary-text-color: #211400!important;
 --sc-on-secondary-secondary-text-color: #807567!important;
---sc-tertiary-background-color: #f8dddd!important;
+--sc-tertiary-background-color: #ebebeb!important;
 --sc-on-tertiary-primary-text-color: #00192f!important;
 --sc-on-tertiary-secondary-text-color: #675d4f!important;
 --sc-dark-fixed-background-color: #544f4f!important;
---sc-darker-fixed-background-color: #403c3c!important;
+--sc-darker-fixed-background-color: #000000!important;
 }
 `;
     document.head.appendChild(styleTag);
@@ -92,6 +93,7 @@ body{
 // --sc-darker-fixed-background-color: #3a3036!important;
 
 // hamburgler
+// this is not pure black: --sc-dark-fixed-background-color: #544f4f!important;
 // --scrollbar-width: 17px!important;
 // --sc-primary-color: #666!important;
 // --sc-primary-color-light: #858585!important;
