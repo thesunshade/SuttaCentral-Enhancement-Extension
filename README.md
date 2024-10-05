@@ -8,6 +8,12 @@
 pnpm dev
 ```
 
+### FireFox
+
+```
+pnpm dev -b firefox
+```
+
 ## Create package
 
 ### Chrome
