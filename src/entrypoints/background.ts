@@ -1,7 +1,44 @@
 import { allSuttasPaliNameArray } from "./ddBlurbs.content/allSuttasPaliNameArray.js";
+import { settingsConfig } from "./popup/settingsConfig.js";
 
 export default defineBackground(() => {
   console.log("Hello background!", { id: browser.runtime.id });
+
+  chrome.runtime.onInstalled.addListener(details => {
+    const defaultSettings: { [key: string]: any } = {};
+
+    // Loop through the settingsConfig to extract default values
+    Object.keys(settingsConfig).forEach(key => {
+      defaultSettings[key] = settingsConfig[key].default;
+    });
+
+    // Fetch existing settings
+    chrome.storage.sync.get(null, items => {
+      // If there are no settings (new install), set defaults
+      if (Object.keys(items).length === 0) {
+        chrome.storage.sync.set(defaultSettings, () => {
+          console.log("Default settings initialized on install:", defaultSettings);
+        });
+      } else if (details.reason === "update") {
+        // On update, merge new defaults with existing settings
+        const mergedSettings = { ...defaultSettings, ...items }; // Existing settings take precedence
+        chrome.storage.sync.set(mergedSettings, () => {
+          console.log("Settings updated with new defaults:", mergedSettings);
+        });
+      }
+    });
+  });
+
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "refreshActiveTab") {
+      chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+        if (tabs.length > 0) {
+          // Ensure there's at least one active tab
+          chrome.tabs.reload(tabs[0].id); // Refresh the active tab
+        }
+      });
+    }
+  });
 
   function omniboxFeature() {
     const BASE_URL = "https://suttacentral.net";

@@ -16,9 +16,20 @@
 
 body {
   margin: 0;
-  display: flex;
   min-width: 420px;
   min-height: 100vh;
+}
+
+.settingsForm {
+  margin: 1rem
+}
+
+.refresh-line {
+  margin: 10px 0px 0px 10px
+}
+
+select {
+  margin-left: 5px
 }
 
 h1 {

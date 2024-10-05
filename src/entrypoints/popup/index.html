@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,6 +7,12 @@
     <meta name="manifest.type" content="browser_action" />
   </head>
   <body>
+    <div class="refresh-line">
+      <button id="refreshButton">Refresh Page ↻</button>
+      to apply changes.
+    </div>
+
+    <form id="settingsForm" class="settingsForm"></form>
     <div id="app"></div>
     <script type="module" src="./main.ts"></script>
   </body>

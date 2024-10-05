@@ -1,53 +1,90 @@
-import isInputFocused from "./functions/isInputFocused";
-import onlyPressed from "./functions/onlyPressed";
-
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
-    console.info("⏱️ Press 'h' to display reading time");
+    // Check the setting before running the script
+    chrome.storage.sync.get(["showReadingTime", "wordsPerMinute"], data => {
+      const isEnabled = data["showReadingTime"] === "true"; // Convert to boolean
+      const WPM = Number(data["wordsPerMinute"]) || 200; // Use numeric value or default to 200
 
-    document.addEventListener("keydown", (event: KeyboardEvent) => {
-      if (onlyPressed(event, "h") && !isInputFocused()) {
-        insertReadingTime();
+      if (!isEnabled) {
+        console.info("❌ Reading time display is disabled");
+        return; // Exit if the setting is not enabled
+      }
+
+      insertReadingTime();
+
+      function insertReadingTime() {
+        console.info("⏱️ Reading time displayed");
+
+        const runScript = () => {
+          const observer = new MutationObserver((mutations, observer) => {
+            const article = document.querySelector("article");
+            if (article) {
+              observer.disconnect(); // Stop observing once the article tag is found
+
+              const contentObserver = new MutationObserver((mutations, contentObserver) => {
+                const text = article.textContent;
+                if (!text) return;
+                if (text.trim()) {
+                  contentObserver.disconnect(); // Stop observing when content is available
+
+                  // Check if the badge already exists
+                  if (!article.querySelector(".reading-time-badge")) {
+                    const wordMatchRegExp = /[^\s]+/g; // Regular expression
+                    const words = text.matchAll(wordMatchRegExp);
+                    const wordCount = [...words].length;
+                    const readingTime = Math.round(wordCount / WPM);
+                    const badge = document.createElement("p");
+                    badge.classList.add("color-secondary-text", "type--caption", "reading-time-badge");
+                    badge.textContent = `⏱️ ${readingTime} min read (${WPM} wpm)`;
+
+                    const heading = article.querySelector("h1");
+                    const date = article.querySelector("time")?.parentNode;
+
+                    ((date as HTMLElement | null) ?? (heading as HTMLElement)).insertAdjacentElement("afterend", badge);
+                  } else {
+                    // console.log("Reading time badge already exists.");
+                  }
+                }
+              });
+
+              // Start observing for content changes in the article
+              contentObserver.observe(article, { childList: true, subtree: true });
+            }
+          });
+
+          // Start observing the document for when the article element appears
+          observer.observe(document, { childList: true, subtree: true });
+        };
+
+        // Helper function to monitor URL changes
+        const monitorUrlChanges = (callback: () => void) => {
+          let lastUrl = window.location.href;
+
+          new MutationObserver(() => {
+            const currentUrl = window.location.href;
+            if (currentUrl !== lastUrl) {
+              lastUrl = currentUrl;
+              callback(); // Run script when URL changes
+            }
+          }).observe(document, { subtree: true, childList: true });
+        };
+
+        // Handle URL and state changes in an SPA
+        const observeNavigation = () => {
+          runScript(); // Run script on initial load
+
+          // Capture SPA routing changes
+          window.addEventListener("popstate", runScript);
+          window.addEventListener("hashchange", runScript);
+
+          // Monitor URL changes in case pushState/replaceState are not directly used
+          monitorUrlChanges(runScript);
+        };
+
+        // Initialize the navigation observer
+        observeNavigation();
       }
     });
-
-    function insertReadingTime() {
-      const WPM = 200;
-      const article = document.querySelector("article");
-
-      if (!article) {
-        console.warn("No article found on the page.");
-        return;
-      }
-
-      const text = article.textContent;
-      if (!text || !text.trim()) {
-        console.warn("No text content found in the article.");
-        return;
-      }
-
-      // Check if the reading time badge already exists
-      if (article.querySelector(".reading-time-badge")) {
-        console.info("Reading time badge already exists.");
-        return;
-      }
-
-      // Calculate reading time
-      const wordMatchRegExp = /[^\s]+/g; // Regular expression to match words
-      const words = text.matchAll(wordMatchRegExp);
-      const wordCount = [...words].length;
-      const readingTime = Math.round(wordCount / WPM);
-
-      // Create and insert the badge
-      const badge = document.createElement("p");
-      badge.classList.add("color-secondary-text", "type--caption", "reading-time-badge");
-      badge.textContent = `⏱️ ${readingTime} min read (${WPM} wpm)`;
-
-      // Find the location to insert the badge (after h1 or time/date)
-      const heading = article.querySelector("h1");
-      const date = article.querySelector("time")?.parentNode;
-      ((date as HTMLElement | null) ?? (heading as HTMLElement)).insertAdjacentElement("afterend", badge);
-    }
   },
 });

@@ -1,22 +1,127 @@
 import "./style.css";
+import { settingsConfig } from "./settingsConfig";
+
+// Generate the settings form dynamically
+function generateSettingsForm(config: any) {
+  const form = document.getElementById("settingsForm") as HTMLFormElement;
+  form.innerHTML = ""; // Clear existing content
+
+  Object.keys(config).forEach(key => {
+    const setting = config[key];
+    const wrapper = document.createElement("div");
+
+    // Label
+    const label = document.createElement("label");
+    label.innerHTML = setting.label;
+
+    // Input element
+    let input: HTMLInputElement | HTMLSelectElement;
+
+    if (setting.type === "select") {
+      input = document.createElement("select") as HTMLSelectElement;
+      setting.choices.forEach((choice: string) => {
+        const option = document.createElement("option");
+        option.value = choice;
+        option.textContent = choice.charAt(0).toUpperCase() + choice.slice(1);
+        input.appendChild(option);
+      });
+      input.id = key;
+      wrapper.appendChild(label); // Append label first for select elements
+      wrapper.appendChild(input); // Then append input
+    } else if (setting.type === "checkbox") {
+      input = document.createElement("input");
+      input.type = "checkbox";
+      input.id = key;
+      wrapper.appendChild(input); // Append input first for checkbox
+      wrapper.appendChild(label); // Then append label
+    } else {
+      input = document.createElement("input");
+      input.type = "text"; // Default to text input for other types
+      input.id = key;
+      wrapper.appendChild(label); // Append label first
+      wrapper.appendChild(input); // Then append input
+    }
+
+    // Append the wrapper to the form
+    form.appendChild(wrapper);
+  });
+}
+
+// Load all settings from chrome.storage.sync
+async function loadSettings(config: any): Promise<any> {
+  return new Promise(resolve => {
+    const defaultValues: any = {};
+    Object.keys(config).forEach(key => {
+      defaultValues[key] = config[key].default;
+    });
+
+    chrome.storage.sync.get(defaultValues, items => {
+      console.log("Loaded settings:", items); // Log loaded settings for debugging
+      resolve(items);
+    });
+  });
+}
+
+// Apply loaded settings to the UI
+function applySettingsToUI(settings: any) {
+  Object.keys(settings).forEach(key => {
+    const element = document.getElementById(key) as HTMLInputElement | HTMLSelectElement;
+
+    if (!element) return; // Skip if element is not found
+
+    if (element.type === "checkbox") {
+      // Convert string to boolean for checkbox
+      element.checked = settings[key] === "true"; // Ensure it’s treated as a boolean
+    } else {
+      element.value = settings[key];
+    }
+  });
+}
+
+// Save settings to chrome.storage.sync
+function saveSettings(key: string, value: any) {
+  const setting = { [key]: value };
+  chrome.storage.sync.set(setting, () => {
+    console.log(`Setting ${key} saved:`, value); // Log saved settings for debugging
+  });
+}
+
+// Initialize the form and load the settings
+async function initSettingsForm() {
+  generateSettingsForm(settingsConfig);
+
+  const settings = await loadSettings(settingsConfig);
+  applySettingsToUI(settings);
+
+  // Save changes on form input
+  const form = document.getElementById("settingsForm") as HTMLFormElement;
+  form.addEventListener("change", event => {
+    const target = event.target as HTMLInputElement | HTMLSelectElement;
+    if (target) {
+      let value: any;
+      if (target.type === "checkbox") {
+        value = target.checked ? "true" : "false"; // Convert boolean to string
+      } else {
+        value = target.value;
+      }
+      saveSettings(target.id, value);
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initSettingsForm();
+
+  document.getElementById("refreshButton")?.addEventListener("click", () => {
+    // Send a message to the background script to refresh the active tab
+    chrome.runtime.sendMessage({ action: "refreshActiveTab" });
+  });
+});
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
   <h3>On Sutta Central.net</h3>
-    <li>Changes the theme to <strong>“Ronnie”</strong></li>
-    <li><strong>Random Sutta</strong> link added to homepage</li>
-    <li><strong>Segments swapped:</strong> Root appears first or on the left</li>
-    <li>Notification of <strong>additional translations</strong> in user's language</li>
-    <li>Notification of <strong>Pāli parallels</strong></li>
-    <li>Clicking segment number copies URL to that segment to the clipboard.
-    <li><kbd>.</kbd> to <strong>select only translation</strong></li>
-    <li><kbd>,</kbd> to <strong>select only root</strong> language</li>
-    <li><kbd>q</kbd> will open a popup with a <strong>QR Code</strong></li>
-    <li><kbd>u</kbd> will <strong>copy the bare url</strong></li>
-    <li><kbd>l</kbd> will copy a link to the current page in <strong>markdown format</strong>, e.g. <br><code>[DN 1 Brahmajālasutta](https://suttacentral.net/dn1/en/sujato)</code></li>
-    <li><kbd>h</kbd> to show <strong>how long it will take to read</strong></li>
-    <li><kbd>c</kbd> <strong>copies the heading and body of the entire text</strong> to the clipboard. Visible root and notes (even on asterisks) will get copied too.</li>
-    <li><strong>Current site language</strong> is persistently displayed above the three dot menu icon</li>
+    
     <li>There is a mockup of a new navigation menu.</li>
     <li>Test of vertical view settings panel</li>
 
