@@ -6,7 +6,7 @@ export default defineConfig({
   srcDir: "src",
   manifest: {
     name: "SuttaCentral Enhancement Extension",
-    permissions: ["clipboardWrite", "contextMenus", "tabs"],
+    permissions: ["clipboardWrite", "contextMenus", "tabs", "storage"],
     omnibox: { keyword: "sc" },
   },
   zip: {
