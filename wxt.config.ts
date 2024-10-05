@@ -8,6 +8,11 @@ export default defineConfig({
     name: "SuttaCentral Enhancement Extension",
     permissions: ["clipboardWrite", "contextMenus", "tabs", "storage"],
     omnibox: { keyword: "sc" },
+    browser_specific_settings: {
+      gecko: {
+        id: "info@readingfaithfully.org",
+      },
+    },
   },
   zip: {
     name: "SC-Enhancement",
