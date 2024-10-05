@@ -4,25 +4,35 @@ export default defineContentScript({
     console.info("✂️ selecting one language alt");
 
     const keyStyle = `margin: 0px 0.1em;
- padding: 0.1em 0.4em;
- font-weight:bold;
- border-radius: 3px;
- border: 1px solid rgb(204, 204, 204);
- color: rgb(51, 51, 51);
- font-family: Arial,Helvetica,sans-serif;
- font-size: 1rem;
- display: inline-block;
- box-shadow: 0px 1px 0px rgba(0,0,0,0.2), inset 0px 0px 0px 2px #ffffff;
- background-color: rgb(247, 247, 247);
- -moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2), 0 0 0 2px #ffffff inset;
- -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2), 0 0 0 2px #ffffff inset;
- -moz-border-radius: 3px;
- -webkit-border-radius: 3px;
- text-shadow: 0 1px 0 #fff;`;
+      padding: 0.1em 0.4em;
+      font-weight: bold;
+      border-radius: 3px;
+      border: 1px solid rgb(204, 204, 204);
+      color: rgb(51, 51, 51);
+      font-family: Arial,Helvetica,sans-serif;
+      font-size: 1rem;
+      display: inline-block;
+      box-shadow: 0px 1px 0px rgba(0,0,0,0.2), inset 0px 0px 0px 2px #ffffff;
+      background-color: rgb(247, 247, 247);
+      -moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2), 0 0 0 2px #ffffff inset;
+      -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2), 0 0 0 2px #ffffff inset;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      text-shadow: 0 1px 0 #fff;`;
 
     // Initial state
     let isRootDisabled = false;
     let isTranslationDisabled = false;
+    let hotkeyRootEnabled = false;
+    let hotkeyTranslationEnabled = false;
+
+    // Load settings from chrome storage
+    chrome.storage.sync.get(["selectOnlyRoot", "selectOnlyTranslation"], data => {
+      hotkeyRootEnabled = data.selectOnlyRoot === "true"; // Enable or disable root hotkey
+      hotkeyTranslationEnabled = data.selectOnlyTranslation === "true"; // Enable or disable translation hotkey
+
+      console.log(`Hotkeys - Root: ${hotkeyRootEnabled}, Translation: ${hotkeyTranslationEnabled}`);
+    });
 
     // Function to toggle user-select on specified elements
     function setUserSelectNone(selector: string, disable: boolean): void {
@@ -81,7 +91,7 @@ export default defineContentScript({
 
     // Event listener for the keydown event
     document.addEventListener("keydown", event => {
-      if (event.key === ".") {
+      if (event.key === "." && hotkeyTranslationEnabled) {
         // If root is disabled, re-enable it. Otherwise, disable root and clear translation if necessary.
         if (isRootDisabled) {
           isRootDisabled = false;
@@ -90,7 +100,7 @@ export default defineContentScript({
           isTranslationDisabled = false; // Clear translation selection if active
         }
         updateSelectionStates();
-      } else if (event.key === ",") {
+      } else if (event.key === "," && hotkeyRootEnabled) {
         // If translation is disabled, re-enable it. Otherwise, disable translation and clear root if necessary.
         if (isTranslationDisabled) {
           isTranslationDisabled = false;

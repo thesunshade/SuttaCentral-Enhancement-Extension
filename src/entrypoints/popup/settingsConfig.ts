@@ -15,6 +15,11 @@ export const settingsConfig = {
     type: "checkbox",
     default: "true",
   },
+  rootColorSwap: {
+    label: "Root language dark, translation light",
+    type: "checkbox",
+    default: "false",
+  },
   notifyAdditionalTranslation: {
     label: "Notification of <strong>additional translations</strong> in user's language",
     type: "checkbox",
