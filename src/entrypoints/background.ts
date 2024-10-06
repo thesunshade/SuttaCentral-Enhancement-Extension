@@ -10,7 +10,10 @@ export default defineBackground(() => {
 
     // Loop through the settingsConfig to extract default values
     Object.keys(settingsConfig).forEach(key => {
-      defaultSettings[key] = settingsConfig[key].default;
+      // Skip headings and paragraphs
+      if (settingsConfig[key].type !== "heading" && settingsConfig[key].type !== "paragraph") {
+        defaultSettings[key] = settingsConfig[key].default;
+      }
     });
 
     // Fetch existing settings

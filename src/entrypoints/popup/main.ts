@@ -10,58 +10,68 @@ function generateSettingsForm(config: any) {
     const setting = config[key];
     const wrapper = document.createElement("div");
 
-    // Label
-    const label = document.createElement("label");
-    label.innerHTML = setting.label;
-
-    // Input element
-    let input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
-
-    if (setting.type === "select") {
-      input = document.createElement("select") as HTMLSelectElement;
-      setting.choices.forEach((choice: string) => {
-        const option = document.createElement("option");
-        option.value = choice;
-        option.textContent = choice.charAt(0).toUpperCase() + choice.slice(1);
-        input.appendChild(option);
-      });
-      input.id = key;
-      wrapper.appendChild(label); // Append label first for select elements
-      wrapper.appendChild(input); // Then append input
-    } else if (setting.type === "checkbox") {
-      input = document.createElement("input");
-      input.type = "checkbox";
-      input.id = key;
-      wrapper.appendChild(input); // Append input first for checkbox
-      wrapper.appendChild(label); // Then append label
-    } else if (setting.type === "textarea") {
-      input = document.createElement("textarea") as HTMLTextAreaElement;
-      input.id = key;
-      wrapper.appendChild(label); // Append label first
-      wrapper.appendChild(input); // Then append input
-    } else if (setting.type === "radio") {
-      setting.choices.forEach((choice: string) => {
-        const radioWrapper = document.createElement("div");
-        input = document.createElement("input");
-        input.type = "radio";
-        input.name = key; // All radios in the same group share the same name
-        input.value = choice;
-        input.id = `${key}_${choice}`;
-
-        const radioLabel = document.createElement("label");
-        radioLabel.htmlFor = `${key}_${choice}`;
-        radioLabel.textContent = choice.charAt(0).toUpperCase() + choice.slice(1);
-
-        radioWrapper.appendChild(input);
-        radioWrapper.appendChild(radioLabel);
-        wrapper.appendChild(radioWrapper);
-      });
+    if (setting.type === "heading") {
+      const heading = document.createElement("h2");
+      heading.textContent = setting.label;
+      wrapper.appendChild(heading);
+    } else if (setting.type === "paragraph") {
+      const paragraph = document.createElement("p");
+      paragraph.innerHTML = setting.label;
+      wrapper.appendChild(paragraph);
     } else {
-      input = document.createElement("input");
-      input.type = "text"; // Default to text input for other types
-      input.id = key;
-      wrapper.appendChild(label); // Append label first
-      wrapper.appendChild(input); // Then append input
+      // Label
+      const label = document.createElement("label");
+      label.innerHTML = setting.label;
+
+      // Input element
+      let input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+
+      if (setting.type === "select") {
+        input = document.createElement("select") as HTMLSelectElement;
+        setting.choices.forEach((choice: string) => {
+          const option = document.createElement("option");
+          option.value = choice;
+          option.textContent = choice.charAt(0).toUpperCase() + choice.slice(1);
+          input.appendChild(option);
+        });
+        input.id = key;
+        wrapper.appendChild(label); // Append label first for select elements
+        wrapper.appendChild(input); // Then append input
+      } else if (setting.type === "checkbox") {
+        input = document.createElement("input");
+        input.type = "checkbox";
+        input.id = key;
+        wrapper.appendChild(input); // Append input first for checkbox
+        wrapper.appendChild(label); // Then append label
+      } else if (setting.type === "textarea") {
+        input = document.createElement("textarea") as HTMLTextAreaElement;
+        input.id = key;
+        wrapper.appendChild(label); // Append label first
+        wrapper.appendChild(input); // Then append input
+      } else if (setting.type === "radio") {
+        setting.choices.forEach((choice: string) => {
+          const radioWrapper = document.createElement("div");
+          input = document.createElement("input");
+          input.type = "radio";
+          input.name = key; // All radios in the same group share the same name
+          input.value = choice;
+          input.id = `${key}_${choice}`;
+
+          const radioLabel = document.createElement("label");
+          radioLabel.htmlFor = `${key}_${choice}`;
+          radioLabel.textContent = choice.charAt(0).toUpperCase() + choice.slice(1);
+
+          radioWrapper.appendChild(input);
+          radioWrapper.appendChild(radioLabel);
+          wrapper.appendChild(radioWrapper);
+        });
+      } else {
+        input = document.createElement("input");
+        input.type = "text"; // Default to text input for other types
+        input.id = key;
+        wrapper.appendChild(label); // Append label first
+        wrapper.appendChild(input); // Then append input
+      }
     }
 
     // Append the wrapper to the form
@@ -74,7 +84,10 @@ async function loadSettings(config: any): Promise<any> {
   return new Promise(resolve => {
     const defaultValues: any = {};
     Object.keys(config).forEach(key => {
-      defaultValues[key] = config[key].default;
+      // Skip headings and paragraphs
+      if (config[key].type !== "heading" && config[key].type !== "paragraph") {
+        defaultValues[key] = config[key].default;
+      }
     });
 
     chrome.storage.sync.get(defaultValues, items => {
@@ -93,7 +106,7 @@ function applySettingsToUI(settings: any) {
 
     if (element.type === "checkbox") {
       // Convert string to boolean for checkbox
-      element.checked = settings[key] === "true"; // Ensure it’s treated as a boolean
+      element.checked = settings[key] === "true"; // Convert string to boolean
     } else {
       element.value = settings[key];
     }
@@ -143,12 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
   <h3>On Sutta Central.net</h3>
-    
     <li>There is a mockup of a new navigation menu.</li>
     <li>Test of vertical view settings panel</li>
-
-    <h3>On All sites</h3>
-    <li>Hovering with the mouse over a link to suttas on SuttaCentral.net will <strong>pop up the blurb</strong> for that sutta.</li>
-    <li><strong>Context menu item</strong> for selected text to search on SuttaCentral.net, search on the forum, go to suttaplex card, go to sutta text, and search PTS citation. </li>
 </div>
 `;
