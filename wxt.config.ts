@@ -7,6 +7,7 @@ export default defineConfig({
   manifest: {
     name: "SuttaCentral Enhancement Extension",
     permissions: ["clipboardWrite", "contextMenus", "tabs", "storage", "scripting"],
+    host_permissions: ["<all_urls>"],
     omnibox: { keyword: "sc" },
     browser_specific_settings: {
       gecko: {

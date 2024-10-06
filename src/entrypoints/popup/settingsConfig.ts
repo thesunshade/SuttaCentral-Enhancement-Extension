@@ -116,10 +116,9 @@ export const settingsConfig = {
     type: "checkbox",
     default: "true",
   },
+  showBlurbsExcludeSites: {
+    label: "Sites to not show sutta summaries on. Put each site on a new line.",
+    type: "textarea",
+    default: "index.readingfaithfully.org",
+  },
 };
-
-// showBlurbsExcludeSites: {
-//   label: "Sites to not show sutta summaries on. Put each site on a new line.",
-//   type: "input",
-//   default: "200",
-// },
