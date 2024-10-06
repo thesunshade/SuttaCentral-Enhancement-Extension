@@ -81,4 +81,45 @@ export const settingsConfig = {
     choices: ["100", "150", "200", "250", "300", "350", "400", "450"],
     default: "200",
   },
+  searchFromUrlBar: {
+    label: "Search for sutta names or citations in URL bar",
+    type: "checkbox",
+    default: "true",
+  },
+  showBlurbs: {
+    label: "Show sutta summaries hovering over SC links",
+    type: "checkbox",
+    default: "true",
+  },
+  contextSearchSuttacentral: {
+    label: "Context menu search on SuttaCentral.net",
+    type: "checkbox",
+    default: "true",
+  },
+  contextSearchForum: {
+    label: "Context menu search on discourse.SuttaCentral.net",
+    type: "checkbox",
+    default: "true",
+  },
+  contextGoToSuttaplex: {
+    label: "Context menu go to suttaplex citation",
+    type: "checkbox",
+    default: "true",
+  },
+  contextGoToSutta: {
+    label: "Context menu go to sutta citation",
+    type: "checkbox",
+    default: "true",
+  },
+  contextSearchPts: {
+    label: "Context menu search PTS citation",
+    type: "checkbox",
+    default: "true",
+  },
 };
+
+// showBlurbsExcludeSites: {
+//   label: "Sites to not show sutta summaries on. Put each site on a new line.",
+//   type: "input",
+//   default: "200",
+// },
