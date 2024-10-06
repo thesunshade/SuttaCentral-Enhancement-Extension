@@ -15,7 +15,7 @@ function generateSettingsForm(config: any) {
     label.innerHTML = setting.label;
 
     // Input element
-    let input: HTMLInputElement | HTMLSelectElement;
+    let input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
     if (setting.type === "select") {
       input = document.createElement("select") as HTMLSelectElement;
@@ -34,6 +34,28 @@ function generateSettingsForm(config: any) {
       input.id = key;
       wrapper.appendChild(input); // Append input first for checkbox
       wrapper.appendChild(label); // Then append label
+    } else if (setting.type === "textarea") {
+      input = document.createElement("textarea") as HTMLTextAreaElement;
+      input.id = key;
+      wrapper.appendChild(label); // Append label first
+      wrapper.appendChild(input); // Then append input
+    } else if (setting.type === "radio") {
+      setting.choices.forEach((choice: string) => {
+        const radioWrapper = document.createElement("div");
+        input = document.createElement("input");
+        input.type = "radio";
+        input.name = key; // All radios in the same group share the same name
+        input.value = choice;
+        input.id = `${key}_${choice}`;
+
+        const radioLabel = document.createElement("label");
+        radioLabel.htmlFor = `${key}_${choice}`;
+        radioLabel.textContent = choice.charAt(0).toUpperCase() + choice.slice(1);
+
+        radioWrapper.appendChild(input);
+        radioWrapper.appendChild(radioLabel);
+        wrapper.appendChild(radioWrapper);
+      });
     } else {
       input = document.createElement("input");
       input.type = "text"; // Default to text input for other types

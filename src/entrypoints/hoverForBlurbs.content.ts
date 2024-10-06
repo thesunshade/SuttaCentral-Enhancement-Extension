@@ -3,7 +3,7 @@ import { allSuttasPaliNameDictionary } from "./ddBlurbs.content/allSuttasPaliNam
 
 export default defineContentScript({
   matches: ["<all_urls>"],
-  excludeMatches: ["*://index.readingfaithfully.org/*", "*://sutta.readingfaithfully.org/*"],
+  registration: "runtime",
   main() {
     // Check the setting before running the script
     chrome.storage.sync.get(["showBlurbs"], data => {
