@@ -4,6 +4,7 @@ import { settingsConfig } from "./popup/settingsConfig.js";
 export default defineBackground(() => {
   console.log("Hello background!", { id: browser.runtime.id });
 
+  // Initiate settings
   chrome.runtime.onInstalled.addListener(details => {
     const defaultSettings: { [key: string]: any } = {};
 
@@ -29,6 +30,7 @@ export default defineBackground(() => {
     });
   });
 
+  //refresh active tab
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "refreshActiveTab") {
       chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
@@ -129,42 +131,132 @@ export default defineBackground(() => {
     });
   }
 
-  omniboxFeature();
+  // Function to check and execute based on setting
+  function checkOmniboxSetting() {
+    chrome.storage.sync.get(["searchFromUrlBar"], result => {
+      console.log(`Loaded searchFromUrlBar setting: ${result.searchFromUrlBar}`);
 
-  chrome.runtime.onInstalled.addListener(() => {
-    // SuttaCentral
-    chrome.contextMenus.create({
-      id: "searchSuttaCentral",
-      title: "🔍 Search SuttaCentral for '%s'",
-      contexts: ["selection"],
+      if (result.searchFromUrlBar === "true") {
+        console.log("Enabling omnibox feature");
+        omniboxFeature(); // Call the feature if setting is true
+      } else {
+        console.log("Disabling omnibox feature");
+        // Disable the omnibox feature by clearing its suggestion
+        browser.omnibox.setDefaultSuggestion({
+          description: "Omnibox feature is disabled",
+        });
+      }
     });
+  }
 
-    // D&D
-    chrome.contextMenus.create({
-      id: "searchDD",
-      title: "🗣️ Search D&&D for '%s'",
-      contexts: ["selection"],
-    });
-    // regular citation Suttaplex
-    chrome.contextMenus.create({
-      id: "goToCitationSuttaplex",
-      title: "📕 Go to Suttaplex for citation: '%s'",
-      contexts: ["selection"],
-    });
-    // regular citation text
-    chrome.contextMenus.create({
-      id: "goToCitation",
-      title: "📙 Go to citation: '%s'",
-      contexts: ["selection"],
-    });
-    // PTS citation
-    chrome.contextMenus.create({
-      id: "searchPtsCitation",
-      title: "📗 Lookup PTS citation for '%s'",
-      contexts: ["selection"],
-    });
+  // Call this function initially to check the setting
+  checkOmniboxSetting();
+
+  // Listener to update feature when settings change
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === "sync" && changes.searchFromUrlBar) {
+      console.log("Detected change in searchFromUrlBar setting");
+      checkOmniboxSetting(); // Re-check when the setting changes
+    }
   });
 
+  // Function to create context menu items based on settings
+  const createContextMenus = (settings: any) => {
+    console.log("Creating context menus with settings:", settings); // Debug log
+
+    // Remove all existing context menus first
+    chrome.contextMenus.removeAll(() => {
+      console.log("Existing context menus removed"); // Debug log
+
+      // Convert the settings to proper booleans
+      const contextSearchSuttacentral = settings.contextSearchSuttacentral === "true";
+      const contextSearchForum = settings.contextSearchForum === "true";
+      const contextGoToSuttaplex = settings.contextGoToSuttaplex === "true";
+      const contextGoToSutta = settings.contextGoToSutta === "true";
+      const contextSearchPts = settings.contextSearchPts === "true";
+
+      if (contextSearchSuttacentral) {
+        chrome.contextMenus.create({
+          id: "searchSuttaCentral",
+          title: "🔍 Search SuttaCentral for '%s'",
+          contexts: ["selection"],
+        });
+      }
+      if (contextSearchForum) {
+        chrome.contextMenus.create({
+          id: "searchDD",
+          title: "🗣️ Search D&&D for '%s'",
+          contexts: ["selection"],
+        });
+      }
+      if (contextGoToSuttaplex) {
+        chrome.contextMenus.create({
+          id: "goToCitationSuttaplex",
+          title: "📕 Go to Suttaplex for citation: '%s'",
+          contexts: ["selection"],
+        });
+      }
+      if (contextGoToSutta) {
+        chrome.contextMenus.create({
+          id: "goToCitation",
+          title: "📙 Go to citation: '%s'",
+          contexts: ["selection"],
+        });
+      }
+      if (contextSearchPts) {
+        chrome.contextMenus.create({
+          id: "searchPtsCitation",
+          title: "📗 Lookup PTS citation for '%s'",
+          contexts: ["selection"],
+        });
+      }
+    });
+  };
+
+  // Function to load settings from storage or use defaults from settingsConfig.ts
+  const loadSettings = (callback: (settings: any) => void) => {
+    chrome.storage.sync.get(["contextSearchSuttacentral", "contextSearchForum", "contextGoToSuttaplex", "contextGoToSutta", "contextSearchPts"], storedSettings => {
+      // If no settings are stored, use defaults from settingsConfig.ts
+      console.log("Stored settings:", storedSettings); // Debug log
+
+      const defaultSettings = {
+        contextSearchSuttacentral: settingsConfig.contextSearchSuttacentral.defaultValue || false,
+        contextSearchForum: settingsConfig.contextSearchForum.defaultValue || false,
+        contextGoToSuttaplex: settingsConfig.contextGoToSuttaplex.defaultValue || false,
+        contextGoToSutta: settingsConfig.contextGoToSutta.defaultValue || false,
+        contextSearchPts: settingsConfig.contextSearchPts.defaultValue || false,
+      };
+
+      // Merge stored settings with defaults, stored settings take precedence
+      const finalSettings = { ...defaultSettings, ...storedSettings };
+      callback(finalSettings);
+    });
+  };
+
+  // Load settings and create context menus on installation
+  chrome.runtime.onInstalled.addListener(() => {
+    loadSettings(createContextMenus);
+  });
+
+  // Listen for changes to the settings and update menus dynamically
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === "sync") {
+      const updatedSettings: any = {};
+      for (const key in changes) {
+        updatedSettings[key] = changes[key].newValue;
+      }
+
+      console.log("Settings changed:", updatedSettings); // Debug log
+
+      // Fetch the latest settings, merging updated ones
+      loadSettings(settings => {
+        const mergedSettings = { ...settings, ...updatedSettings };
+        createContextMenus(mergedSettings);
+      });
+    }
+  });
+
+  // Handle context menu item clicks
   chrome.contextMenus.onClicked.addListener((info, tab) => {
     if (info.menuItemId === "searchSuttaCentral" && info.selectionText) {
       const searchUrl = `https://suttacentral.net/search?query=${encodeURIComponent(info.selectionText)}`;
@@ -178,7 +270,6 @@ export default defineBackground(() => {
       chrome.tabs.create({ url: searchUrl });
     } else if (info.menuItemId === "goToCitation" && info.selectionText) {
       const citation = encodeURIComponent(info.selectionText.replace(/ /g, "").trim());
-      console.log(citation);
       const searchUrl = `https://suttacentral.net/${citation}/en/sujato`;
       chrome.tabs.create({ url: searchUrl });
     } else if (info.menuItemId === "searchPtsCitation" && info.selectionText) {
