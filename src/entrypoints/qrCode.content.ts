@@ -18,16 +18,13 @@ export default defineContentScript({
 
       console.info("📱 'q' to copy QR code generator active");
 
-      document.addEventListener("keydown", (event: KeyboardEvent) => {
-        if (onlyPressed(event, "q") && !isInputFocused()) {
-          const url = window.location.href;
-          createQrCodePopup(url);
-        }
-      });
+      // Define a flag to track the popup's visibility
+      let isPopupOpen = false;
+      let popup: HTMLDivElement | null = null;
 
       function createQrCodePopup(url: string) {
         // Create the popup div
-        const popup = document.createElement("div");
+        popup = document.createElement("div");
         popup.id = "qr-popup";
         popup.style.position = "fixed";
         popup.style.top = "50%";
@@ -52,22 +49,16 @@ export default defineContentScript({
           </div>`;
         popup.appendChild(urlText);
 
-        // Create a close button
+        // Create buttons
         const closeButton = document.createElement("button");
         closeButton.textContent = "Close";
         closeButton.classList.add("qr-button");
+        closeButton.addEventListener("click", closePopup);
 
-        // Add close functionality to the button
-        closeButton.addEventListener("click", () => {
-          closePopup();
-        });
-
-        // Create a copy button
         const copyButton = document.createElement("button");
         copyButton.textContent = "Copy QR Code";
         copyButton.classList.add("qr-button");
 
-        // Create save button
         const saveButton = document.createElement("button");
         saveButton.textContent = "Save QR Code";
         saveButton.classList.add("qr-button");
@@ -130,25 +121,44 @@ export default defineContentScript({
 
         // Close the popup when clicking outside of it
         document.addEventListener("click", event => {
-          if (!popup.contains(event.target as Node)) {
+          if (popup && !popup.contains(event.target as Node)) {
             closePopup();
           }
         });
 
-        // Close the popup when pressing the Escape key
-        document.addEventListener("keydown", (event: KeyboardEvent) => {
-          if (event.key === "Escape") {
-            closePopup();
-          }
-        });
+        // Set the flag to true after creating the popup
+        isPopupOpen = true;
+      }
 
-        // Function to close the popup
-        function closePopup() {
-          if (popup && popup.parentElement) {
-            document.body.removeChild(popup);
-          }
+      // Function to close the popup
+      function closePopup() {
+        if (popup && popup.parentElement) {
+          document.body.removeChild(popup);
+          popup = null; // Clear reference to the popup
+          isPopupOpen = false; // Set the flag to false when closing the popup
         }
       }
+
+      // Keydown event listener to toggle the popup
+      document.addEventListener("keydown", (event: KeyboardEvent) => {
+        if (onlyPressed(event, "q") && !isInputFocused()) {
+          const url = window.location.href;
+          if (isPopupOpen) {
+            // If the popup is already open, close it
+            closePopup();
+          } else {
+            // If the popup is closed, open it
+            createQrCodePopup(url);
+          }
+        }
+      });
+
+      // Close the popup when pressing the Escape key
+      document.addEventListener("keydown", (event: KeyboardEvent) => {
+        if (event.key === "Escape" && isPopupOpen) {
+          closePopup();
+        }
+      });
     });
   },
 });

@@ -2,9 +2,9 @@ import { blurbs } from "./ddBlurbs.content/blurbs.js";
 import { allSuttasPaliNameDictionary } from "./ddBlurbs.content/allSuttasPaliNameDictionary.js";
 
 export default defineContentScript({
-  include: ["chrome"],
+  include: ["firefox"],
   matches: ["<all_urls>"],
-  registration: "runtime",
+  excludeMatches: ["*://index.readingfaithfully.org/*", "*://sutta.readingfaithfully.org/*"],
   main() {
     // Check the setting before running the script
     chrome.storage.sync.get(["showBlurbs"], data => {
