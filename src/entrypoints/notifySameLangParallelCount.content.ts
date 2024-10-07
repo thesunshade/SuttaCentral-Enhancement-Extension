@@ -86,7 +86,6 @@ export default defineContentScript({
         fetchParallels(uid).then(data => {
           if (data) {
             const paliCount = countPliLang(data);
-            // console.log(`Number of Pali parallels: ${paliCount}`);
             updateParallelButton(paliCount);
           }
         });
@@ -133,7 +132,16 @@ export default defineContentScript({
 
       observer.observe(document, { subtree: true, childList: true });
 
-      setInterval(processStateChange, 1000);
+      setInterval(() => {
+        chrome.storage.sync.get("notifyPaliParallels", data => {
+          const isEnabled = data["notifyPaliParallels"] === "true"; // Convert to boolean
+          if (!isEnabled) {
+            stopNotifyPaliParallels();
+          } else {
+            runScript();
+          }
+        });
+      }, 1000);
 
       runScript();
 
@@ -144,3 +152,13 @@ export default defineContentScript({
     });
   },
 });
+
+// Function to stop Pali parallels notifications
+function stopNotifyPaliParallels() {
+  const parallelButton = querySelectorDeep("#btnShowParallels");
+  const paliCountElement = parallelButton?.querySelector(".paliCount");
+  if (paliCountElement) {
+    paliCountElement.remove();
+  }
+  console.info("🚫 Stopped Pali parallels notification");
+}

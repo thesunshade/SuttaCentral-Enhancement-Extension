@@ -18,13 +18,8 @@ export const settingsConfig = {
     type: "checkbox",
     default: "true",
   },
-  rootColorSwap: {
-    label: "Root language dark, translation light",
-    type: "checkbox",
-    default: "false",
-  },
   colorOptionsDescriptions: {
-    label: "Enter a valid css color. Leave blank to use default.",
+    label: "Enter valid css colors below. Hit Enter to update. Leave blank to use default.",
     type: "paragraph",
   },
   rootColor: {
@@ -38,11 +33,11 @@ export const settingsConfig = {
     default: "",
   },
   featuresOptionsHeading: {
-    label: "New features",
+    label: "Added features",
     type: "heading",
   },
   featuresOptionsDescriptions: {
-    label: "Various new features and functionality for SuttaCentral.net.",
+    label: "Various features and functionality for SuttaCentral.net.",
     type: "paragraph",
   },
 
@@ -167,9 +162,9 @@ export const settingsConfig = {
     default: "true",
   },
   showBlurbsExcludeSites: {
-    label: "Sites to not show sutta summaries on. Put each site on a new line.",
+    label: "Sites to not show sutta summaries on. Put each site on a new line. <strong>NOTE: this setting onlly works on Chrome type browsers.</strong>",
     type: "textarea",
-    default: "index.readingfaithfully.org",
+    default: "index.readingfaithfully.org\nsutta.readingfaithfully.org",
   },
   omniboxOptionsContextHeading: {
     label: "Omnibox search",
@@ -185,3 +180,9 @@ export const settingsConfig = {
     default: "true",
   },
 };
+
+// rootColorSwap: {
+//   label: "Root language dark, translation light",
+//   type: "checkbox",
+//   default: "false",
+// },

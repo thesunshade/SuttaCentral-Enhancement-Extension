@@ -1,5 +1,6 @@
 .qr-url-label {
     text-align: center;
+    color: black;
 }
 
 .qr-url {
@@ -7,6 +8,7 @@
     font-family: monospace;
     margin: 5px auto;
     max-width: 300px;
+    color: black;
 }
 
 #qr-code {

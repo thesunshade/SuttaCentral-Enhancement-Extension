@@ -9,6 +9,7 @@ function generateSettingsForm(config: any) {
   Object.keys(config).forEach(key => {
     const setting = config[key];
     const wrapper = document.createElement("div");
+    wrapper.classList.add("form-group"); // Add a class for styling and spacing
 
     if (setting.type === "heading") {
       const heading = document.createElement("h2");
@@ -21,6 +22,7 @@ function generateSettingsForm(config: any) {
     } else {
       // Label
       const label = document.createElement("label");
+      label.htmlFor = key;
       label.innerHTML = setting.label;
 
       // Input element
@@ -35,20 +37,28 @@ function generateSettingsForm(config: any) {
           input.appendChild(option);
         });
         input.id = key;
+        input.setAttribute("aria-labelledby", key); // Associate the label with the input
         wrapper.appendChild(label); // Append label first for select elements
         wrapper.appendChild(input); // Then append input
       } else if (setting.type === "checkbox") {
         input = document.createElement("input");
         input.type = "checkbox";
         input.id = key;
+        input.setAttribute("aria-labelledby", key);
         wrapper.appendChild(input); // Append input first for checkbox
         wrapper.appendChild(label); // Then append label
       } else if (setting.type === "textarea") {
         input = document.createElement("textarea") as HTMLTextAreaElement;
         input.id = key;
+        input.setAttribute("aria-labelledby", key);
         wrapper.appendChild(label); // Append label first
         wrapper.appendChild(input); // Then append input
       } else if (setting.type === "radio") {
+        const fieldset = document.createElement("fieldset");
+        const legend = document.createElement("legend");
+        legend.textContent = setting.label;
+        fieldset.appendChild(legend);
+
         setting.choices.forEach((choice: string) => {
           const radioWrapper = document.createElement("div");
           input = document.createElement("input");
@@ -63,12 +73,14 @@ function generateSettingsForm(config: any) {
 
           radioWrapper.appendChild(input);
           radioWrapper.appendChild(radioLabel);
-          wrapper.appendChild(radioWrapper);
+          fieldset.appendChild(radioWrapper);
         });
+        wrapper.appendChild(fieldset);
       } else {
         input = document.createElement("input");
         input.type = "text"; // Default to text input for other types
         input.id = key;
+        input.setAttribute("aria-labelledby", key);
         wrapper.appendChild(label); // Append label first
         wrapper.appendChild(input); // Then append input
       }

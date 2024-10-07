@@ -1,90 +1,110 @@
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
-    // Check the setting before running the script
-    chrome.storage.sync.get(["showReadingTime", "wordsPerMinute"], data => {
-      const isEnabled = data["showReadingTime"] === "true"; // Convert to boolean
-      const WPM = Number(data["wordsPerMinute"]) || 200; // Use numeric value or default to 200
+    let badge; // Reference to the reading time badge
+    let lastProcessedContent = ""; // Store the last processed content to avoid unnecessary updates
+    let currentWPM = 200; // Store the current WPM
 
-      if (!isEnabled) {
-        console.info("❌ Reading time display is disabled");
-        return; // Exit if the setting is not enabled
+    // console.log("Content script initialized");
+
+    // Function to update or insert the reading time badge
+    const updateReadingTime = (WPM: number, forceUpdate = false) => {
+      // console.log("Updating reading time");
+      const article = document.querySelector("article");
+      if (!article) {
+        // console.log("No article found");
+        return; // Exit if no article found
       }
 
-      insertReadingTime();
-
-      function insertReadingTime() {
-        console.info("⏱️ Reading time displayed");
-
-        const runScript = () => {
-          const observer = new MutationObserver((mutations, observer) => {
-            const article = document.querySelector("article");
-            if (article) {
-              observer.disconnect(); // Stop observing once the article tag is found
-
-              const contentObserver = new MutationObserver((mutations, contentObserver) => {
-                const text = article.textContent;
-                if (!text) return;
-                if (text.trim()) {
-                  contentObserver.disconnect(); // Stop observing when content is available
-
-                  // Check if the badge already exists
-                  if (!article.querySelector(".reading-time-badge")) {
-                    const wordMatchRegExp = /[^\s]+/g; // Regular expression
-                    const words = text.matchAll(wordMatchRegExp);
-                    const wordCount = [...words].length;
-                    const readingTime = Math.round(wordCount / WPM);
-                    const badge = document.createElement("p");
-                    badge.classList.add("color-secondary-text", "type--caption", "reading-time-badge");
-                    badge.textContent = `⏱️ ${readingTime} min read (${WPM} wpm)`;
-
-                    const heading = article.querySelector("h1");
-                    const date = article.querySelector("time")?.parentNode;
-
-                    ((date as HTMLElement | null) ?? (heading as HTMLElement)).insertAdjacentElement("afterend", badge);
-                  } else {
-                    // console.log("Reading time badge already exists.");
-                  }
-                }
-              });
-
-              // Start observing for content changes in the article
-              contentObserver.observe(article, { childList: true, subtree: true });
-            }
-          });
-
-          // Start observing the document for when the article element appears
-          observer.observe(document, { childList: true, subtree: true });
-        };
-
-        // Helper function to monitor URL changes
-        const monitorUrlChanges = (callback: () => void) => {
-          let lastUrl = window.location.href;
-
-          new MutationObserver(() => {
-            const currentUrl = window.location.href;
-            if (currentUrl !== lastUrl) {
-              lastUrl = currentUrl;
-              callback(); // Run script when URL changes
-            }
-          }).observe(document, { subtree: true, childList: true });
-        };
-
-        // Handle URL and state changes in an SPA
-        const observeNavigation = () => {
-          runScript(); // Run script on initial load
-
-          // Capture SPA routing changes
-          window.addEventListener("popstate", runScript);
-          window.addEventListener("hashchange", runScript);
-
-          // Monitor URL changes in case pushState/replaceState are not directly used
-          monitorUrlChanges(runScript);
-        };
-
-        // Initialize the navigation observer
-        observeNavigation();
+      const text = article.textContent?.trim() || "";
+      if (!text) {
+        // console.log("Article is empty");
+        return; // Exit if the article is still empty
       }
-    });
+
+      // Check if content has changed or if we're forcing an update
+      if (text === lastProcessedContent && !forceUpdate) {
+        // console.log("Content unchanged, skipping update");
+        return;
+      }
+      lastProcessedContent = text;
+
+      const wordMatchRegExp = /[^\s]+/g;
+      const words = text.matchAll(wordMatchRegExp);
+      const wordCount = [...words].length;
+      const readingTime = Math.round(wordCount / WPM);
+
+      // console.log(`Word count: ${wordCount}, Reading time: ${readingTime} minutes, WPM: ${WPM}`);
+
+      // Create or update the badge
+      if (!badge) {
+        // console.log("Creating new badge");
+        badge = document.createElement("p");
+        badge.classList.add("color-secondary-text", "type--caption", "reading-time-badge");
+      }
+
+      const heading = article.querySelector("h1");
+      const date = article.querySelector("time")?.parentNode;
+      ((date as HTMLElement | null) ?? (heading as HTMLElement)).insertAdjacentElement("afterend", badge);
+
+      badge.textContent = `⏱️ ${readingTime} min read (${WPM} wpm)`;
+    };
+
+    // Function to check and update the reading time display based on settings
+    const checkSettings = (forceUpdate = false) => {
+      // console.log("Checking settings");
+      chrome.storage.sync.get(["showReadingTime", "wordsPerMinute"], data => {
+        const isEnabled = data["showReadingTime"] === "true";
+        const WPM = Number(data["wordsPerMinute"]) || 200;
+
+        // console.log(`Settings: showReadingTime=${isEnabled}, WPM=${WPM}`);
+
+        if (isEnabled) {
+          currentWPM = WPM; // Update the current WPM
+          updateReadingTime(WPM, forceUpdate); // Show the reading time if enabled
+        } else if (badge) {
+          // console.log("Removing reading time badge");
+          badge.remove();
+          badge = null;
+        }
+      });
+    };
+
+    // Function to handle changes in storage settings
+    const handleStorageChanges = changes => {
+      // console.log("Storage changes detected", changes);
+      if (changes.showReadingTime || changes.wordsPerMinute) {
+        checkSettings(true); // Force update when settings change
+      }
+    };
+
+    // Observe storage changes
+    chrome.storage.onChanged.addListener(handleStorageChanges);
+
+    // Function to observe DOM changes
+    const observeDOMChanges = () => {
+      // console.log("Setting up DOM observer");
+      const observer = new MutationObserver(mutations => {
+        for (let mutation of mutations) {
+          if (mutation.type === "childList" || mutation.type === "subtree") {
+            // console.log("Significant DOM change detected");
+            checkSettings(); // Re-check settings and update reading time
+            break; // Only need to do this once per batch of mutations
+          }
+        }
+      });
+
+      // Observe the entire document body for changes
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
+    };
+
+    // Initial setup
+    checkSettings();
+    observeDOMChanges();
+
+    // console.log("Setup complete");
   },
 });
