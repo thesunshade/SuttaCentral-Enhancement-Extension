@@ -1,5 +1,17 @@
 import { allSuttasPaliNameArray } from "./ddBlurbs.content/allSuttasPaliNameArray.js";
 import { settingsConfig } from "./popup/settingsConfig.js";
+const typedSettingsConfig: SettingsConfigType = settingsConfig as SettingsConfigType;
+
+type SettingConfig = {
+  label: string;
+  type: string;
+  choices?: string[];
+  default?: string;
+};
+
+type SettingsConfigType = {
+  [key: string]: SettingConfig;
+};
 
 export default defineBackground(() => {
   console.log("Hello background!", { id: browser.runtime.id });
@@ -9,10 +21,11 @@ export default defineBackground(() => {
     const defaultSettings: { [key: string]: any } = {};
 
     // Loop through the settingsConfig to extract default values
-    Object.keys(settingsConfig).forEach(key => {
+    Object.keys(typedSettingsConfig).forEach(key => {
+      const setting = typedSettingsConfig[key];
       // Skip headings and paragraphs
-      if (settingsConfig[key].type !== "heading" && settingsConfig[key].type !== "paragraph") {
-        defaultSettings[key] = settingsConfig[key].default;
+      if (setting.type !== "heading" && setting.type !== "paragraph") {
+        defaultSettings[key] = setting.default;
       }
     });
 
@@ -37,9 +50,9 @@ export default defineBackground(() => {
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "refreshActiveTab") {
       chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-        if (tabs.length > 0) {
-          // Ensure there's at least one active tab
-          chrome.tabs.reload(tabs[0].id); // Refresh the active tab
+        if (tabs.length > 0 && tabs[0].id !== undefined) {
+          // Ensure there's at least one active tab and it has an id
+          chrome.tabs.reload(tabs[0].id);
         }
       });
     }
@@ -222,16 +235,16 @@ export default defineBackground(() => {
       // If no settings are stored, use defaults from settingsConfig.ts
       console.log("Stored settings:", storedSettings); // Debug log
 
-      const defaultSettings = {
-        contextSearchSuttacentral: settingsConfig.contextSearchSuttacentral.defaultValue || false,
-        contextSearchForum: settingsConfig.contextSearchForum.defaultValue || false,
-        contextGoToSuttaplex: settingsConfig.contextGoToSuttaplex.defaultValue || false,
-        contextGoToSutta: settingsConfig.contextGoToSutta.defaultValue || false,
-        contextSearchPts: settingsConfig.contextSearchPts.defaultValue || false,
-      };
+      // const defaultSettings = {
+      //   contextSearchSuttacentral: settingsConfig.contextSearchSuttacentral.defaultValue || false,
+      //   contextSearchForum: settingsConfig.contextSearchForum.defaultValue || false,
+      //   contextGoToSuttaplex: settingsConfig.contextGoToSuttaplex.defaultValue || false,
+      //   contextGoToSutta: settingsConfig.contextGoToSutta.defaultValue || false,
+      //   contextSearchPts: settingsConfig.contextSearchPts.defaultValue || false,
+      // };
 
       // Merge stored settings with defaults, stored settings take precedence
-      const finalSettings = { ...defaultSettings, ...storedSettings };
+      const finalSettings = { ...storedSettings };
       callback(finalSettings);
     });
   };
