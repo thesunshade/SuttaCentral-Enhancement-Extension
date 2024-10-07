@@ -1,4 +1,4 @@
-import NavigationMenu from "@/components/VpNavigationMenu";
+// import NavigationMenu from "@/components/VpNavigationMenu";
 // import "./vpMenu.content/vpMenu.css";
 // import "./vpMenu.content/sc-custommenu.css";
 
