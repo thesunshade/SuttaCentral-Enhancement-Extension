@@ -1,7 +1,7 @@
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
-    let badge; // Reference to the reading time badge
+    let badge: HTMLElement | null; // Reference to the reading time badge
     let lastProcessedContent = ""; // Store the last processed content to avoid unnecessary updates
     let currentWPM = 200; // Store the current WPM
 
@@ -38,7 +38,6 @@ export default defineContentScript({
 
       // Create or update the badge
       if (!badge) {
-        // console.log("Creating new badge");
         badge = document.createElement("p");
         badge.classList.add("color-secondary-text", "type--caption", "reading-time-badge");
       }
@@ -71,7 +70,12 @@ export default defineContentScript({
     };
 
     // Function to handle changes in storage settings
-    const handleStorageChanges = changes => {
+    // Define an interface for the changes object
+    interface StorageChanges {
+      showReadingTime?: string;
+      wordsPerMinute?: string;
+    }
+    const handleStorageChanges = (changes: StorageChanges) => {
       // console.log("Storage changes detected", changes);
       if (changes.showReadingTime || changes.wordsPerMinute) {
         checkSettings(true); // Force update when settings change
@@ -86,7 +90,7 @@ export default defineContentScript({
       // console.log("Setting up DOM observer");
       const observer = new MutationObserver(mutations => {
         for (let mutation of mutations) {
-          if (mutation.type === "childList" || mutation.type === "subtree") {
+          if (mutation.type === "childList") {
             // console.log("Significant DOM change detected");
             checkSettings(); // Re-check settings and update reading time
             break; // Only need to do this once per batch of mutations
