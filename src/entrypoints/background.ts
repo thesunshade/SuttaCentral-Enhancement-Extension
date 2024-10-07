@@ -66,8 +66,8 @@ export default defineBackground(() => {
     const processedSuttas = allSuttasPaliNameArray.map(sutta => {
       const [title, id] = sutta.split(" | ");
       return {
-        title: title.toLowerCase(),
-        id: id.toLowerCase(),
+        title: normalizeString(title),
+        id: normalizeString(id),
         original: sutta,
       };
     });
@@ -88,7 +88,7 @@ export default defineBackground(() => {
     });
 
     function handleInput(text: string, addSuggestions: (suggestions: Array<{ content: string; description: string }>) => void) {
-      const lowerCaseText = text.toLowerCase();
+      const normalizedText = normalizeString(text);
 
       if (text.startsWith("sc ")) {
         const searchQuery = text.slice(3); // remove the 'sc ' prefix
@@ -101,7 +101,7 @@ export default defineBackground(() => {
       } else {
         // Suggest matching suttas from the preprocessed list
         const suggestions = processedSuttas
-          .filter(sutta => sutta.title.includes(lowerCaseText) || sutta.id.includes(lowerCaseText))
+          .filter(sutta => sutta.title.includes(normalizedText) || sutta.id.includes(normalizedText))
           .slice(0, 10) // Limit to 10 suggestions for performance
           .map(sutta => {
             const [title, id] = sutta.original.split(" | ");
@@ -123,8 +123,9 @@ export default defineBackground(() => {
         const searchQuery = text.slice(3); // remove 'sc ' prefix
         url = `${SEARCH_URL}?query=${searchQuery}`;
       } else {
-        // Check if input matches a sutta
-        const matchedSutta = processedSuttas.find(sutta => sutta.title.includes(text.toLowerCase()) || sutta.id.includes(text.toLowerCase()));
+        // Check if input matches a sutta using normalized text
+        const normalizedText = normalizeString(text);
+        const matchedSutta = processedSuttas.find(sutta => sutta.title.includes(normalizedText) || sutta.id.includes(normalizedText));
         if (matchedSutta) {
           url = `https://suttacentral.net/${matchedSutta.id}/en/sujato`;
         } else {
@@ -145,6 +146,39 @@ export default defineBackground(() => {
           break;
       }
     });
+
+    // Normalization function for fuzzy matching
+    function normalizeString(str: string): string {
+      return (
+        str
+          .normalize("NFD") // Decompose diacritics
+          .replace(/[\u0300-\u036f]/g, "") // Remove diacritics
+          // .replace(/[\s,;.“”'"’/()-]/g, "") // Remove spaces and punctuation
+          .toLowerCase()
+          .replace(/kh/gi, "k")
+          .replace(/gh/gi, "g")
+          .replace(/ch/gi, "c")
+          .replace(/jh/gi, "j")
+          .replace(/th/gi, "t")
+          .replace(/dh/gi, "d")
+          .replace(/ph/gi, "p")
+          .replace(/bh/gi, "b")
+          .replace(/kk/gi, "k")
+          .replace(/gg/gi, "g")
+          .replace(/cc/gi, "c")
+          .replace(/jj/gi, "j")
+          .replace(/tt/gi, "t")
+          .replace(/dd/gi, "d")
+          .replace(/pp/gi, "p")
+          .replace(/bb/gi, "b")
+          .replace(/mm/gi, "m")
+          .replace(/yy/gi, "y")
+          .replace(/rr/gi, "r")
+          .replace(/ll/gi, "l")
+          .replace(/vv/gi, "v")
+          .replace(/ss/gi, "s")
+      );
+    }
   }
 
   // Function to check and execute based on setting
