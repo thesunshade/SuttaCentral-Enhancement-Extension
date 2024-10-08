@@ -264,7 +264,7 @@ export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
     function applyTheme(selectedTheme: keyof typeof themes) {
-      console.log(`🎨 Theme: ${selectedTheme}`);
+      console.info(`🎨 Theme: ${selectedTheme}`);
 
       // Remove any existing theme style tag
       const existingStyle = document.getElementById("theme-style");

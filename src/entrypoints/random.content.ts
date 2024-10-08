@@ -6,7 +6,7 @@ export default defineContentScript({
     // Check the randomLink setting and return if it's not enabled
     function isRandomLinkEnabled(callback) {
       chrome.storage.sync.get(["randomLink"], result => {
-        console.log("Current value of randomLink in storage:", result.randomLink); // Log the retrieved value
+        // console.log("Current value of randomLink in storage:", result.randomLink); // Log the retrieved value
         if (result.randomLink === "true") {
           callback();
         } else {
