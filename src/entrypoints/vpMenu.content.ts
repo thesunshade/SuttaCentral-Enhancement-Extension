@@ -1,7 +1,8 @@
 import { querySelectorDeep } from "query-selector-shadow-dom";
 import ally from "ally.js";
-import menu from "./VpMenu/index.html";
+import menu from "./VpMenu/index.html?raw";
 import "./VpMenu/sc-custommenu.css";
+import "./VpMenu/bootstrap/css/bootstrap.min.css";
 
 function toggleMenu(vpHamburger: HTMLElement, navMenu: HTMLElement) {
   console.log("Hamburger icon clicked.");
@@ -29,11 +30,7 @@ function injectStyles() {
       position: absolute;
       background-color: white;
       box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-      padding: 10px;
       z-index: 1000;
-      width: 550px;
-      height: 450px;
-      overflow: auto;
       border: 1px solid #ccc;
       margin: 0;
       list-style: none;
@@ -41,6 +38,11 @@ function injectStyles() {
     }
   `;
   document.head.appendChild(style);
+
+  // width: 550px;
+  // height: 450px;
+  // overflow: auto;
+  // padding: 10px;
 }
 
 export default defineContentScript({
@@ -85,8 +87,8 @@ export default defineContentScript({
           const breadcrumb = querySelectorDeep(".top-bar-home-link") as HTMLElement;
           if (breadcrumb) {
             console.log("Breadcrumb found:", breadcrumb);
+            observer.disengage(); // Disengage as soon as the breadcrumb is found
             callback(breadcrumb);
-            observer.disengage();
           }
         },
       });
