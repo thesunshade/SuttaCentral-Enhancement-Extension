@@ -22,12 +22,16 @@ export default defineContentScript({
           labelElement.style.marginTop = "20px";
         });
 
-        const alphabetSelect = innerSetting.querySelector("#selPaliScripts");
-        alphabetSelect.style.width = "inherit";
+        const alphabetSelect = innerSetting.querySelector("#selPaliScripts") as HTMLElement;
+        if (alphabetSelect) {
+          alphabetSelect.style.width = "inherit";
+        } else {
+          console.error("💥 #selPaliScripts not found");
+        }
 
         const paliWordLookup = innerSetting.querySelectorAll(".form-controls.two-column");
         paliWordLookup.forEach(element => {
-          element.style.columnCount = "1";
+          (element as HTMLElement).style.columnCount = "1";
         });
       }
     }, 2000);

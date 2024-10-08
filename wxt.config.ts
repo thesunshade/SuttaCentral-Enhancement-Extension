@@ -6,6 +6,12 @@ import htmlImport from "@ayatkyo/vite-plugin-html-import";
 export default defineConfig({
   srcDir: "src",
   manifest: {
+    content_scripts: [
+      {
+        js: ["/js/bootstrap.min.js"],
+        matches: ["*://suttacentral.net/*"],
+      },
+    ],
     name: "SuttaCentral Enhancement Extension",
     permissions: ["clipboardWrite", "contextMenus", "tabs", "storage", "scripting"],
     host_permissions: ["<all_urls>"],

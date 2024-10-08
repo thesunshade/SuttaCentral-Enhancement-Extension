@@ -4,7 +4,7 @@ export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
     // Check the randomLink setting and return if it's not enabled
-    function isRandomLinkEnabled(callback) {
+    function isRandomLinkEnabled(callback: () => void): void {
       chrome.storage.sync.get(["randomLink"], result => {
         // console.log("Current value of randomLink in storage:", result.randomLink); // Log the retrieved value
         if (result.randomLink === "true") {
