@@ -19,6 +19,8 @@
     "wxt": "^0.19.1"
   },
   "dependencies": {
+    "@ayatkyo/vite-plugin-html-import": "^0.1.2",
+    "ally.js": "^1.4.1",
     "qr-creator": "^1.0.0",
     "query-selector-shadow-dom": "^1.0.1",
     "vite-plugin-remove-console": "^2.2.0"
