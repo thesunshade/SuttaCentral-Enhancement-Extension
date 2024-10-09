@@ -101,8 +101,6 @@ function injectStyles() {
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
-    // console.log("≡ vpMenu Active on SuttaCentral.net");
-
     const vpHamburger = document.createElement("div");
     vpHamburger.id = "vpHamburger";
     vpHamburger.innerHTML = `
@@ -114,6 +112,7 @@ export default defineContentScript({
     `;
 
     function handleBreadCrumb(breadcrumb: HTMLElement) {
+      console.log("Hamburger icon added.");
       breadcrumb.appendChild(vpHamburger);
 
       const vpMenu = document.createElement("div");
@@ -122,17 +121,13 @@ export default defineContentScript({
 
       document.body.appendChild(vpMenu);
 
-      // console.log("Navigation menu added to the page.");
       injectStyles();
 
       vpHamburger.addEventListener("click", () => toggleMenu(vpHamburger, vpMenu));
 
-      // Close the menu when clicking a link, scrolling, or clicking outside the menu
       closeMenuOnClick(vpMenu.querySelectorAll("a"), vpMenu);
       closeMenuOnScroll(vpMenu);
       closeMenuOnOutsideClick(vpMenu, vpHamburger);
-
-      // console.log("Breadcrumb updated:", breadcrumb);
     }
 
     function observeBreadCrumb(callback: (breadcrumb: HTMLElement) => void) {
@@ -144,14 +139,48 @@ export default defineContentScript({
         callback: () => {
           const breadcrumb = querySelectorDeep(".top-bar-home-link") as HTMLElement;
           if (breadcrumb) {
-            // console.log("Breadcrumb found:", breadcrumb);
-            observer.disengage(); // Disengage as soon as the breadcrumb is found
+            console.log("Breadcrumb found:", breadcrumb);
+            observer.disengage();
             callback(breadcrumb);
           }
         },
       });
     }
 
-    observeBreadCrumb(handleBreadCrumb);
+    function updateMenuVisibility() {
+      chrome.storage.sync.get("vpMenuShow", result => {
+        const vpMenuShow = result.vpMenuShow;
+        console.log("vpMenuShow setting:", vpMenuShow);
+
+        if (vpMenuShow === "true") {
+          const vpHamburgerExisting = querySelectorDeep("#vpHamburger") as HTMLElement;
+          if (!vpHamburgerExisting) {
+            console.log("vpMenuShow is true. Adding hamburger icon.");
+            observeBreadCrumb(handleBreadCrumb); // Inject the menu if vpMenuShow is "true"
+          }
+        } else {
+          console.log("vpMenuShow is false. Removing hamburger icon if present.");
+          const vpHamburgerExisting = querySelectorDeep("#vpHamburger") as HTMLElement;
+          if (vpHamburgerExisting) {
+            console.log("Hamburger icon found, attempting to remove...");
+            vpHamburgerExisting.remove(); // Remove the hamburger icon
+            console.log("Hamburger icon removed.");
+          } else {
+            console.log("Hamburger icon not found, nothing to remove.");
+          }
+        }
+      });
+    }
+
+    // Initial check for the setting
+    updateMenuVisibility();
+
+    // Listen for changes to the setting in storage and update immediately
+    chrome.storage.onChanged.addListener((changes, namespace) => {
+      if (namespace === "sync" && changes.vpMenuShow) {
+        console.log("Storage change detected for vpMenuShow. Updating menu visibility.");
+        updateMenuVisibility();
+      }
+    });
   },
 });
