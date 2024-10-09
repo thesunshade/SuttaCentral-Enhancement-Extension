@@ -38,11 +38,6 @@ function injectStyles() {
     }
   `;
   document.head.appendChild(style);
-
-  // width: 550px;
-  // height: 450px;
-  // overflow: auto;
-  // padding: 10px;
 }
 
 export default defineContentScript({
