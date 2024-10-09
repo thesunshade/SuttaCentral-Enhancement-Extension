@@ -1,8 +1,8 @@
 import { querySelectorDeep } from "query-selector-shadow-dom";
 
-chrome.storage.sync.get(null, items => {
-  console.log("Stored items in sync storage:", items);
-});
+// chrome.storage.sync.get(null, items => {
+//   console.log("Stored items in sync storage:", items);
+// });
 
 // Your existing interfaces
 interface ReduxState {

@@ -1,10 +1,17 @@
 import { defineConfig } from "wxt";
 import removeConsole from "vite-plugin-remove-console";
+import htmlImport from "@ayatkyo/vite-plugin-html-import";
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
   srcDir: "src",
   manifest: {
+    content_scripts: [
+      {
+        js: ["/js/bootstrap.min.js"],
+        matches: ["*://suttacentral.net/*"],
+      },
+    ],
     name: "SuttaCentral Enhancement Extension",
     permissions: ["clipboardWrite", "contextMenus", "tabs", "storage", "scripting"],
     host_permissions: ["<all_urls>"],
@@ -19,6 +26,6 @@ export default defineConfig({
     name: "SC-Enhancement",
   },
   vite: configEnv => ({
-    plugins: [configEnv.mode === "production" && removeConsole({ includes: ["log"] })],
+    plugins: [configEnv.mode === "production" && removeConsole({ includes: ["log"] }), configEnv.mode === "development" && removeConsole({ includes: ["info"] }), htmlImport()],
   }),
 });

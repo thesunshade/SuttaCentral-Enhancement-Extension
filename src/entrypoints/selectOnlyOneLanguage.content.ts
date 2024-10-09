@@ -30,8 +30,6 @@ export default defineContentScript({
     chrome.storage.sync.get(["selectOnlyRoot", "selectOnlyTranslation"], data => {
       hotkeyRootEnabled = data.selectOnlyRoot === "true"; // Enable or disable root hotkey
       hotkeyTranslationEnabled = data.selectOnlyTranslation === "true"; // Enable or disable translation hotkey
-
-      console.log(`Hotkeys - Root: ${hotkeyRootEnabled}, Translation: ${hotkeyTranslationEnabled}`);
     });
 
     // Function to toggle user-select on specified elements
