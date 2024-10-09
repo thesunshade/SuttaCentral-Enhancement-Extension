@@ -1,5 +1,15 @@
 # Development
 
+## installing
+
+After opening your local clone of the repository:
+
+```
+pnpm i
+```
+
+That should install all the dependencies. If you don't have pnpm installed, [here](https://pnpm.io/installation) are the official instructions.
+
 ## Start server
 
 ### Chrome
