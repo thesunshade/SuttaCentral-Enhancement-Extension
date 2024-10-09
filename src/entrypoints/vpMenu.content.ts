@@ -1,8 +1,9 @@
 import { querySelectorDeep } from "query-selector-shadow-dom";
 import ally from "ally.js";
 import menu from "./VpMenu/index.html?raw";
+import "./VpMenu/optimized_bootstrap.css";
 import "./VpMenu/sc-custommenu.css";
-import "./VpMenu/bootstrap/css/bootstrap.min.css";
+// import "./VpMenu/bootstrap/css/bootstrap.min.css";
 
 function closeMenuOnOutsideClick(navMenu: HTMLElement, vpHamburger: HTMLElement) {
   document.addEventListener("click", event => {
@@ -11,7 +12,7 @@ function closeMenuOnOutsideClick(navMenu: HTMLElement, vpHamburger: HTMLElement)
     // Close the menu only if it is open and the click is outside both the navMenu and the vpHamburger
     if (navMenu.style.display === "block" && !navMenu.contains(target) && !vpHamburger.contains(target)) {
       navMenu.style.display = "none";
-      console.log("Navigation menu closed due to click outside the menu.");
+      // console.log("Navigation menu closed due to click outside the menu.");
     }
   });
 
@@ -32,7 +33,7 @@ function closeMenuOnClick(links: NodeListOf<Element>, navMenu: HTMLElement) {
         // Close the menu only if the URL has changed (indicating a navigation)
         if (newUrl !== currentUrl) {
           navMenu.style.display = "none";
-          console.log("Navigation menu closed after clicking a link that caused page navigation.");
+          // console.log("Navigation menu closed after clicking a link that caused page navigation.");
         }
       }, 100);
     });
@@ -55,26 +56,26 @@ function closeMenuOnScroll(navMenu: HTMLElement) {
   window.addEventListener("scroll", () => {
     if (!isMouseOverMenu && navMenu.style.display === "block") {
       navMenu.style.display = "none";
-      console.log("Navigation menu closed due to page scroll.");
+      // console.log("Navigation menu closed due to page scroll.");
     }
   });
 }
 
 function toggleMenu(vpHamburger: HTMLElement, navMenu: HTMLElement) {
-  console.log("Hamburger icon clicked.");
+  // console.log("Hamburger icon clicked.");
   if (navMenu) {
     const rect = vpHamburger.getBoundingClientRect();
     navMenu.style.top = `${rect.bottom}px`;
     navMenu.style.left = `0px`;
     navMenu.style.display = navMenu.style.display === "block" ? "none" : "block";
-    console.log(`Toggled navigation menu visibility: ${navMenu.style.display}`);
+    // console.log(`Toggled navigation menu visibility: ${navMenu.style.display}`);
   } else {
-    console.log("Navigation menu not found.");
+    // console.log("Navigation menu not found.");
   }
 }
 
 function injectStyles() {
-  console.log("Injecting styles...");
+  // console.log("Injecting styles...");
   const style = document.createElement("style");
   style.textContent = `
     #vpHamburger {
@@ -82,6 +83,7 @@ function injectStyles() {
       cursor: pointer;
     }
     #vpNavigationMenu {
+      width:575px;
       display: none;
       position: absolute;
       background-color: white;
@@ -99,7 +101,7 @@ function injectStyles() {
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
-    console.log("≡ vpMenu Active on SuttaCentral.net");
+    // console.log("≡ vpMenu Active on SuttaCentral.net");
 
     const vpHamburger = document.createElement("div");
     vpHamburger.id = "vpHamburger";
@@ -120,7 +122,7 @@ export default defineContentScript({
 
       document.body.appendChild(vpMenu);
 
-      console.log("Navigation menu added to the page.");
+      // console.log("Navigation menu added to the page.");
       injectStyles();
 
       vpHamburger.addEventListener("click", () => toggleMenu(vpHamburger, vpMenu));
@@ -130,7 +132,7 @@ export default defineContentScript({
       closeMenuOnScroll(vpMenu);
       closeMenuOnOutsideClick(vpMenu, vpHamburger);
 
-      console.log("Breadcrumb updated:", breadcrumb);
+      // console.log("Breadcrumb updated:", breadcrumb);
     }
 
     function observeBreadCrumb(callback: (breadcrumb: HTMLElement) => void) {
@@ -142,7 +144,7 @@ export default defineContentScript({
         callback: () => {
           const breadcrumb = querySelectorDeep(".top-bar-home-link") as HTMLElement;
           if (breadcrumb) {
-            console.log("Breadcrumb found:", breadcrumb);
+            // console.log("Breadcrumb found:", breadcrumb);
             observer.disengage(); // Disengage as soon as the breadcrumb is found
             callback(breadcrumb);
           }
