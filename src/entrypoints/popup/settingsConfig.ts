@@ -41,6 +41,11 @@ export const settingsConfig = {
     type: "paragraph",
   },
 
+  vpMenuShow: {
+    label: "Add new navigationt menu under three bar menu icon in top left.",
+    type: "checkbox",
+    default: "true",
+  },
   randomLink: {
     label: "Add link to random sutta on home page",
     type: "checkbox",
