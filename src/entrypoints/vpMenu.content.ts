@@ -3,7 +3,6 @@ import ally from "ally.js";
 import menu from "./VpMenu/index.html?raw";
 import "./VpMenu/optimized_bootstrap.css";
 import "./VpMenu/sc-custommenu.css";
-// import "./VpMenu/bootstrap/css/bootstrap.min.css";
 
 function closeMenuOnOutsideClick(navMenu: HTMLElement, vpHamburger: HTMLElement) {
   document.addEventListener("click", event => {
@@ -62,13 +61,15 @@ function closeMenuOnScroll(navMenu: HTMLElement) {
 }
 
 function toggleMenu(vpHamburger: HTMLElement, navMenu: HTMLElement) {
-  // console.log("Hamburger icon clicked.");
   if (navMenu) {
     const rect = vpHamburger.getBoundingClientRect();
-    navMenu.style.top = `${rect.bottom}px`;
-    navMenu.style.left = `0px`;
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+
+    // Set the position relative to the current scroll position
+    navMenu.style.top = `${rect.bottom + scrollTop}px`;
+    navMenu.style.left = `${rect.left + scrollLeft}px`;
     navMenu.style.display = navMenu.style.display === "block" ? "none" : "block";
-    // console.log(`Toggled navigation menu visibility: ${navMenu.style.display}`);
   } else {
     // console.log("Navigation menu not found.");
   }
