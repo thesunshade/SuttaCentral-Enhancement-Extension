@@ -1,7 +1,6 @@
 import { querySelectorDeep } from "query-selector-shadow-dom";
 import ally from "ally.js";
 import menu from "./VpMenu/index.html?raw";
-import "./VpMenu/optimized_bootstrap.css";
 import "./VpMenu/sc-custommenu.css";
 
 function closeMenuOnOutsideClick(navMenu: HTMLElement, vpHamburger: HTMLElement) {
