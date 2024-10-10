@@ -166,9 +166,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-  <div>
-  <h3>On Sutta Central.net</h3>
-    <li>There is a mockup of a new navigation menu.</li>
-    <li>Test of vertical view settings panel</li>
-</div>
 `;

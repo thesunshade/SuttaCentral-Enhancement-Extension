@@ -6,6 +6,12 @@ import htmlImport from "@ayatkyo/vite-plugin-html-import";
 export default defineConfig({
   srcDir: "src",
   manifest: {
+    web_accessible_resources: [
+      {
+        resources: ["icon/ddFavicon.png", "icon/favicon.ico"],
+        matches: ["*://discourse.suttacentral.net/*"],
+      },
+    ],
     content_scripts: [
       {
         js: ["/js/bootstrap.min.js"],
