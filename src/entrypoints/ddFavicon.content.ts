@@ -3,7 +3,7 @@ export default defineContentScript({
   main() {
     // Function to update the favicon
     function updateFavicon(isEnabled: boolean) {
-      console.log(`updateFavicon called. isEnabled: ${isEnabled}`);
+      //   console.log(`updateFavicon called. isEnabled: ${isEnabled}`);
 
       // Create or update the favicon link
       const faviconUrl = isEnabled ? chrome.runtime.getURL("icon/ddFavicon.png") : chrome.runtime.getURL("icon/favicon.ico");
@@ -15,18 +15,18 @@ export default defineContentScript({
         linkElement.rel = "icon";
         linkElement.type = "image/png"; // Set to PNG for ddFavicon
         document.head.appendChild(linkElement);
-        console.log("New favicon appended to head.");
+        // console.log("New favicon appended to head.");
       }
 
       // Update the favicon's href
       linkElement.href = faviconUrl; // This should set it to either ddFavicon or default favicon
-      console.log("Favicon updated to:", linkElement.href);
+      //   console.log("Favicon updated to:", linkElement.href);
     }
 
     // Fetch the initial state from chrome.storage.sync
     chrome.storage.sync.get("ddFavicon", result => {
       const isEnabled = result.ddFavicon === "true"; // storage values are strings
-      console.log("Initial ddFavicon value:", isEnabled);
+      //   console.log("Initial ddFavicon value:", isEnabled);
       updateFavicon(isEnabled);
     });
 
@@ -34,7 +34,7 @@ export default defineContentScript({
     chrome.storage.onChanged.addListener((changes, area) => {
       if (area === "sync" && changes.ddFavicon) {
         const isEnabled = changes.ddFavicon.newValue === "true"; // storage values are strings
-        console.log("ddFavicon changed to:", isEnabled);
+        // console.log("ddFavicon changed to:", isEnabled);
         updateFavicon(isEnabled);
       }
     });

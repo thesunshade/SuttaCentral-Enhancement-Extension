@@ -36,7 +36,15 @@ export default defineContentScript({
 
       const heading = article.querySelector("h1");
       const date = article.querySelector("time")?.parentNode;
-      ((date as HTMLElement | null) ?? (heading as HTMLElement)).insertAdjacentElement("afterend", badge);
+
+      // Ensure at least one element exists before proceeding
+      const targetElement = (date as HTMLElement | null) ?? (heading as HTMLElement | null);
+
+      if (targetElement) {
+        targetElement.insertAdjacentElement("afterend", badge);
+      } else {
+        // console.error("Both heading and date elements are null.");
+      }
 
       badge.textContent = `⏱️ ${readingTime} min read (${WPM} wpm)`;
     };
