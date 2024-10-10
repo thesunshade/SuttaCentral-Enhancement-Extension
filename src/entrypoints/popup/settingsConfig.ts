@@ -66,6 +66,11 @@ export const settingsConfig = {
     type: "checkbox",
     default: "true",
   },
+  addedTextBrackets: {
+    label: "Adds brackets around text added by translator",
+    type: "checkbox",
+    default: "true",
+  },
   showUserLanguage: {
     label: "Show current site language above the three dot menu icon",
     type: "checkbox",
