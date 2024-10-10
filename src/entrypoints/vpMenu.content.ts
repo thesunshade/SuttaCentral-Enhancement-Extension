@@ -110,7 +110,7 @@ export default defineContentScript({
     vpHamburger.style.marginLeft = "10px";
 
     function handleBreadCrumb(breadcrumb: HTMLElement) {
-      console.log("Hamburger icon added.");
+      // console.log("Hamburger icon added.");
       breadcrumb.insertBefore(vpHamburger, breadcrumb.firstChild);
 
       const vpMenu = document.createElement("div");
@@ -137,7 +137,7 @@ export default defineContentScript({
         callback: () => {
           const breadcrumb = querySelectorDeep(".top-bar-home-link") as HTMLElement;
           if (breadcrumb) {
-            console.log("Breadcrumb found:", breadcrumb);
+            // console.log("Breadcrumb found:", breadcrumb);
             observer.disengage();
             callback(breadcrumb);
           }
@@ -148,23 +148,23 @@ export default defineContentScript({
     function updateMenuVisibility() {
       chrome.storage.sync.get("vpMenuShow", result => {
         const vpMenuShow = result.vpMenuShow;
-        console.log("vpMenuShow setting:", vpMenuShow);
+        // console.log("vpMenuShow setting:", vpMenuShow);
 
         if (vpMenuShow === "true") {
           const vpHamburgerExisting = querySelectorDeep("#vpHamburger") as HTMLElement;
           if (!vpHamburgerExisting) {
-            console.log("vpMenuShow is true. Adding hamburger icon.");
+            // console.log("vpMenuShow is true. Adding hamburger icon.");
             observeBreadCrumb(handleBreadCrumb); // Inject the menu if vpMenuShow is "true"
           }
         } else {
-          console.log("vpMenuShow is false. Removing hamburger icon if present.");
+          // console.log("vpMenuShow is false. Removing hamburger icon if present.");
           const vpHamburgerExisting = querySelectorDeep("#vpHamburger") as HTMLElement;
           if (vpHamburgerExisting) {
-            console.log("Hamburger icon found, attempting to remove...");
+            // console.log("Hamburger icon found, attempting to remove...");
             vpHamburgerExisting.remove(); // Remove the hamburger icon
-            console.log("Hamburger icon removed.");
+            // console.log("Hamburger icon removed.");
           } else {
-            console.log("Hamburger icon not found, nothing to remove.");
+            // console.log("Hamburger icon not found, nothing to remove.");
           }
         }
       });
@@ -176,7 +176,7 @@ export default defineContentScript({
     // Listen for changes to the setting in storage and update immediately
     chrome.storage.onChanged.addListener((changes, namespace) => {
       if (namespace === "sync" && changes.vpMenuShow) {
-        console.log("Storage change detected for vpMenuShow. Updating menu visibility.");
+        // console.log("Storage change detected for vpMenuShow. Updating menu visibility.");
         updateMenuVisibility();
       }
     });

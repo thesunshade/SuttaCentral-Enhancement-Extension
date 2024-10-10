@@ -142,7 +142,7 @@ li {
     /* only really needed for FF */
 }
 
-#showBlurbsExcludeSites {
+textarea {
   width: 90%;
   height: 4rem
 }

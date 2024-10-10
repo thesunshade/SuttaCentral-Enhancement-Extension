@@ -10,7 +10,7 @@ export const settingsConfig = {
   theme: {
     label: "Theme",
     type: "select",
-    choices: ["none", "Grimace", "Shamrock Shake", "Birdie", "Burglar", "Ronnie", "OB Mack", "Shamrock Shake Dark", "Bubblegum", "Sonora", "Pumpkin Spice", "Isi", "Steeling"],
+    choices: ["none", "Grimace", "Shamrock Shake", "Birdie", "Burglar", "Ronnie", "OB Mack", "Shamrock Shake Dark", "Bubblegum", "Sonora", "Pumpkin Spice", "Spooky", "Isi", "Steeling"],
     default: "none",
   },
   languageSwap: {
@@ -40,7 +40,6 @@ export const settingsConfig = {
     label: "Various features and functionality for SuttaCentral.net.",
     type: "paragraph",
   },
-
   vpMenuShow: {
     label: "Add new navigationt menu under three bar menu icon in top left.",
     type: "checkbox",
@@ -197,5 +196,25 @@ export const settingsConfig = {
     label: "Give the forum a unique favicon.",
     type: "checkbox",
     default: "true",
+  },
+
+  advancedHeading: {
+    label: "Advanced",
+    type: "heading",
+  },
+  advancedDescription: {
+    label: "The following are at your own risk. Only use if you know what you are doing",
+    type: "paragraph",
+  },
+
+  customScCss: {
+    label: "Add custom CSS to the main SuttaCentral.net website.",
+    type: "textarea",
+    default: "",
+  },
+  customDdCss: {
+    label: "Add custom CSS to the SC forum website.",
+    type: "textarea",
+    default: "",
   },
 };
