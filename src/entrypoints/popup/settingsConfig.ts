@@ -184,10 +184,13 @@ export const settingsConfig = {
     type: "checkbox",
     default: "true",
   },
+  ddSettingsHeading: {
+    label: "D&D Forum settings",
+    type: "heading",
+  },
+  ddFavicon: {
+    label: "Give the forum a unique favicon.",
+    type: "checkbox",
+    default: "true",
+  },
 };
-
-// rootColorSwap: {
-//   label: "Root language dark, translation light",
-//   type: "checkbox",
-//   default: "false",
-// },

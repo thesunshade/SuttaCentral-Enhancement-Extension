@@ -1,32 +1,247 @@
-/* fonts fonts fonts */
+:root {
+    --lightgrey: #ccc;
+    --darkgrey: #888;
+    --black: #000;
+    --darkbrown: #9e6f04;
+    --ochre: #c68b05;
 
-/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
-
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap'); */
-
-
-
-/* sutta central line order fixes */
-#segmented_text_content .reference {
-    grid-row: -1;
+    --padding-sm: 10px;
 
 }
 
-/* #sc-navigation-linden-leaves{
-background-color: rgb(64, 60, 60);
-color: rgb(255, 255, 255);
-display: block;
-font-family: "Skolar Sans PE Variable", "Noto Sans", sans-serif, "Noto Sans", "Source Sans Pro", sans-serif;
-height: 48px;
-position: relative;
-transform: none;
-width: vw;
-z-index: 200;
-} */
+/* fonts fonts fonts */
 
-/* #sc-navigation-linden-leaves a{
-    color:#fff;
-} */
+/* 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap'); 
+
+*/
+
+/* Optimized Bootstrap CSS based on the provided HTML */
+
+/* Accordion styles */
+
+.accordion-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    background-color: #fff;
+    border: 0;
+    border-radius: 0;
+    overflow-anchor: none;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, border-radius 0.15s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .accordion-button {
+        transition: none;
+    }
+}
+
+
+
+button.accordion-button:not(.collapsed) {
+    color: #fff;
+    background-color: var(--ochre) !important;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 75%, rgba(127, 82, 21, 0.4)) !important;
+}
+
+.accordion-button:not(.collapsed)::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    transform: rotate(-180deg);
+}
+
+.accordion-button::after {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: auto;
+    content: "";
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-size: 1.25rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .accordion-button::after {
+        transition: none;
+    }
+}
+
+.accordion-button:hover {
+    z-index: 2;
+}
+
+.accordion-button:focus {
+    z-index: 3;
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.accordion-header {
+    margin-bottom: 0;
+}
+
+.accordion-item {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.accordion-item:first-of-type {
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+
+.accordion-item:first-of-type .accordion-button {
+    border-top-left-radius: calc(0.25rem - 1px);
+    border-top-right-radius: calc(0.25rem - 1px);
+}
+
+.accordion-item:not(:first-of-type) {
+    border-top: 0;
+}
+
+.accordion-item:last-of-type {
+    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+
+.accordion-item:last-of-type .accordion-button.collapsed {
+    border-bottom-right-radius: calc(0.25rem - 1px);
+    border-bottom-left-radius: calc(0.25rem - 1px);
+}
+
+.accordion-item:last-of-type .accordion-collapse {
+    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+
+.accordion-body {
+    padding: 1rem 1.25rem;
+}
+
+.accordion-flush .accordion-collapse {
+    border-width: 0;
+}
+
+.accordion-flush .accordion-item {
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+}
+
+.accordion-flush .accordion-item:first-child {
+    border-top: 0;
+}
+
+.accordion-flush .accordion-item:last-child {
+    border-bottom: 0;
+}
+
+.accordion-flush .accordion-item .accordion-button {
+    border-radius: 0;
+}
+
+
+.accordion-button {
+    color: var(--ochre);
+    /* Example color */
+
+    border: none;
+    /* Example border */
+}
+
+.accordion-button:not(.collapsed) {
+    color: #fff;
+    /* Color for expanded state */
+    background-color: var(--ochre);
+    /* Background color for expanded state */
+    border: none;
+}
+
+.accordion-button:not(.collapsed)::after {
+    background-color: var(--ochre);
+}
+
+.accordion-header {
+    display: flex;
+    /* Flex display for header alignment */
+}
+
+/* Button styles */
+
+.btn {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn {
+        transition: none;
+    }
+}
+
+.btn {
+    display: inline-flex;
+    /* Flex display for button alignment */
+    align-items: center;
+    /* Center items in button */
+    padding: 0.375rem 0.75rem;
+    /* Padding for button */
+    border: 1px solid transparent;
+    /* Border for button */
+
+}
+
+.list-unstyled {
+    padding-left: 0;
+    /* No padding for lists */
+    list-style-type: none;
+    /* Remove bullet points */
+}
+
+.collapse {
+    display: none;
+    /* Hide collapsed elements */
+}
+
+.collapse.show {
+    display: block;
+    /* Show expanded elements */
+}
+
+.collapse:not(.show) {
+    display: none;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+    .collapsing {
+        transition: none;
+    }
+}
+
+
+
+
 
 
 /*menu stuffs */
@@ -40,35 +255,29 @@ z-index: 200;
 }
 
 
-:root {
-    --lightgrey: #ccc;
-    --darkgrey: #888;
-    --black: #000;
-    --darkbrown: #9e6f04;
-    --ochre: #c68b05;
 
-    --padding-sm: 10px;
 
-}
 
-/* body {
-    background: var(--ochre);
-    font-family: 'Noto Sans', Arial, Helvetica, Sans-serif, Verdana, Tahoma;
-    color: black;
-} */
 
 .sc-custommenu {
-    background-color: rgb(255, 251, 255);
-    max-width: 575px;
+    background: whitesmoke;
+    width: 575px;
     box-shadow: 2px 2px 30px rgba(20, 20, 20, 0.5);
-    padding: 5px 10px;
-    height: calc(100vh - 75px);
-    max-height: 100vh;
-    overflow-y: scroll;
+    padding: 0;
+    min-height: 33vh;
+    max-height: calc(100vh - 75px);
+    overflow-y: auto;
     font-size: 16px;
     border-radius: 0 0px 10px 0;
     color: var(--darkgrey);
+    font-family: "Skolar Sans PE Variable", "Noto Sans", sans-serif;
+    margin: 0;
 }
+
+.sc-custommenu a {
+    color: var(--ochre);
+}
+
 
 aside {
     grid-area: sidebar;
@@ -84,6 +293,7 @@ aside {
     border-bottom: 1px solid;
     border-color: var(--lightgrey);
     text-align: left;
+    background-color: rgb(255, 251, 255);
 }
 
 .scc-links a {
@@ -92,11 +302,20 @@ aside {
     position: relative;
     border-radius: 0;
     padding-top: 5px;
+    padding-left: 0;
 }
+
+.scc-links .second li a {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
 
 .scc-links li a:hover {
 
     text-shadow: 1px 2px 1px white;
+    text-decoration: none;
 
 }
 
@@ -125,15 +344,19 @@ chapterid {
 }
 
 translation {
-    width: 40%;
+    width: 38%;
     display: inline-block;
-    line-height: 22px
+    line-height: 22px;
+    padding-left: 5px;
 }
 
+.third translation {
+    padding-left: 0;
+}
 
 root {
     margin-left: 1ex;
-    width: 40%;
+    width: 38%;
     display: block;
 }
 
@@ -167,16 +390,12 @@ chapterid {
 
 
 button[aria-expanded=false] {
-    background: transparent;
-}
-
-button[aria-expanded=true] {
-    background-color: #fff8f3;
-    background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 83.19%, rgba(0, 0, 0, 0.2));
+    /*    background: transparent;*/
 }
 
 .btn-check:focus+.btn,
-.btn:focus {
+.btn:focus,
+scc-links a:focus {
     outline: none;
     /*    box-shadow:0 0 0 .25rem rgb(253 184 13 / 25%);*/
     box-shadow: none;
@@ -187,16 +406,15 @@ button[aria-expanded=true] {
     color: var(--ochre);
 }
 
-.btn[aria-expanded=true]:hover {
-    background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 75%, rgba(127, 82, 21, 1));
+button.accordion-button.btn[aria-expanded=true]:hover {
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 75%, rgba(127, 82, 21, 0.4));
 }
 
 
 .first {
     border-top: 1px solid #ccc;
     width: 100%;
-    font-family: "Skolar PE Variable", serif;
-    /* font-family: "Noto Serif", serif; */
+    font-family: "Noto Serif", serif;
     background-color: #fff;
     background-image: linear-gradient(to left, rgba(255, 255, 255, 0) 98%, rgba(250, 250, 250, 1));
     color: var(--darkgrey);
@@ -211,6 +429,14 @@ button[aria-expanded=true] {
 
 }
 
+aside.sc-custommenu .first button.btn {
+    font-family: "Noto Serif", serif;
+}
+
+.second a.btn {
+    font-family: "Skolar Sans PE Variable", "Noto sans", sans-serif;
+}
+
 .scc-links .second li:last-of-type {
     border-bottom: none;
     padding-bottom: 10px;
@@ -220,8 +446,7 @@ button[aria-expanded=true] {
 .second {
     color: #000;
     padding-left: 0;
-    /* font-family: 'Noto Sans', Arial, Helvetica, Sans-serif, Verdana, Tahoma; */
-    font-family: "Skolar Sans PE Variable", Arial, Helvetica, Sans-serif, Verdana, Tahoma;
+    font-family: 'Noto Sans', Arial, Helvetica, Sans-serif, Verdana, Tahoma;
     padding-bottom: 10px;
     padding-top: 0px;
     border-bottom: 1px solid var(--lightgrey);
@@ -253,13 +478,10 @@ button[aria-expanded=true] {
 
 .scc-links .first .btn[aria-expanded=true] {
     font-weight: 700;
-
-    background-color: var(--ochre);
     color: #fff;
 }
 
 .scc-links .second .btn[aria-expanded=true] {
-    background: transparent;
     color: var(--darkbrown);
 }
 
@@ -377,15 +599,15 @@ button[aria-expanded=true] {
 
 
 .expander[aria-expanded=false] {
-    content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'%3e%3cpath fill='none' stroke='rgba%280,0,0,1%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 4h17v17H3zM12 8v8m-4-4h8'/%3e%3c/svg%3e");
+    content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24'%3e%3cpath fill='none' stroke='rgba%280,0,0,1%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 4h17v17H3zM12 8v8m-4-4h8'/%3e%3c/svg%3e");
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     padding: 1px;
 }
 
 .expander[aria-expanded=true] {
-    content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'%3e%3cpath fill='none' stroke='rgba%280,0,0,1%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 3h18v18H3zM8 12h8'/%3e%3c/svg%3e");
+    content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24'%3e%3cpath fill='none' stroke='rgba%280,0,0,1%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 3h18v18H3zM8 12h8'/%3e%3c/svg%3e");
     display: inline-block;
     width: 16px;
     height: 16px;
@@ -396,7 +618,7 @@ button[aria-expanded=true] {
 
 
 span.info {
-    /*    display: block;*/
+    display: inline-block;
     width: 14px;
     position: relative;
     width: 20px;
@@ -405,7 +627,7 @@ span.info {
 .info blurb,
 blurb {
     visibility: hidden;
-    width: 320px;
+    width: 450px;
     background-color: rgb(85 85 85 / 96%);
     color: #fff;
     text-align: center;
@@ -416,7 +638,7 @@ blurb {
     z-index: 1;
     bottom: 155%;
     left: 70%;
-    margin-left: -310px;
+    margin-left: -440px;
     /* Fade in tooltip */
     opacity: 0;
     transition: opacity 0.3s;
@@ -444,9 +666,10 @@ blurb {
     opacity: 1;
     color: white;
     text-shadow: none;
+    z-index: 99999999999;
 }
 
 
-.accordion-button:not(.collapsed)::after {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+.accordion-button:not(.collapsed) {
+    background-color: darkred;
 }
