@@ -78,10 +78,6 @@ function injectStyles() {
   // console.log("Injecting styles...");
   const style = document.createElement("style");
   style.textContent = `
-    #vpHamburger {
-      padding-left: 5px;
-      cursor: pointer;
-    }
     #vpNavigationMenu {
       width:575px;
       display: none;
@@ -110,10 +106,12 @@ export default defineContentScript({
         <rect y="26" width="30" height="4" rx="2" fill="white" />
       </svg>
     `;
+    vpHamburger.style.cursor = "pointer";
+    vpHamburger.style.marginLeft = "10px";
 
     function handleBreadCrumb(breadcrumb: HTMLElement) {
       console.log("Hamburger icon added.");
-      breadcrumb.appendChild(vpHamburger);
+      breadcrumb.insertBefore(vpHamburger, breadcrumb.firstChild);
 
       const vpMenu = document.createElement("div");
       vpMenu.id = "vpNavigationMenu";
