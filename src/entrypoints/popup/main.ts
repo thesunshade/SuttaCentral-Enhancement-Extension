@@ -11,7 +11,16 @@ function generateSettingsForm(config: any) {
     const wrapper = document.createElement("div");
     wrapper.classList.add("form-group"); // Add a class for styling and spacing
 
-    if (setting.type === "heading") {
+    if (setting.type === "details") {
+      const details = document.createElement("details");
+      const summary = document.createElement("summary");
+      summary.innerHTML = setting.summary;
+      details.appendChild(summary);
+      const content = document.createElement("div");
+      content.innerHTML = setting.content;
+      details.appendChild(content);
+      wrapper.appendChild(details);
+    } else if (setting.type === "heading") {
       const heading = document.createElement("h2");
       heading.textContent = setting.label;
       wrapper.appendChild(heading);

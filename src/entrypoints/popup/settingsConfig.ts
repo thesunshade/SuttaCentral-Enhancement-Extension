@@ -104,10 +104,32 @@ export const settingsConfig = {
     type: "checkbox",
     default: "true",
   },
-  copyMarkdownLink: {
+  copyCustomLink: {
     label: "<kbd>l</kbd> to copy a link to the current page in <strong>markdown format</strong>",
     type: "checkbox",
     default: "true",
+  },
+  linkCustomizeDetails: {
+    type: "details",
+    summary: "Click for instructions",
+    content: `<p>Build a link using the following placeholders pluss any text:</p>
+    <ul>
+    <li><code>{citation}</code> sutta number</li>
+    <li><code>{link}</code> sutta link</li>
+    <li><code>{clean}</code> sutta link with all parameters cleaned</li>
+    <li><code>{suttaplex}</code>link to suttaplex page</li>
+    <li><code>{pali}</code> Pali title</li>
+    <li><code>{title}</code> translation title</li>
+    <li><code>{author}</code> translator name</li>
+    <li><code>{language}</code> translation language</li>
+    <li><code>{date}</code> translation date</li>
+    </ul>
+    `,
+  },
+  linkPattern: {
+    label: "Pattern to use for link.",
+    type: "text",
+    default: "[{citation}—{pali}: {title}, by {author}, {date}]({clean})",
   },
   qrCode: {
     label: "<kbd>q</kbd> to open a popup with a <strong>QR Code</strong>",
