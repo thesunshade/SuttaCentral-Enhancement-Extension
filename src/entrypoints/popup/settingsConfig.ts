@@ -105,7 +105,7 @@ export const settingsConfig = {
     default: "true",
   },
   copyCustomLink: {
-    label: "<kbd>l</kbd> to copy a link to the current page in <strong>markdown format</strong>",
+    label: "<kbd>l</kbd> to copy a link to the current page in <strong>a custom format</strong>",
     type: "checkbox",
     default: "true",
   },
@@ -129,7 +129,7 @@ export const settingsConfig = {
   linkPattern: {
     label: "Pattern to use for link.",
     type: "text",
-    default: "[{citation}—{pali}: {title}, by {author}, {date}]({clean})",
+    default: "[{citation} {pali}: {title}, by {author}, {date}]({clean})",
   },
   qrCode: {
     label: "<kbd>q</kbd> to open a popup with a <strong>QR Code</strong>",
