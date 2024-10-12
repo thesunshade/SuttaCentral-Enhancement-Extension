@@ -79,13 +79,10 @@ function injectStyles() {
   const style = document.createElement("style");
   style.textContent = `
     #vpNavigationMenu {
-      width:575px;
       display: none;
       position: absolute;
-      background-color: white;
-      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
       z-index: 1000;
-      border: 1px solid #ccc;
+      border: 2px 1px 0 1px solid var(--sc-dark-fixed-background-color);
       margin: 0;
       list-style: none;
       color: black;
