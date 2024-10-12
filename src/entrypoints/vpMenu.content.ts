@@ -66,8 +66,8 @@ function toggleMenu(vpHamburger: HTMLElement, navMenu: HTMLElement) {
     const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
 
     // Set the position relative to the current scroll position
-    navMenu.style.top = `${rect.bottom + scrollTop}px`;
-    navMenu.style.left = `${rect.left + scrollLeft}px`;
+    navMenu.style.top = `${rect.bottom + 14 + scrollTop}px`;
+    navMenu.style.left = `${rect.left - 5 + scrollLeft}px`;
     navMenu.style.display = navMenu.style.display === "block" ? "none" : "block";
   } else {
     // console.log("Navigation menu not found.");
