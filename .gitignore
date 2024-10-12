@@ -28,3 +28,5 @@ web-ext.config.ts
 # misc
 todo.md
 *.old
+old/*
+templates/*

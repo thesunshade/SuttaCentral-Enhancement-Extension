@@ -10,7 +10,7 @@ export default defineContentScript({
         languageDiv.textContent = `${language.toUpperCase()}`;
         languageDiv.title = languageFull;
       } catch (error) {
-        console.error("Failed to parse reduxState:", error);
+        // console.error("Failed to parse reduxState:", error);
       }
     };
 

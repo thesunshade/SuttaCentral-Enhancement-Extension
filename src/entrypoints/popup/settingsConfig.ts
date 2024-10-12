@@ -112,7 +112,7 @@ export const settingsConfig = {
   linkCustomizeDetails: {
     type: "details",
     summary: "Click for instructions",
-    content: `<p>Build a link using the following placeholders pluss any text:</p>
+    content: `<p>Build a link using the following placeholders plus any text:</p>
     <ul>
     <li><code>{citation}</code> sutta number</li>
     <li><code>{link}</code> sutta link</li>
