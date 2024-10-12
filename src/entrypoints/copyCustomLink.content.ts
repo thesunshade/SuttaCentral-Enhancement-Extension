@@ -38,6 +38,9 @@ export default defineContentScript({
 
       // Function to fetch and store data
       async function fetchAndStoreData() {
+        if (localStorage.reduxState == null) {
+          return;
+        }
         const currentRoute = JSON.parse(localStorage.reduxState).currentRoute;
         const uid = currentRoute.params.suttaId;
         const authorUid = currentRoute.params.authorUid;
@@ -49,7 +52,7 @@ export default defineContentScript({
           const originalTitle = data[0].original_title;
           const citation = data[0].acronym;
 
-          const foundObject = translations.find(translation => translation.author_uid === authorUid);
+          const foundObject = translations.find((translation: { author_uid: string }) => translation.author_uid === authorUid);
 
           const storedData = {
             title: foundObject ? foundObject.title : null,
