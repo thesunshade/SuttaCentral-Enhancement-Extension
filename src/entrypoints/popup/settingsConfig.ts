@@ -60,6 +60,11 @@ export const settingsConfig = {
     type: "checkbox",
     default: "true",
   },
+  rootOnLegacy: {
+    label: "Add root to legacy translation",
+    type: "checkbox",
+    default: "true",
+  },
   clickSegmentNumbersToCopyUrl: {
     label: "Clicking segment number copies URL to that segment to the clipboard.",
     type: "checkbox",
