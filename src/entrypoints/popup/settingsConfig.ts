@@ -60,6 +60,11 @@ export const settingsConfig = {
     type: "checkbox",
     default: "true",
   },
+  rootOnLegacy: {
+    label: "Add root to legacy translation",
+    type: "checkbox",
+    default: "true",
+  },
   clickSegmentNumbersToCopyUrl: {
     label: "Clicking segment number copies URL to that segment to the clipboard.",
     type: "checkbox",
@@ -112,7 +117,7 @@ export const settingsConfig = {
   linkCustomizeDetails: {
     type: "details",
     summary: "Click for instructions",
-    content: `<p>Build a link using the following placeholders pluss any text:</p>
+    content: `<p>Build a link using the following placeholders plus any text:</p>
     <ul>
     <li><code>{citation}</code> sutta number</li>
     <li><code>{link}</code> sutta link</li>

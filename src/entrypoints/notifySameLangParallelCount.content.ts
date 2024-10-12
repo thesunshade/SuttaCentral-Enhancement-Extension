@@ -44,7 +44,27 @@ export default defineContentScript({
       }
 
       function runScript() {
-        const reduxState: ReduxState = JSON.parse(localStorage.reduxState);
+        // Check if reduxState exists in localStorage
+        const reduxStateString = localStorage.getItem("reduxState");
+        if (!reduxStateString) {
+          // console.warn("reduxState is not available in localStorage.");
+          return;
+        }
+
+        let reduxState: ReduxState;
+        try {
+          reduxState = JSON.parse(reduxStateString);
+        } catch (error) {
+          console.warn("Failed to parse reduxState:", error);
+          return;
+        }
+
+        // Ensure that suttaPublicationInfo exists before trying to destructure it
+        if (!reduxState.suttaPublicationInfo || !reduxState.suttaPublicationInfo.uid) {
+          // console.warn("suttaPublicationInfo is null or missing necessary data:", reduxState.suttaPublicationInfo);
+          return;
+        }
+
         const { uid } = reduxState.suttaPublicationInfo;
 
         function fetchParallels(uid: string): Promise<any> {
@@ -83,12 +103,16 @@ export default defineContentScript({
           return count;
         }
 
-        fetchParallels(uid).then(data => {
-          if (data) {
-            const paliCount = countPliLang(data);
-            updateParallelButton(paliCount);
-          }
-        });
+        fetchParallels(uid)
+          .then(data => {
+            if (data) {
+              const paliCount = countPliLang(data);
+              updateParallelButton(paliCount);
+            }
+          })
+          .catch(error => {
+            console.log("Error fetching parallels data:", error);
+          });
       }
 
       function updateParallelButton(paliCount: number) {

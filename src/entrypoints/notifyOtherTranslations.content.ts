@@ -1,9 +1,5 @@
 import { querySelectorDeep } from "query-selector-shadow-dom";
 
-// chrome.storage.sync.get(null, items => {
-//   console.log("Stored items in sync storage:", items);
-// });
-
 // Your existing interfaces
 interface ReduxState {
   siteLanguage: string;
@@ -99,7 +95,21 @@ export default defineContentScript({
       }
 
       function runScript() {
-        const reduxState: ReduxState = JSON.parse(localStorage.reduxState);
+        // Check if reduxState exists in localStorage
+        const reduxStateString = localStorage.getItem("reduxState");
+        if (!reduxStateString) {
+          // console.warn("reduxState is not available in localStorage.");
+          return;
+        }
+
+        let reduxState: ReduxState;
+        try {
+          reduxState = JSON.parse(reduxStateString);
+        } catch (error) {
+          console.log("Failed to parse reduxState:", error);
+          return;
+        }
+
         const { siteLanguage } = reduxState;
         const { uid, lang: language, authorUid } = reduxState.suttaPublicationInfo;
 
@@ -123,13 +133,17 @@ export default defineContentScript({
           return data.filter(item => item.lang === language && item.author_uid !== authorUid).length;
         }
 
-        fetchSuttaplex(uid, siteLanguage).then(data => {
-          if (data.length > 0) {
-            const translations = data[0].translations;
-            const translationCount = countTranslations(translations, siteLanguage, authorUid);
-            updateParallelButton(translationCount);
-          }
-        });
+        fetchSuttaplex(uid, siteLanguage)
+          .then(data => {
+            if (data.length > 0) {
+              const translations = data[0].translations || []; // Default to empty array if translations is undefined
+              const translationCount = countTranslations(translations, siteLanguage, authorUid);
+              updateParallelButton(translationCount);
+            }
+          })
+          .catch(error => {
+            console.error("Error fetching suttaplex data:", error);
+          });
       }
 
       function updateParallelButton(translationCount: number) {
