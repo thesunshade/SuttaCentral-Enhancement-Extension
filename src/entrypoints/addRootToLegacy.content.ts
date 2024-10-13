@@ -45,15 +45,41 @@ function insertRoot(path: string) {
             rootElement.innerHTML = rootInHtml;
             rootElement.style.minWidth = "50vw";
             const rootStyle = document.createElement("style");
-            rootStyle.innerText = ".sutta-title {word-break: break-word;}";
-            main.appendChild(rootStyle);
-            main.appendChild(rootElement);
+            rootStyle.innerText = `.sutta-title {word-break: break-word;}
+            .reference a {
+                font-family: var(--sc-sans-font);
+                font-size: var(--sc-font-size-xxs);
+                font-weight: 400;
+                font-style: normal;
+                display: inline-block;
+                box-sizing: border-box;
+                margin-right: 0.5em;
+                padding: 0.1em 0.5em;
+                text-align: left;
+                text-indent: 0;
+                text-transform: none;
+                white-space: nowrap;
+                letter-spacing: normal;
+                color: var(--sc-on-primary-secondary-text-color);
+                border: 1px solid var(--sc-border-color);
+                border-radius: 8px;
+                background-color: var(--sc-secondary-background-color);
+                font-variant-caps: normal;
+                   } 
+                .sutta-title {
+                    word-break: break-word;
+                }
+`;
+            if (main) {
+              main.appendChild(rootStyle);
+              main.appendChild(rootElement);
+            }
             const articles = document.getElementsByTagName("article");
             for (let i = 0; i < articles.length; i++) {
               articles[i].style.maxHeight = "100vh";
               articles[i].style.overflowY = "scroll";
             }
-          }, 300);
+          }, 600);
         });
     })
     .catch(error => {
@@ -61,13 +87,14 @@ function insertRoot(path: string) {
     });
 }
 
-function createRootInHtml(jsonData: Object) {
+function createRootInHtml(jsonData: any) {
   console.log("root in html data", jsonData);
   const { keys_order, root_text, html_text } = jsonData;
   let result = "";
 
-  keys_order.forEach(key => {
-    const rootValue = root_text[key];
+  keys_order.forEach((key: string) => {
+    const id = key.split(":")[1];
+    const rootValue = `<span class="root"><span class="reference"><a class="sc" id="${id}" href="#${id}" title="SuttaCentral segment number">${id}</a></span>${root_text[key]}</span>`;
     const htmlTemplate = html_text[key];
     result += htmlTemplate.replace("{}", rootValue);
   });

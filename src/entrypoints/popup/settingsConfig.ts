@@ -61,7 +61,7 @@ export const settingsConfig = {
     default: "true",
   },
   rootOnLegacy: {
-    label: "Add root to legacy translation",
+    label: "Add root to legacy translation. Page refresh required. Not configurable through regular view options.",
     type: "checkbox",
     default: "true",
   },
