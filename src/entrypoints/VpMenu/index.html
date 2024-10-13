@@ -1,29 +1,28 @@
 <aside class="scc-sidebar sc-custommenu">
   
   <nav class=" scc-links ">
-    <ul id="alllanguages" class="first list-unstyled mb-0 accordion accordion-flush" >
-    <li class="text-language accordion-item" id="pali">
+    <ul id="alllanguages" class="first list-unstyled mb-0 accordion accordion-flush" aria-controls="st1" role="menu">
+    <li class="text-language accordion-item" id="pali"  aria-haspopup="true" role="menuitem">
       <span class="accordion-header">
-      <button class="btn d-inline-flex align-items-left collapsed accordion-button" data-bs-toggle="collapse" data-bs-target="#pali-lang" aria-expanded="false">Pāḷi</button>
+      <button class="btn d-inline-flex align-items-left collapsed accordion-button" data-bs-toggle="collapse" data-bs-target="#pali-lang" aria-expanded="false" tabindex="1">Pāḷi</button>
       </span>
       <div  class="language accordion-item">
       <ul class="second list-unstyled collapse accordion-collapse " id="pali-lang" data-bs-parent="#alllanguages">
         <li class="text-type">
           <span class="accordion-header">
-          <a href="#" class="d-inline-flex btn accordion-button collapsed"  data-bs-toggle="collapse" data-bs-target="#pali-discourses" aria-expanded="false">
-              <translation>Discourses</translation>
+          <button class="d-inline-flex btn accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#pali-discourses" aria-expanded="false" aria-expanded="false" role="menuitem">
+            <translation>Discourses</translation>
             <root>suttas</root>
             <span class="info">
                              <blurb>TThe Buddha’s teachings on meditation, morality, the nature of the world, and the path to freedom. These scriptures are our primary sources for the historical Buddha’s life and practice. They depict the Buddha and his students in lively conversation with a diverse range of people.</blurb>
            </span>
-          </a>
+          </button>
           </span>          
           <ul class="third collapse list-unstyled accordion-collapse" data-bs-parent="#pali-lang" id="pali-discourses">
-            <li id="dn" class="long suttas">
-              <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#dn-sections">
-                <title>expand</title>
-                +
-              </a>
+            <li id="dn" class="long suttas" role="menuitem" aria-controls="st1">
+              <button data-bs-toggle="collapse" title="expand" description="expand menu" class="expander" aria-expanded="false" data-bs-target="#dn-sections">
+                  +
+              </button>
               <a class="btn d-inline-flex" href="https://suttacentral.net/dn">
                 <chapterid>DN</chapterid>
                 <translation>Long Discourses</translation>
@@ -59,10 +58,9 @@
               </ul>
             </li>
             <li id="mn" class="middle suttas">
-              <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#mn-sections">
-                <title>expand</title>
+              <button class="expander" data-bs-toggle="collapse" data-bs-target="#mn-sections" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                 +
-              </a>
+                </button>
               <a class="btn d-inline-flex" href="https://suttacentral.net/mn" class="btn d-inline-flex">
                 <chapterid>mn</chapterid>
                 <translation>Middle Discourses</translation>
@@ -75,9 +73,9 @@
               </a>
               <ul  id="mn-sections" class="collapse multi-collapse list-unstyled fourth">
                 <li>
-                  <a class="expander" data-bs-toggle="collapse" data-bs-target="#mn-mulapannasa" aria-expanded="false">
-                    <!--  <title>expand</title>+ -->
-                  </a>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#mn-mulapannasa" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
+                    +
+                  </button>
                   <a href="https://suttacentral.net/mn-mulapannasa" class="btn d-inline-flex">
                     <chapterid>MN 1–50</chapterid>
                     <translation>The First Fifty</translation>
@@ -123,10 +121,9 @@
                   </ul>
                 </li>
                 <li>
-                  <a class="expander" data-bs-toggle="collapse" data-bs-target="#mn-majjhimapannasa" aria-expanded="false">
-                    <title>expand</title>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#mn-majjhimapannasa" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                     +
-                  </a>
+                    </button>
                   <a href="https://suttacentral.net/mn-majjhimapannasa" class="btn d-inline-flex">
                     <chapterid>MN 50–100</chapterid>
                     <translation>The Middle Fifty</translation>
@@ -171,10 +168,9 @@
                   </ul>
                 </li>
                 <li>
-                  <a class="expander" data-bs-toggle="collapse" data-bs-target="#mn-uparipannasa" aria-expanded="false">
-                    <title>expand</title>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#mn-uparipannasa" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                     +
-                  </a>
+                    </button>
                   <a href="https://suttacentral.net/mn-uparipannasa" class="btn d-inline-flex">
                     <chapterid>101–150</chapterid>
                     <translation>The Final Fifty</translation>
@@ -221,10 +217,9 @@
               </ul>
             </li>
             <li id="sn" class="linked suttas">
-              <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#sn-sections">
-                <title>Expand</title>
+              <button class="expander" data-bs-toggle="collapse" data-bs-target="#sn-sections" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                 +
-              </a>
+                </button>
               <a href="https://suttacentral.net/sn" class="btn d-inline-flex">
                 <chapterid>SN</chapterid>
                 <translation>Linked Discourses</translation>
@@ -237,17 +232,16 @@
               </a>
               <ul id="sn-sections" class="collapse multi-collapse list-unstyled fourth">
                 <li>
-                  <a class="expander" data-bs-toggle="collapse" data-bs-target="#sn-sagathavaggasamyutta" aria-expanded="true">
-                    <title>Expand</title>
-                  </a>
-                  <a href="https://suttacentral.net/sn-sagathavaggasamyutta" class="btn d-inline-flex">
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#sn-sagathavaggasamyutta" aria-expanded="true" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
+                    +
+                    </button>
+                    <a href="https://suttacentral.net/sn-salayatanavaggasamyutta" class="btn d-inline-flex">
                     <chapterid>SN 1–11</chapterid>
                     <translation>The Group of Linked Discourses With Verses</translation>
                     <root>Sagāthāvaggasaṁyutta</root>
-                                    <span class="info">
+                    <span class="info">
                   <blurb>
-                  The main version of the Linked Discourses found in the Chinese canon is known as the Saṁyuktāgama (Za ahan jing, 雜阿含經), and is believed to stem from a branch of the Sarvāstivādin school. It was translated by Guṇabhadra (求那跋陀) and Baoyun (寶雲) in CE 435–436 at Waguan Monastery (瓦官寺,) Yangdu (楊都). Like the Pali Saṁyutta Nikāya, it contains over a thousand short suttas organized by topic. The texts, however, became disordered during the transmission in China, and an extraneous passage from a later life of Ashoka was mistakenly included. In the 20th century a series of scholars reconstructed the original sequence. The text as originally found is found in the Taishō edition of the Chinese canon as sutra number 99 at T vol. 2, 1a.
-                  </blurb>
+                    The “Book With Verses” is the first of the five books of the Linked Discourses. It is divided into eleven saṁyuttas or “sections”, with a total of 271 suttas. Most of these are further subdivided into vaggas of ten suttas. The word vagga is thus used of both the major overarching “book” and the subsidiary “chapter”. Each of the suttas in this collection contains verse with a prose narrative structure, although in many cases the prose has been omitted through abbreviation. Where most of the Saṁyutta is organized around subject matter, here the organizational principle is people. Each saṁyutta contains conversation involving the Buddha or his disciples with a different person or kind of person, such as gods, kings, nuns, or brahmins. A typical sutta has a bare narrative framework, where someone comes to the Buddha and utters a verse, and the Buddha replies with a better one. In some cases, notably the Sakkasaṁyutta, the narrative element is developed into a lively exchange. Some of the texts in this collection are well known and widely quoted, such as the invitation of Brahmā or the nun Vajirā’s simile of the person as a chariot. Most of the suttas here have parallels in the Chinese Saṁyuktāgama translations; the partial translations SA 2 and SA 3 include Sagāthāvagga material. In addition, many of the verses have parallels elsewhere throughout the Buddhist literature in all languages.                  </blurb>
                 </span>
                   </a>
                   <ul class="fifth collapse show samyutta list-unstyled" id="sn-sagathavaggasamyutta">
@@ -258,7 +252,8 @@
                         <root>Devatāsaṁyutta</root>
                         <span class="info">
                         <blurb>
-                          A partial translation of the Saṁyuktāgama (SA-2) was made between 385 and 431 by an anonymous translator. Known as the Shorter Saṁyuktāgama (Bieyi za ahan jing, 別譯雜阿含經), it may stem from the Mūlasarvāstivādin school. It consists of 364 sutras in 16 fascicles. Most of the texts have parallels in Chinese and/or Pali, primarily in the Sagāthāvagga of the Saṁyutta. In the Taishō edition of the Chinese canon, it is text number 100, located at T vol. 2, 374a.
+                          The “Linked Discourses on Deities” contains 81 discourses, each one of which depicts the Buddha in conversation with a deity. Typically a deity approaches the Buddha in the monastery at Sāvatthī, illuminating the night with their glory. The deity addresses the Buddha with a question or verse, which may be a praise, a challenge, a riddle, or simply a reflection. The Buddha responds, usually elevating the discourse to a higher plane. As always in Buddhist texts, a deity is not worshiped, but is regarded as a temporary rebirth in a higher plane; the deities learn from the Buddha, not the other way around. In most cases, the narrative framework is slim, and after a while it is dropped entirely, retaining just the verses. There’s no particular theme to the discourses, which range from the simple to the profound.
+
 
                         </blurb>
                         </span>
@@ -269,6 +264,11 @@
                         <chapterid>sn2</chapterid>
                         <translation>Linked Discourses on Gods</translation>
                         <root>Devaputtasaṁyutta</root>
+                        <span class="info">
+                        <blurb>
+                          The “Linked Discourses on Gods” contains 30 discourses, each one of which depicts the Buddha in conversation with a god. Here the term devaputta is used, rather than devatā in the previous saṁyutta. The difference is purely nominal and there is no difference in the meaning. The style of discourses is similar to the “Linked Discourses on Deities”, although here there is a greater emphasis on the theme of renunciation. A number of these discourses are regularly recited in modern Theravāda; the Tāyana verses on diligent striving at SN 2.8 are often recited by monastics, while the discourses on the sun and the moon (SN 2.9 and SN 2.10) are popular protection chants, which are also found in Tibetan.
+                        </blurb>
+                        </span>
                       </a>
                     </li>
                     <li>
@@ -276,6 +276,10 @@
                         <chapterid>sn3</chapterid>
                         <translation>Linked Discourses With King Pasenadi of Kosala</translation>
                         <root>Kosalasaṁyutta</root>
+                        <blurb>
+                          The “Linked Discourses with the Kosalan” contains 25 discourses featuring King Pasenadi of Kosala. Pasenadi shines through in the early texts as a complex human figure, one with foibles and foolishness, but with a great devotion and capacity to grow. He appears frequently elsewhere in the suttas; MN 87 tells the story of how Queen Mallikā led him to the Dhamma. Here Mallikā appears again, and in SN 3.8 she shows how she is not afraid to challenge her king. The suttas in this collection typically set the verses in substantive prose narratives, illustrating the struggles and problems that beset a king intent on Dhamma who must nonetheless rule in a world with spies, sacrifices, punishments, wars, and the many temptations of royal life.
+                        </blurb>
+                        </span>
                       </a>
                     </li>
                     <li>
@@ -337,10 +341,9 @@
                   </ul>
                 </li>
                 <li>
-                  <a class="expander" data-bs-toggle="collapse" data-bs-target="#sn-nidanavaggasamyutta" aria-expanded="true">
-                    <title>Expand</title>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#sn-nidanavaggasamyutta" aria-expanded="true" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                     +
-                  </a>
+                    </button>
                   <a href="https://suttacentral.net/sn-nidanavaggasamyutta" class="btn d-inline-flex">
                     <chapterid>SN 12–21</chapterid>
                     <translation>The Group of Linked Discourses Beginning With Causation</translation>
@@ -420,10 +423,9 @@
                   </ul>
                 </li>
                 <li>
-                  <a class="expander" data-bs-toggle="collapse" data-bs-target="#sn-khandhavaggasamyutta" aria-expanded="true">
-                    <title>Expand</title>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#sn-khandhavaggasamyutta" aria-expanded="true" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                     +
-                  </a>
+                    </button>
                   <a href="https://suttacentral.net/sn-khandhavaggasamyutta" class="btn d-inline-flex">
                     <chapterid>sn 22–34</chapterid>
                     <translation>The Group of Linked Discourses Beginning With the Aggregates</translation>
@@ -524,10 +526,9 @@
                   </ul>
                 </li>
                 <li>
-                  <a class="expander" data-bs-toggle="collapse" data-bs-target="#sn-salayatanavaggasamyutta" aria-expanded="true">
-                    <title>expand</title>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#sn-salayatanavaggasamyutta" aria-expanded="true" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                     +
-                  </a>
+                    </button>
                   <a href="https://suttacentral.net/sn-salayatanavaggasamyutta">
                     <chapterid>sn 35–44</chapterid>
                     <translation>The Group of Linked Discourses Beginning With the Six Sense Fields</translation>
@@ -607,10 +608,9 @@
                   </ul>
                 </li>
                 <li>
-                  <a class="expander" data-bs-toggle="collapse" data-bs-target="#sn-mahavaggasamyutta" aria-expanded="true">
-                    <title>expand</title>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#sn-mahavaggasamyutta" aria-expanded="true" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                     +
-                  </a>
+                    </button>
                   <a href="https://suttacentral.net/sn-mahavaggasamyutta" class="btn d-inline-flex">
                     <chapterid>SN 45–56</chapterid>
                     <translation>The Group of Linked Discourses on the Path</translation>
@@ -707,10 +707,9 @@
             </li>
             <!-- end pi-sn -->
             <li id="an" class="numbered suttas">
-              <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#an-sections">
-                <title>expand</title>
+              <button class="expander" data-bs-toggle="collapse" data-bs-target="#an-sections" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                 +
-              </a>
+                </button>
               <a class="btn d-inline-flex" href="https://suttacentral.net/an" class="btn d-inline-flex">
                 <chapterid>AN</chapterid>
                 <translation>Numbered Discourses</translation>
@@ -802,10 +801,9 @@
               </ul>
             </li>
             <li id="kn" class="minor suttas">
-              <a href="#" class="expander" data-bs-toggle="collapse" data-bs-target="#kn-sections" aria-expanded="false">
-                <title>expand</title>
+              <button class="expander" data-bs-toggle="collapse" data-bs-target="#kn-sections" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                 +
-              </a>
+                </button>
               <a href="https://suttacentral.net/kn" class="btn d-inline-flex">
                 <chapterid>kn</chapterid>
                 <translation>Minor Collection</translation>
@@ -958,21 +956,20 @@
         </li>
         <li id="tv-vi" class="text-type vinaya">
             <span class="accordion-header">
-          <a href="#" class="d-inline-flex btn accordion-button collapsed"  data-bs-toggle="collapse" data-bs-target="#pali-vin" aria-expanded="false">
+          <button class="d-inline-flex btn accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#pali-vin" aria-expanded="false" aria-expanded="false" role="menuitem">
             <!-- <chapterid>tv vi</chapterid> -->
-              <translation>Theravāda Monastic Law</translation>
+            <translation>Theravāda Monastic Law</translation>
               <root>Vinayapiṭaka</root>
                <span class="info">
                              <blurb>The Monastic Law for the Theravāda school in Pali. This collection is followed by mendicants of the Theravāda school. It is the only Vinaya for which we have a complete collection in the original Indic.</blurb>
               </span>
-          </a>
+          </button>
           </span>          
           <ul class="third collapse list-unstyled accordion-collapse" data-bs-parent="#pali-lang" id="pali-vin">
             <li>
-              <a href="#" class="expander"  data-bs-toggle="collapse" data-bs-target="#pli-tv" aria-expanded="false">
-                <title>expand</title>
+              <button class="expander" data-bs-toggle="collapse" data-bs-target="#pli-tv" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                 +
-              </a>
+                </button>
               <a href="https://suttacentral.net/pli-tv-vi" class="btn d-inline-flex">
                 <chapterid>pli tv vi</chapterid>
                 <translation>Rules and Their Analysis</translation>
@@ -981,10 +978,10 @@
               </a>
               <ul class="collapse multi-collapse list-unstyled fourth" id="pli-tv">
                 <li>
-                  <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#pli-tv-bu-vb">
-                    <title>expand</title>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#pli-tv-bu-vb" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                     +
-                  </a>
+
+                    </button>
                   <a href="https://suttacentral.net/pli-tv-bu-vb" class="btn d-inline-flex">
                     <chapterid>bu-vb</chapterid>
                     <translation>Monks’ Rules and Their Analysis</translation>
@@ -1066,10 +1063,10 @@
                   </a>
                   </li>
                 <li>
-                  <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#pli-tv-bi-vb">
-                    <title>expand</title>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#pli-tv-bi-vb" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                     +
-                  <a href="https://suttacentral.net/pli-tv-bi-vb" class="btn d-inline-flex">
+
+                    </button>
                     <chapterid>bi-vb</chapterid>
                     <translation>Nuns’ Rules and Their Analysis</translation>
                     <root>Bhikkhunīvibhaṅga</root>
@@ -1146,10 +1143,9 @@
             </li>
             
             <li>
-              <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#pli-tv-kd">
-                <title>expand</title>
+              <button class="expander" data-bs-toggle="collapse" data-bs-target="#pli-tv-kd" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                 +
-              </a>
+                </button>
               <a href="https://suttacentral.net/pli-tv-kd" class="btn d-inline-flex">
                 <chapterid>kd</chapterid>
                 <translation>Chapters on Legal Topics</translation>
@@ -1162,10 +1158,10 @@
               </a>
               <ul class="collapse multi-collapse list-unstyled fourth" id="pli-tv-kd">
                 <li>
-                  <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#pli-tv-mv">
-                    <title>expand</title>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#pli-tv-mv" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                     +
-                  </a>
+
+                    </button>
                   <a href="https://suttacentral.net/pli-tv-kd">
                     <translation>The Great Chapter</translation>
                     <root>Mahāvagga</root>
@@ -1244,10 +1240,10 @@
                   </ul>
                 </li>
                 <li>
-                  <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#pli-tv-cu">
-                    <title>expand</title>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#pli-tv-cu" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                     +
-                  </a>
+
+                    </button>
                   <a href="https://suttacentral.net/pli-tv-kd">
                     <translation>The Lesser Chapter</translation>
                     <root>Cūḷavagga</root>
@@ -1342,10 +1338,9 @@
               </ul>
             </li>
             <li>
-              <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#pli-tv-pvr">
-                <title>expand</title>
+              <button class="expander" data-bs-toggle="collapse" data-bs-target="#pli-tv-pvr" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                 +
-              </a>
+                </button>
               <a href="https://suttacentral.net/pli-tv-pvr" class="btn d-inline-flex">
                 <chapterid>pvr</chapterid>
                 <translation>The Compendium</translation>
@@ -1510,14 +1505,14 @@
         <!-- end vinaya -->
         <li class="text-type">
            <span class="accordion-header">
-           <a href="#" class="d-inline-flex btn accordion-button collapsed"  data-bs-toggle="collapse" data-bs-target="#pali-abhidhamma" aria-expanded="false">
+           <button class="d-inline-flex btn accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#pali-abhidhamma" aria-expanded="false" aria-expanded="false" role="menuitem">
             <!-- <chapterid>Tv Ab</chapterid> -->
             <translation>Systematic Treatises of the Theravāda School </translation>
             <root>Theravāda Abhidhamma</root>
             <span class="info">
                         <blurb>The seven books of the canonical Theravāda Abhidhamma.</blurb>
             </span>
-            </a>
+            </button>
             </span>
         
         <ul class="list-unstyled third collapse accordion-collapse" data-bs-parent="#pali-lang" id="pali-abhidhamma">
@@ -1599,18 +1594,18 @@
     <!-- end pali -->
     <li class="text-language accordion-item">
      <span class="accordion-header">
-        <button class="btn d-inline-flex align-items-left collapsed accordion-button" data-bs-toggle="collapse" data-bs-target="#chinese-lang" aria-expanded="false">Chinese</button>
+        <button class="btn d-inline-flex align-items-left collapsed accordion-button" data-bs-toggle="collapse" data-bs-target="#chinese-lang" aria-expanded="false" >Chinese</button>
     </span>
       <ul class="list-unstyled list-unstyled second  accordion-collapse collapse" id="chinese-lang" data-bs-parent="#alllanguages">
         <li class="text-type">
          <span class="accordion-header">
-          <a href="#" class="d-inline-flex btn accordion-button collapsed"  data-bs-toggle="collapse" data-bs-target="#chinese-discourses" aria-expanded="false">
-            <translation>Discourses&nbsp;</translation>
+          <button class="d-inline-flex btn accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#chinese-discourses" aria-expanded="false" aria-expanded="false" role="menuitem">
+             <translation>Discourses&nbsp;</translation>
             <root>sūtras</root>
              <span class="info">
                              <blurb>TThe Buddha’s teachings on meditation, morality, the nature of the world, and the path to freedom. These scriptures are our primary sources for the historical Buddha’s life and practice. They depict the Buddha and his students in lively conversation with a diverse range of people.</blurb>
            </span>
-          </a>
+          </button>
         </span>
           <div  id="chinese-discourses" class="collapse accordion-collapse third" data-bs-parent="#chinese-lang">
             <ul class="list-unstyled">
@@ -1808,19 +1803,19 @@
         </li>
         <!-- end lzh-sutta -->
         <li class="text-group">
-        <a href="#" class="d-inline-flex btn accordion-button collapsed"  data-bs-toggle="collapse" data-bs-target="#lzh-vin" aria-expanded="false">
+        <button class="d-inline-flex btn accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#lzh-vin" aria-expanded="false" aria-expanded="false" role="menuitem">
         <translation>Monastic Law</translation>
         <root>Vinaya</root>
          <span class="info">
                      <blurb>The texts on Monastic Law (vinaya) detail the lifestyle, rules, and procedures for Buddhist monks and nuns. They provide the guidelines for Buddhist monastics to this day, and in addition, paint a detailed and vivid picture of everyday life in ancient India.</blurb>
       </span>
-        </a>
+        </button>
         <ul class="list-unstyled third collapse  accordion-collapse" data-bs-parent="#chinese-lang" id="lzh-vin">
         <li class="text-type">
-        <a href="#" class="expander"  data-bs-toggle="collapse" data-bs-target="#lzh-mg-vin" aria-expanded="false">
+        <button class="expander" data-bs-toggle="collapse" data-bs-target="#lzh-mg-vin" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
         +
-        </a>
-        <a href="https://suttacentral.net/lzh-mg-vi" class="d-inline-flex btn">
+
+        </button>
         <chapterid>Lzh Mg Vi</chapterid>
         <translation>Monastic Law of the Mahāsaṅghika School</translation>
         <root>Mahāsaṅghika Vinaya</root>
@@ -1830,10 +1825,10 @@
         </a>
         <ul id="lzh-mg-vin" class="collapse  fourth list-unstyled"> 
         <li>
-        <a href="#" class="expander"  data-bs-toggle="collapse" data-bs-target="#lzh-mg-bu-vb" aria-expanded="false">
+        <button class="expander" data-bs-toggle="collapse" data-bs-target="#lzh-mg-bu-vb" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
         +
-        </a>
-        <a href="https://suttacentral.net/lzh-mg-bu-vb" class="d-inline-flex btn">
+
+        </button>
         <chapterid>Lzh Mg Bu Vb</chapterid>
         <translation>Monks’ Rules and Their Analysis</translation>
         <root>Bhikkhu Vibhaṅga</root>
@@ -1936,10 +1931,10 @@
         </a>
         </li>
         <li>
-        <a href="#" class="expander"  data-bs-toggle="collapse" data-bs-target="#lzh-mg-bi-vb" aria-expanded="false">
+        <button class="expander" data-bs-toggle="collapse" data-bs-target="#lzh-mg-bi-vb" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
         +
-        </a>
-        <a href="https://suttacentral.net/lzh-mg-bi-vb" class="d-inline-flex btn">
+
+        </button>
         <chapterid>Lzh Mg Bi Vb</chapterid>
         <translation>Nuns’ Rules and Their Analysis</translation>
         <root>Bhikkhunī Vibhaṅga</root>
@@ -2040,10 +2035,10 @@
         </a>
         </li>
         <li>
-        <a href="#" class="expander"  data-bs-toggle="collapse" data-bs-target="#lzh-mg-bu-pm" aria-expanded="false">
+        <button class="expander" data-bs-toggle="collapse" data-bs-target="#lzh-mg-bu-pm" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
         +
-        </a>
-        <a href="https://suttacentral.net/lzh-mg-bu-pm" class="d-inline-flex btn">
+
+        </button>
         <chapterid>Lzh Mg Bu Pm</chapterid>
         <translation>Monks’ Rules</translation>
         <root>Bhikkhu Pātimokkha</root>
@@ -2136,10 +2131,10 @@
         </li>
         <!-- end bu pm   -->
         <li>
-        <a href="#" class="expander"  data-bs-toggle="collapse" data-bs-target="#lzh-mg-bi-pm" aria-expanded="false">
+        <button class="expander" data-bs-toggle="collapse" data-bs-target="#lzh-mg-bi-pm" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
         +
-        </a>
-        <a href="https://suttacentral.net/lzh-mg-bi-pm" class="d-inline-flex btn">
+
+        </button>
         <chapterid>Lzh Mg Bi Pm</chapterid>
         <translation>Nuns’ Rules</translation>
         <root>Bhikkhunī Pātimokkha</root>
@@ -2236,10 +2231,10 @@
         </li>
         <!-- end lzh-mg-vinaya -->
         <li class="text-type">
-        <a href="#" class="expander"  data-bs-toggle="collapse" data-bs-target="#lzh-sarv-vi" aria-expanded="false">+</a>
-        <a href="https://suttacentral.net/lzh-mg-vi" class="d-inline-flex btn">
-        <chapterid>Lzh Sar Vi</chapterid>
-        <translation>Monastic Law of the Sāvastivādan School</translation>
+        <button class="expander" data-bs-toggle="collapse" data-bs-target="#lzh-sarv-vi" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
+        +
+
+        </button>
         <root>Sāvastivadin Vinaya</root>
         <span class="info">
                 <blurb>The Monastic Law for the Sarvāstivāda school in Chinese. This school spread throughout North India and Central Asia. The Sarvāstivāda Vinaya was the most common Vinaya in China before they changed to the Dharmaguptaka. The Sarvāstivāda school is now extinct. Most of the Vinaya texts we have today were translated from about 404–409 CE by the Kashmiri monks Kumārajīva and Puṇyatāra. When Puṇyatāra died, Dharmaruci replaced him and finished the translation.</blurb>
@@ -2247,10 +2242,10 @@
         </a>
         <ul class="fourth collapse list-unstyled" id="lzh-sarv-vi" >
         <li>
-        <a href="#" class="expander"  data-bs-toggle="collapse" data-bs-target="#lzh-sarv-bu-vb" aria-expanded="false">+</a>
-        <a href="https://suttacentral.net/lzh-sarv-bu-vb" class="d-inline-flex btn">
-        <chapterid>Lzh Sarv Bu Vb</chapterid>
-        <translation>Monks’ Rules and Their Analysis </translation>
+        <button class="expander" data-bs-toggle="collapse" data-bs-target="#lzh-sarv-bu-vb" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
+        +
+
+        </button>
         <root>Bhikkhu Vibhaṅga</root>
         <span class="info">
                 <blurb>The Bhikkhu-vibhaṅga (“the analysis of the monks’ rules”) contains the monastic code for monks, the Bhikkhu-pātimokkha, embedded in explanatory material. The Vibhaṅga is divided into eight chapters, each dealing with a separate class of rules, grouped according to the offense incurred in breaking them, with the exception of the <i lang='pi' translate='no'>aniyatas</i> (“the undetermined”), and the <i lang='pi' translate='no'>adhikaraṇasamathadhamma</i> (“the principles for resolving legal issues”), which are principles to be applied rather than rules in the strict sense. Each rule together with its explanatory material forms an independent unit, a sub-chapter.</blurb>
@@ -2452,10 +2447,10 @@
         </a>
         </li>
         <li>
-        <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#lzh-sarv-bu-pm">            
-        <title>expand</title>+
-        </a> 
-        <a href="https://suttacentral.net/lzh-sarv-bu-pm" class="d-inline-flex btn">
+        <button class="expander" data-bs-toggle="collapse" data-bs-target="#lzh-sarv-bu-pm" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
+        +
+
+        </button>
         <chapterid>Lzh Sarv Bu Pm</chapterid>
         <translation>Monks’ Rules (1st) </translation>
         <root>Bhikkhu Pātimokkha (1st)</root>
@@ -2547,10 +2542,10 @@
         </ul>
         </li>
         <li>
-        <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#lzh-sarv-bu-pm-2">            
-        <title>expand</title>+
-        </a> 
-        <a href="https://suttacentral.net/lzh-sarv-bu-pm-2" class="d-inline-flex btn">
+        <button class="expander" data-bs-toggle="collapse" data-bs-target="#lzh-sarv-bu-pm-2" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
+        +
+
+        </button>
         <chapterid>Lzh Sarv Bu Pm 2</chapterid>
         <translation>Monks’ Rules (2nd) </translation>
         <root>Bhikkhu Pātimokkha (2nd)</root>
@@ -2642,10 +2637,10 @@
         </ul>
         </li>
         <li>
-        <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#lzh-sarv-bi-pm">            
-        <title>expand</title>+
-        </a> 
-        <a href="https://suttacentral.net/lzh-sarv-bi-pm" class="d-inline-flex btn">
+        <button class="expander" data-bs-toggle="collapse" data-bs-target="#lzh-sarv-bi-pm" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
+        +
+
+        </button>
         <chapterid>Lzh Sarv Bi Pm</chapterid>
         <translation>Nuns’ Rules </translation>
         <root>Bhikkhunī Pātimokkha</root>
@@ -2727,10 +2722,10 @@
         </ul>
         </li>
         <li>
-        <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#lzh-sarv-bi-pm">            
-        <title>expand</title>+
-        </a> 
-        <a href="https://suttacentral.net/lzh-sarv-bi-pm-dh" class="d-inline-flex btn">
+        <button class="expander" data-bs-toggle="collapse" data-bs-target="#lzh-sarv-bi-pm" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
+        +
+
+        </button>
         <chapterid>Lzh Sarv Bi Pm Dh</chapterid>
         <translation>Nuns’ Rules (Dunhuang edition) </translation>
         <root>Bhikkhunī Pātimokkha (Dunhaung)</root>
@@ -2855,10 +2850,10 @@
         </li>
         <!-- end lzh-sv-vinaya -->                    
         <li class="text-type">
-        <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#lzh-mu-vi"> <title>expand</title>+</a>  
-        <a href="https://suttacentral.net/lzh-mu-vi" class="d-inline-flex btn">
-        <chapterid>Lzh Mu Vi</chapterid>
-        <translation>Monastic Law of the Mūlasarvāstivāda School</translation>
+        <button class="expander" data-bs-toggle="collapse" data-bs-target="#lzh-mu-vi" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
+        +
+
+        </button>
         <root>Mūlasarvāstivāda Vinaya</root>
         <span class="info">
                 <blurb>The Monastic Law for the Mūlasarvāstivāda school in Chinese. The debate about the origins of this school is still ongoing but it is clear that it had a large influence on Central Asia. Monastics of the Tibetan tradition follow this Vinaya. Most of the Vinaya texts in Chinese we have today were translated between 695 and 713 CE by Yijing. We also have a full Vinaya translation in Tibetan, and a part of the original Sanskrit.</blurb>
@@ -2995,17 +2990,19 @@
         </li>
         <!-- end lzh-vinaya -->
         <li class="text-group">
-        <a href="#" class="d-inline-flex btn accordion-button collapsed"  data-bs-toggle="collapse" data-bs-target="#lzh-ab" aria-expanded="false">
+        <button class="d-inline-flex btn accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#lzh-ab" aria-expanded="false" aria-expanded="false" role="menuitem">
         <translation>Systematic Treastise</translation>
         <root>Abhidhamma</root>
         <span class="info">
                 <blurb>Abhidhamma texts are systematic summaries and analyses of the teachings drawn from the earlier discourses. The Abhidhamma (spelled abhidharma in Sanskrit) is intended for advanced students who have mastered the teachings of the discourses.</blurb>    
         </span>
-        </a>
+        </button>
         <ul  id="lzh-ab" class="collapse list-unstyled third  accordion-collapse" data-bs-parent="#chinese-lang">
         <li class="text-type">
-        <a href="#" class="expander"  data-bs-toggle="collapse" data-bs-target="#lzh-dg-ab" aria-expanded="false"> +</a>
-        <a href="https://suttacentral.net/lzh-dg-ab" class="d-inline-flex btn">
+        <button class="expander" data-bs-toggle="collapse" data-bs-target="#lzh-dg-ab" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
+        +
+        </button>
+        <a class="btn d-inline-flex" href="https://suttacentral.net/lzh-dg-ab">
         <translation>Systematic Treastise of the Dharmaguptaka school</translation>
         <root>Dharmaguptaka Abhidhamma</root>
         <span class="info">
@@ -3027,8 +3024,11 @@
         </li>
         <!-- end lzh-dg-ab -->
         <li class="text-type">
-        <a href="#" class="expander"  data-bs-toggle="collapse" data-bs-target="#lzh-sarv-ab" aria-expanded="false"> +</a>
-        <a href="https://suttacentral.net/lzh-sarv-ab" class="d-inline-flex btn">
+        <button class="expander" data-bs-toggle="collapse" data-bs-target="#lzh-sarv-ab" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
+        +
+
+        </button>
+        <a class="btn d-inline-flex" href="https://suttacentral.net/lzh-sarv-ab">
         <translation>Systematic Treastise of the Sarvāstivāda school</translation>
         <root>Sarvāstivāda Abhidhamma</root>
         <span class="info">
@@ -3098,18 +3098,18 @@
     <!-- end chinese -->
     <li class="text-language accordion-item">
       <span class="accordion-header">
-      <button class="btn d-inline-flex align-items-left collapsed accordion-button" data-bs-toggle="collapse" data-bs-target="#sanskrit-lang" aria-expanded="false">Sanskrit</button>          
+      <button class="btn d-inline-flex align-items-left collapsed accordion-button" data-bs-toggle="collapse" data-bs-target="#sanskrit-lang" aria-expanded="false" >Sanskrit</button>          
     </span>
       <ul id="sanskrit-lang" class="list-unstyled collapse second accordion-collapse" data-bs-parent="#alllanguages">
         <li class="text-type">
           <span class="accordion-header">
-          <a href="#" class="d-inline-flex btn collapsed accordion-button"  data-bs-toggle="collapse" data-bs-target="#san-sutta" aria-expanded="false">
+          <button class="d-inline-flex btn accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#san-sutta" aria-expanded="false" aria-expanded="false" role="menuitem">
             <translation>Discourses&nbsp;</translation>
             <root>Sūtras</root>
             <span class="info">
                         <blurb>Texts and fragments in Sanskrit. Some of these are canonical texts, while others are later texts that quote from or include passages from the early discourses.</blurb>
             </span>
-          </a>
+          </button>
           </span>
           <ul  id="san-sutta" class="collapse  third list-unstyled  accordion-collapse" data-bs-parent="#sanskrit-lang">
             <li>
@@ -3216,19 +3216,18 @@
         </li>
         <!-- end san-sutta -->        
         <li class="text-type">
-          <a href="#" class="d-inline-flex btn collapsed accordion-button"  data-bs-toggle="collapse" data-bs-target="#san-vin" aria-expanded="false">
-            <translation>Monastic Law</translation>
+          <button class="d-inline-flex btn accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#san-vin" aria-expanded="false" aria-expanded="false" role="menuitem">
+          <translation>Monastic Law</translation>
             <root>Vinaya</root>
               <span class="info">
                      <blurb>The texts on Monastic Law (vinaya) detail the lifestyle, rules, and procedures for Buddhist monks and nuns. They provide the guidelines for Buddhist monastics to this day, and in addition, paint a detailed and vivid picture of everyday life in ancient India.</blurb>
             </span>
-          </a>
+          </button>
           <ul class="list-unstyled collapse accordion-collapse third  accordion-collapse" data-bs-parent="#sanskrit-lang" id="san-vin">
             <li class="text-group">
-              <a href="#" class="expander"  data-bs-toggle="collapse" data-bs-target="#san-mg-vi" aria-expanded="false">
-                <title>expand</title>
+              <button class="expander" data-bs-toggle="collapse" data-bs-target="#san-mg-vi" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                 +
-              </a>
+                </button>
               <a href="https://suttacentral.net/san-mg-vi" class="btn d-inline-flex" class="btn d-inline-flex">
                 <chapterid>San Mg Vi</chapterid>
                 <translation>The Monastic Law of the Mahāsaṁghika School</translation>
@@ -3249,10 +3248,9 @@
             </li>
             <!-- end san-ms-vinaya -->
             <li class="text-type">
-              <a href="#" class="expander"  data-bs-toggle="collapse" data-bs-target="#san-lo-vi" aria-expanded="false">
-                <title>expand</title>
+              <button class="expander" data-bs-toggle="collapse" data-bs-target="#san-lo-vi" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                 +
-              </a>
+                </button>
               <a href="https://suttacentral.net/san-lo-vi" class="d-inline-flex btn">
                 <chapterid>San Lo Vi</chapterid>
                 <translation>Monastic Law of the Lokuttaravāda School</translation>
@@ -3293,10 +3291,10 @@
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="expander"  data-bs-toggle="collapse" data-bs-target="#san-lo-bi-vb" aria-expanded="false">
-                    <title>expand</title>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#san-lo-bi-vb" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                     +
-                  </a>
+
+                    </button>
                   <a href="https://suttacentral.net/san-lo-bi-vb" class="d-inline-flex btn">
                     <chapterid>San Lo Bi Vb</chapterid>
                     <translation>Nuns’ Rules and Their Analysis</translation>
@@ -3379,10 +3377,10 @@
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="expander"  data-bs-toggle="collapse" data-bs-target="#san-lo-bu-pm" aria-expanded="false">
-                    <title>expand</title>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#san-lo-bu-pm" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                     +
-                  </a>
+
+                    </button>
                   <a href="https://suttacentral.net/san-lo-bu-pm" class="d-inline-flex btn">
                     <chapterid>San Lo Bu Pm</chapterid>
                     <translation>Monks’ Rules</translation>
@@ -3498,11 +3496,11 @@
             </li>
             <!-- end san-lo-vi -->
             <li class="text-group">
-              <a href="#" class="expander"  data-bs-toggle="collapse" data-bs-target="#san-ot-vin" aria-expanded="false">+</a>
-              <a href="#" class="d-inline-flex btn"  data-bs-toggle="collapse" data-bs-target="#san-ot-vin" aria-expanded="false">
-                <chapterid></chapterid>
-                <translation>
-              Other Sanskrit Vinaya Texts</translation>
+              <button class="expander" data-bs-toggle="collapse" data-bs-target="#san-ot-vin" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
+              +
+
+              </button>
+              <translation> Other Sanskrit Vinaya Texts</translation>
               <root></root>
               <span class="info">
               <blurb>
@@ -3582,13 +3580,13 @@
           <!-- end san-vin -->
         </li>
         <li class="text-type">
-          <a href="#" class="d-inline-flex btn accordion-button collapsed"  data-bs-toggle="collapse" data-bs-target="#san-ab" aria-expanded="false">
-            <translation>Systematic Treastise&nbsp;</translation>
+          <button class="d-inline-flex btn accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#san-ab" aria-expanded="false" aria-expanded="false" role="menuitem">
+          <translation>Systematic Treastise&nbsp;</translation>
             <root>Abhidhamma</root>
             <span class="info">
                         <blurb>Abhidhamma texts are systematic summaries and analyses of the teachings drawn from the earlier discourses. The Abhidhamma (spelled abhidharma in Sanskrit) is intended for advanced students who have mastered the teachings of the discourses.</blurb>
             </span>
-          </a>
+          </button>
           <ul  id="san-ab" class="collapse  third list-unstyled  accordion-collapse" data-bs-parent="#sanskrit-lang">
             <li>
               <a href="https://suttacentral.net/san-sarv-ab" class="d-inline-flex btn">
@@ -3605,18 +3603,18 @@
     <!-- end sanskrit -->     
     <li class="text-language accordion-item">
        <span class="accordion-header">
-      <button class="btn d-inline-flex align-items-left collapsed accordion-button" data-bs-toggle="collapse" data-bs-target="#other-lang" aria-expanded="false">Other Languages</button>
+      <button class="btn d-inline-flex align-items-left collapsed accordion-button" data-bs-toggle="collapse" data-bs-target="#other-lang" aria-expanded="false" >Other Languages</button>
     </span>
       <ul id="other-lang"  class="list-unstyled collapse second accordion-collapse" data-bs-parent="#alllanguages">
         <li class="text-type sutta otherlang">
          <span class="accordion-header">        
-          <a href="#" class="d-inline-flex btn accordion-button collapsed"  data-bs-toggle="collapse" data-bs-target="#other-discourses" aria-expanded="false">
+          <button class="d-inline-flex btn accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#other-discourses" aria-expanded="false" aria-expanded="false" role="menuitem">
             <translation>Discourses</translation>
             <root>Sūtra</root>
              <span class="info">
                              <blurb>TThe Buddha’s teachings on meditation, morality, the nature of the world, and the path to freedom. These scriptures are our primary sources for the historical Buddha’s life and practice. They depict the Buddha and his students in lively conversation with a diverse range of people.</blurb>
            </span>
-          </a>
+          </button>
         </span>
           <ul id="other-discourses" class="collapse third list-unstyled  accordion-collapse" data-bs-parent="#other-lang" >
             <li class="text-group dhammapada">
@@ -3737,56 +3735,43 @@
         </li>
         <!-- end oth-sutta -->
         <li class="text-type vinaya otherlang">
-          <a href="#" class="d-inline-flex btn accordion-button collapsed"  data-bs-toggle="collapse" data-bs-target="#ot-vin" aria-expanded="false">
-            <translation>Monastic Law</translation>
+          <button class="d-inline-flex btn accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#ot-vin" aria-expanded="false" aria-expanded="false" role="menuitem">
+          <translation>Monastic Law</translation>
             <root>Vinaya</root>
              <span class="info">
                      <blurb>The texts on Monastic Law (vinaya) detail the lifestyle, rules, and procedures for Buddhist monks and nuns. They provide the guidelines for Buddhist monastics to this day, and in addition, paint a detailed and vivid picture of everyday life in ancient India.</blurb>
         </span>
-          </a>
+          </button>
           <ul  id="ot-vin" class="collapse  third  list-unstyled  accordion-collapse" data-bs-parent="#other-lang">
             <li class="text-group">
-              <a href="#" class="expander"  data-bs-toggle="collapse" data-bs-target="#pgd-dg-bu-pm" aria-expanded="false">
+              <button class="expander" data-bs-toggle="collapse" data-bs-target="#pgd-dg-bu-pm" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
         +
-        </a>
-              <a href="https://suttacentral.net/pgd-dg-bu-pm" class="d-inline-flex btn">
+
+        </button>
                 <chapterid></chapterid>
                 <translation>Monastic Law</translation>
                 <root>Gandhari Dharmaguptaka Vinaya</root>
               </a>
               <ul  id="pgd-dg-bu-pm" class="collapse  fourth  list-unstyled">
                 <li>
-                  <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#pgd-dg-pm">
-                    <title>expand</title>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#pgd-dg-pm" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                     +
-                  </a>
-                  <a href="https://suttacentral.net/pgd-dg-pm" class="d-inline-flex btn"  data-bs-toggle="collapse" data-bs-target="#pgd-pm" aria-expanded="false">
-                    <chapterid></chapterid>
+
+                    </button>
+                  <a href="https://suttacentral.net/pgd-dg-pm" class="d-inline-flex btn">
+                    <chapterid>pgd dg pm</chapterid>
                     <translation>Monks' Rules</translation>
                     <root>Bhikkhu Patimokkha</root>
                   </a>
-                  <ul class="fifth collapse list-unstyled" id="pgd-dg-pm">
-                    <li>
-                      <a href="https://suttacentral.net/pgd-pm-bf13-np" class="d-inline-flex btn">
-                        <chapterid></chapterid>
-                        <translation>Relinquishment With Confession </translation>
-                        <root>Nissaggiya Pācittiya</root>
-                        <span class="info">
-                                                <blurb></blurb>
-                        </span>
-                      </a>
-                    </li>
-                    <!-- end pgd bu pm -->
-                  </ul>
                 </li>
               </ul>
             </li>
             <!-- end pgd-dg-vinaya -->
             <li class="text-group">
-              <a href="#" class="expander"  data-bs-toggle="collapse" data-bs-target="#xct-ms-vin" aria-expanded="false">
-              <title>expand</title>
-                    +
-              </a>
+              <button class="expander" data-bs-toggle="collapse" data-bs-target="#xct-ms-vin" aria-expanded="false" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
+              +
+
+              </button>
               <a href="https://suttacentral.net/xct-mu-vi" class="d-inline-flex btn">
                 <chapterid></chapterid>
                 <translation>Monastic Law</translation>
@@ -3804,10 +3789,10 @@
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#xct-mu-bu-pm">
-                    <title>expand</title>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#xct-mu-bu-pm" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                     +
-                  </a>
+
+                    </button>
                   <a href="https://suttacentral.net/xct-mu-bu-pm" class="d-inline-flex btn">
                     <chapterid>Xct Mu Bu Pm</chapterid>
                     <translation>Code of Discipline for Monks</translation>
@@ -3830,10 +3815,10 @@
                   </ul>
                 </li>
                 <li>
-                  <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#xct-mu-bu-vb">
-                    <title>expand</title>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#xct-mu-bu-vb" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                     +
-                  </a>
+
+                    </button>
                   <a href="https://suttacentral.net/xct-mu-bu-vb" class="d-inline-flex btn">
                     <chapterid>Xct Mu Bu Vb</chapterid>
                     <translation>Monks’ Rules and Their Analysis </translation>
@@ -3857,10 +3842,10 @@
                 </li>
                 <!-- end xct mu bu vb  -->
                 <li>
-                  <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#xct-mu-bi-pm">
-                    <title>expand</title>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#xct-mu-bi-pm" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                     +
-                  </a>
+
+                    </button>
                   <a href="https://suttacentral.net/xct-mu-bi-pm" class="d-inline-flex btn">
                     <chapterid>Xct Mu Bi Pm</chapterid>
                     <translation>Nuns’ Rules </translation>
@@ -3884,10 +3869,10 @@
                 </li>
                 <!-- end xt mu bi pm -->
                 <li>
-                  <a href="#" class="expander" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#xct-mu-bi-vb">
-                    <title>expand</title>
+                  <button class="expander" data-bs-toggle="collapse" data-bs-target="#xct-mu-bi-vb" title="expand" description="expand menu"  aria-expanded="false" role="menuitem">
                     +
-                  </a>
+
+                    </button>
                   <a href="https://suttacentral.net/xct-mu-bi-vb" class="d-inline-flex btn">
                     <chapterid>Xct Mu Bi Vb</chapterid>
                     <translation>Nuns’ Rules and Their Analysis </translation>
