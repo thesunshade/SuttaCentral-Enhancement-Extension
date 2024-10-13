@@ -47,7 +47,7 @@ export default defineContentScript({
 
     // Example list of settings and their corresponding selectors
     const cssOverrides = [
-      { setting: "rootColor", selector: ".root .text" },
+      { setting: "rootColor", selector: ".root .text, .root" },
       { setting: "translationColor", selector: ".translation" },
     ];
 
