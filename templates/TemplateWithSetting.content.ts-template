@@ -1,0 +1,18 @@
+import ally from "ally.js";
+
+export default defineContentScript({
+  matches: ["*://suttacentral.net/*"],
+  main() {
+    // Check the setting before running the script
+    chrome.storage.sync.get("STORAGE_VARIABLE", data => {
+      const isEnabled = data["STORAGE_VARIABLE"] === "true"; // Convert to boolean
+
+      if (!isEnabled) {
+        return; // Exit if the setting is not enabled
+      }
+      console.log("STORAGE_VARIABLE is active");
+
+      // main code goes here
+    });
+  },
+});
