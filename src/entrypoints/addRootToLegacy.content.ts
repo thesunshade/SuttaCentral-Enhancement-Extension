@@ -19,6 +19,7 @@ function insertRoot(path: string) {
       return response.json(); // Parse the response as JSON
     })
     .then(data => {
+      console.log("data");
       console.log(data); // Handle the JSON data here
       if (data.segmented === true) {
         return;
@@ -36,7 +37,7 @@ function insertRoot(path: string) {
           //this contains the root data
           console.log(data);
           const rootInHtml = createRootInHtml(data);
-          console.log(rootInHtml);
+
           setTimeout(() => {
             //TODO this is not a great way to do this
             const main = document.getElementById("simple_text_content");
@@ -74,12 +75,18 @@ function insertRoot(path: string) {
               main.appendChild(rootStyle);
               main.appendChild(rootElement);
             }
-            const articles = document.getElementsByTagName("article");
-            for (let i = 0; i < articles.length; i++) {
-              articles[i].style.maxHeight = "100vh";
-              articles[i].style.overflowY = "scroll";
+            const legacyArticles = document.querySelectorAll("main#simple_text_content article");
+            console.log(legacyArticles);
+            for (let i = 0; i < legacyArticles.length; i++) {
+              legacyArticles[i].style.maxHeight = "100vh";
+              legacyArticles[i].style.overflowY = "scroll";
             }
-          }, 600);
+            // const articles = document.getElementsByTagName("article");
+            // for (let i = 0; i < articles.length; i++) {
+            //   articles[i].style.maxHeight = "100vh";
+            //   articles[i].style.overflowY = "scroll";
+            // }
+          }, 1000);
         });
     })
     .catch(error => {
