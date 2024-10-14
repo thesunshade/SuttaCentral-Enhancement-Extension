@@ -1,7 +1,22 @@
 import { querySelectorDeep } from "query-selector-shadow-dom";
 import ally from "ally.js";
+import isInputFocused from "./functions/isInputFocused";
+import onlyPressed from "./functions/onlyPressed";
 import menu from "./VpMenu/index.html?raw";
 import "./VpMenu/sc-custommenu.css";
+
+function toggleMenuWithKey(vpMenu, vpHamburger) {
+  // Keydown event listener to toggle the menu
+  document.addEventListener("keydown", (event: KeyboardEvent) => {
+    if (onlyPressed(event, "=") && !isInputFocused()) {
+      if (vpHamburger && vpMenu) {
+        toggleMenu(vpHamburger, vpMenu); // Toggle the menu visibility
+      } else {
+        console.log("Menu elements not found");
+      }
+    }
+  });
+}
 
 function closeMenuOnOutsideClick(navMenu: HTMLElement, vpHamburger: HTMLElement) {
   document.addEventListener("click", event => {
@@ -65,8 +80,9 @@ function toggleMenu(vpHamburger: HTMLElement, navMenu: HTMLElement) {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
     setTimeout(() => {
+      //TODO not
       navMenu.focus();
-      console.log("nav menu shoudl be focused");
+      console.log("nav menu should be focused");
     }, 500);
     // Set the position relative to the current scroll position
     navMenu.style.top = `${rect.bottom + 14 + scrollTop}px`;
@@ -129,6 +145,7 @@ export default defineContentScript({
       closeMenuOnClick(vpMenu.querySelectorAll("a"), vpMenu);
       closeMenuOnScroll(vpMenu);
       closeMenuOnOutsideClick(vpMenu, vpHamburger);
+      toggleMenuWithKey(vpMenu, vpHamburger);
     }
 
     function observeBreadCrumb(callback: (breadcrumb: HTMLElement) => void) {
