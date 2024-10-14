@@ -1,5 +1,7 @@
 import { querySelectorDeep } from "query-selector-shadow-dom";
 import ally from "ally.js";
+import isInputFocused from "./functions/isInputFocused";
+import onlyPressed from "./functions/onlyPressed";
 import menu from "./VpMenu/index.html?raw";
 import "./VpMenu/sc-custommenu.css";
 import { exactData } from "./data/exact.js";
@@ -125,6 +127,19 @@ function createInstantLookup() {
   return container;
 }
 
+function toggleMenuWithKey(vpMenu, vpHamburger) {
+  // Keydown event listener to toggle the menu
+  document.addEventListener("keydown", (event: KeyboardEvent) => {
+    if (onlyPressed(event, "=") && !isInputFocused()) {
+      if (vpHamburger && vpMenu) {
+        toggleMenu(vpHamburger, vpMenu); // Toggle the menu visibility
+      } else {
+        console.log("Menu elements not found");
+      }
+    }
+  });
+}
+
 function closeMenuOnOutsideClick(navMenu: HTMLElement, vpHamburger: HTMLElement) {
   document.addEventListener("click", event => {
     const target = event.target as HTMLElement;
@@ -175,9 +190,14 @@ function toggleMenu(vpHamburger: HTMLElement, navMenu: HTMLElement) {
     const rect = vpHamburger.getBoundingClientRect();
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
-
-    navMenu.style.top = `${rect.bottom + scrollTop}px`;
-    navMenu.style.left = `${rect.left + scrollLeft}px`;
+    setTimeout(() => {
+      //TODO not
+      navMenu.focus();
+      console.log("nav menu should be focused");
+    }, 500);
+    // Set the position relative to the current scroll position
+    navMenu.style.top = `${rect.bottom + 14 + scrollTop}px`;
+    navMenu.style.left = `${rect.left - 5 + scrollLeft}px`;
     navMenu.style.display = navMenu.style.display === "block" ? "none" : "block";
   }
 }
@@ -192,7 +212,7 @@ function injectStyles() {
       background-color: white;
       box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
       z-index: 1000;
-      border: 1px solid #ccc;
+      border: 2px 1px 0 1px solid var(--sc-dark-fixed-background-color);
       margin: 0;
       list-style: none;
       color: black;
@@ -265,6 +285,7 @@ export default defineContentScript({
       closeMenuOnClick(vpMenu.querySelectorAll("a"), vpMenu);
       closeMenuOnScroll(vpMenu);
       closeMenuOnOutsideClick(vpMenu, vpHamburger);
+      toggleMenuWithKey(vpMenu, vpHamburger);
     }
 
     function observeBreadCrumb(callback: (breadcrumb: HTMLElement) => void) {

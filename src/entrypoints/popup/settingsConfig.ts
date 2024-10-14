@@ -41,7 +41,7 @@ export const settingsConfig = {
     type: "paragraph",
   },
   vpMenuShow: {
-    label: "Add new navigationt menu under three bar menu icon in top left.",
+    label: "Add new navigationt menu under three bar menu icon in top left. <kbd>=</kbd> to toggle.",
     type: "checkbox",
     default: "true",
   },
