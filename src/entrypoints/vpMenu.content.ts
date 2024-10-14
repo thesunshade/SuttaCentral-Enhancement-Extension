@@ -64,10 +64,13 @@ function toggleMenu(vpHamburger: HTMLElement, navMenu: HTMLElement) {
     const rect = vpHamburger.getBoundingClientRect();
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
-
+    setTimeout(() => {
+      navMenu.focus();
+      console.log("nav menu shoudl be focused");
+    }, 500);
     // Set the position relative to the current scroll position
-    navMenu.style.top = `${rect.bottom + scrollTop}px`;
-    navMenu.style.left = `${rect.left + scrollLeft}px`;
+    navMenu.style.top = `${rect.bottom + 14 + scrollTop}px`;
+    navMenu.style.left = `${rect.left - 5 + scrollLeft}px`;
     navMenu.style.display = navMenu.style.display === "block" ? "none" : "block";
   } else {
     // console.log("Navigation menu not found.");
@@ -85,7 +88,7 @@ function injectStyles() {
       background-color: white;
       box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
       z-index: 1000;
-      border: 1px solid #ccc;
+      border: 2px 1px 0 1px solid var(--sc-dark-fixed-background-color);
       margin: 0;
       list-style: none;
       color: black;

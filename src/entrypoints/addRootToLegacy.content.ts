@@ -19,6 +19,7 @@ function insertRoot(path: string) {
       return response.json(); // Parse the response as JSON
     })
     .then(data => {
+      console.log("data");
       console.log(data); // Handle the JSON data here
       if (data.segmented === true) {
         return;
@@ -36,7 +37,7 @@ function insertRoot(path: string) {
           //this contains the root data
           console.log(data);
           const rootInHtml = createRootInHtml(data);
-          console.log(rootInHtml);
+
           setTimeout(() => {
             //TODO this is not a great way to do this
             const main = document.getElementById("simple_text_content");
