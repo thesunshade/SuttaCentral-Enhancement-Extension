@@ -198,7 +198,7 @@ export const settingsConfig = {
     default: "true",
   },
   showBlurbsExcludeSites: {
-    label: "Sites to not show sutta summaries on. Put each site on a new line. <strong>NOTE: this setting onlly works on Chrome type browsers.</strong>",
+    label: "Sites to not show sutta summaries on. Put each site on a new line. <br><strong>NOTE: ⚠️ This setting onlly works on Chrome type browsers.</strong>",
     type: "textarea",
     default: "index.readingfaithfully.org\nsutta.readingfaithfully.org",
   },
@@ -220,7 +220,7 @@ export const settingsConfig = {
     type: "heading",
   },
   ddFavicon: {
-    label: "Give the forum a unique favicon.",
+    label: "Give the forum a unique favicon. ⚠️Experimental",
     type: "checkbox",
     default: "true",
   },
