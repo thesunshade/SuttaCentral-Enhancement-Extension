@@ -3,7 +3,7 @@ import { settingsConfig } from "./popup/settingsConfig.js";
 const typedSettingsConfig: SettingsConfigType = settingsConfig as SettingsConfigType;
 
 type SettingConfig = {
-  label: string;
+  label?: string;
   type: string;
   choices?: string[];
   default?: string;
@@ -308,22 +308,26 @@ export default defineBackground(() => {
 
   // Handle context menu item clicks
   chrome.contextMenus.onClicked.addListener((info, tab) => {
+    if (!info.selectionText) {
+      // If selectionText is undefined or empty, exit early.
+      return;
+    }
+    const citation = encodeURIComponent(info.selectionText.replace(/ /g, "").replace(":", ".").trim().toLowerCase());
+    const searchString = encodeURIComponent(info.selectionText);
     if (info.menuItemId === "searchSuttaCentral" && info.selectionText) {
-      const searchUrl = `https://suttacentral.net/search?query=${encodeURIComponent(info.selectionText)}`;
+      const searchUrl = `https://suttacentral.net/search?query=${searchString}`;
       chrome.tabs.create({ url: searchUrl });
     } else if (info.menuItemId === "searchDD" && info.selectionText) {
-      const searchUrl = `https://discourse.suttacentral.net/search?q=${encodeURIComponent(info.selectionText)}`;
+      const searchUrl = `https://discourse.suttacentral.net/search?q=${searchString}`;
       chrome.tabs.create({ url: searchUrl });
     } else if (info.menuItemId === "goToCitationSuttaplex" && info.selectionText) {
-      const citation = encodeURIComponent(info.selectionText.replace(/ /g, "").trim());
       const searchUrl = `https://suttacentral.net/${citation}`;
       chrome.tabs.create({ url: searchUrl });
     } else if (info.menuItemId === "goToCitation" && info.selectionText) {
-      const citation = encodeURIComponent(info.selectionText.replace(/ /g, "").trim());
-      const searchUrl = `https://suttacentral.net/${citation}/en/sujato`;
+      const searchUrl = `https://suttacentral.net/${citation}/xx/xx`;
       chrome.tabs.create({ url: searchUrl });
     } else if (info.menuItemId === "searchPtsCitation" && info.selectionText) {
-      const searchUrl = `https://suttacentral.net/search?query=volpage:${encodeURIComponent(info.selectionText)}`;
+      const searchUrl = `https://suttacentral.net/search?query=volpage:${searchString}`;
       chrome.tabs.create({ url: searchUrl });
     }
   });
@@ -402,15 +406,4 @@ export default defineBackground(() => {
 
   // Add this to check if the script is loaded
   console.log("Background script loaded");
-
-  // Check if hoverForBlurbs.content.js exists
-  // fetch(chrome.runtime.getURL("hoverForBlurbs.content.ts"))
-  //   .then(response => {
-  //     if (response.ok) {
-  //       console.log("hoverForBlurbs.content.js file exists");
-  //     } else {
-  //       console.error("hoverForBlurbs.content.js file not found");
-  //     }
-  //   })
-  //   .catch(error => console.error("Error checking for hoverForBlurbs.content.js:", error));
 });
