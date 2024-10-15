@@ -2,7 +2,7 @@ export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
     function applyAddedTextBrackets(shouldApply: string) {
-      console.log(`[ ] added text brackets: ${shouldApply === "true" ? "applied" : "removed"}`);
+      console.info(`[ ] added text brackets: ${shouldApply === "true" ? "applied" : "removed"}`);
 
       const existingStyle = document.getElementById("added-text-brackets");
       if (existingStyle) {

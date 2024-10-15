@@ -101,7 +101,6 @@ function createRootInHtml(jsonData: any) {
 
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
-
   main() {
     // Check the setting before running the script
     chrome.storage.sync.get("rootOnLegacy", data => {
