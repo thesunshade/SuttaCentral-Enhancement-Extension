@@ -235,7 +235,6 @@ function injectStyles() {
       border: 1px solid #ccc;
       width: 575px;
       position: absolute;
-      background-color: #f9b20f;
       max-height: 200px;
       overflow-y: auto;
       display: none;
@@ -245,7 +244,9 @@ function injectStyles() {
     display: block;
       padding: 8px;
       cursor: pointer;
-      text-decoration:none
+      text-decoration:none;
+      color:black;
+      background-color:white;
     }
     .dropdown-item code {
       background-color: rgb(222, 222, 222);
