@@ -16,7 +16,16 @@ function createInstantLookup() {
   input.type = "text";
   input.id = "searchInput";
   input.className = "search-box";
-  input.placeholder = "Enter citation or text name…";
+  input.placeholder = "Jump to a sutta…";
+  input.focus();
+
+  input.addEventListener("focus", function () {
+    input.placeholder = "Enter a citation or text name";
+  });
+
+  input.addEventListener("blur", function () {
+    input.placeholder = "Jump to a sutta";
+  });
 
   input.addEventListener("keydown", (e: KeyboardEvent) => {
     // Allow keyboard navigation within the dropdown
@@ -46,7 +55,7 @@ function createInstantLookup() {
   };
 
   const performSearch = (query: string) => {
-    const normalizedQuery = query.startsWith("dhp") || query.startsWith("vv") ? query : normalizeString(query);
+    const normalizedQuery = normalizeString(query);
 
     if (normalizedQuery.length >= 2) {
       results = normalizedData
@@ -67,23 +76,27 @@ function createInstantLookup() {
 
   const displayResults = (results: Array<{ normStr: string; exact: string }>) => {
     dropdown.innerHTML = "";
-    results.forEach((result, index) => {
-      const item = document.createElement("div");
+    results.forEach(result => {
+      const item = document.createElement("a"); // Change to 'a' element
       item.classList.add("dropdown-item");
       item.innerHTML = result.exact;
-      item.addEventListener("click", () => selectResult(result.exact));
+
+      // Construct the URL for the link
+      const baseUrl = "https://suttacentral.net/";
+      let firstPart = result.exact.split(" ")[0].replace(/<\/?code>/g, "");
+      const url = `${baseUrl}${firstPart}/xx/xx`;
+
+      item.href = url; // Set the href attribute
+      item.target = "_blank"; // Optional: open in a new tab
+      item.rel = "noopener noreferrer"; // Optional: security best practices
+
+      // Remove the click listener as it's no longer needed
+      // item.addEventListener("click", () => selectResult(result.exact));
+
       dropdown.appendChild(item);
     });
 
     dropdown.style.display = results.length > 0 ? "block" : "none";
-  };
-
-  const selectResult = (exactValue: string) => {
-    const baseUrl = "https://suttacentral.net/";
-    let firstPart = exactValue.split(" ")[0];
-    firstPart = firstPart.replace(/<\/?code>/g, "");
-    const url = `${baseUrl}${firstPart}/xx/xx`;
-    window.location.href = url;
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -190,11 +203,6 @@ function toggleMenu(vpHamburger: HTMLElement, navMenu: HTMLElement) {
     const rect = vpHamburger.getBoundingClientRect();
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
-    setTimeout(() => {
-      //TODO not
-      navMenu.focus();
-      console.log("nav menu should be focused");
-    }, 500);
     // Set the position relative to the current scroll position
     navMenu.style.top = `${rect.bottom + 14 + scrollTop}px`;
     navMenu.style.left = `${rect.left - 5 + scrollLeft}px`;
@@ -234,8 +242,10 @@ function injectStyles() {
       z-index:500000
     }
     .dropdown-item {
+    display: block;
       padding: 8px;
       cursor: pointer;
+      text-decoration:none
     }
     .dropdown-item code {
       background-color: rgb(222, 222, 222);
