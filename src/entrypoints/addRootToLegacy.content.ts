@@ -7,7 +7,7 @@ function insertRoot(path: string) {
   const authorUid = pathParts[3];
 
   const SUTTA_API_URL = `https://suttacentral.net/api/suttas/${uid}/${authorUid}`;
-
+  console.log(SUTTA_API_URL);
   fetch(SUTTA_API_URL)
     .then(response => {
       // Check if the response is ok (status in the range 200-299)
@@ -17,6 +17,8 @@ function insertRoot(path: string) {
       return response.json(); // Parse the response as JSON
     })
     .then(data => {
+      console.log(data.segmented);
+      console.log(data);
       if (data.segmented === true) {
         return;
       }
@@ -72,8 +74,9 @@ function insertRoot(path: string) {
             const legacyArticles = document.querySelectorAll("main#simple_text_content article");
 
             for (let i = 0; i < legacyArticles.length; i++) {
-              legacyArticles[i].style.maxHeight = "100vh";
-              legacyArticles[i].style.overflowY = "scroll";
+              const article = legacyArticles[i] as HTMLElement; // Cast to HTMLElement
+              article.style.maxHeight = "100vh";
+              article.style.overflowY = "scroll";
             }
           }, 1000);
         });
