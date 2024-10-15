@@ -69,7 +69,7 @@ function copyMarkdownLink() {
     if (suttaData?.author && suttaData?.title && suttaData?.citation) {
       const values = {
         author: suttaData.author,
-        title: suttaData.title,
+        title: suttaData.title.trim(),
         citation: suttaData.citation,
         originalTitle: suttaData.originalTitle,
         publication_date: suttaData.publication_date,
