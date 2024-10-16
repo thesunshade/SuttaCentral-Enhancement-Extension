@@ -236,7 +236,7 @@ function injectStyles() {
       max-height: 200px;
       overflow-y: auto;
       display: none;
-      z-index:500000
+      z-index:900000
     }
     .dropdown-item {
     display: block;
@@ -252,7 +252,7 @@ function injectStyles() {
     }
     .dropdown-item:hover,
     .dropdown-item.active {
-      background-color: #d3d3d3;
+      background-color: var(--sc-primary-color-light-transparent);
     }
   `;
   document.head.appendChild(style);
