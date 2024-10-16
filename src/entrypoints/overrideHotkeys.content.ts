@@ -3,7 +3,7 @@ import isInputFocused from "./functions/isInputFocused.js";
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
-    console.info("⌨️ make key substitutions with debugging");
+    console.info("⌨️ make key substitutions");
 
     // Define key substitutions as an object
     const keySubstitutions: { [key: string]: string } = {
@@ -20,12 +20,9 @@ export default defineContentScript({
     };
 
     document.addEventListener("keydown", function (event) {
-      // Debugging the pressed key
-      //   console.log("Key pressed:", event.key);
-
       // Don't trigger spoofing if an input, textarea, select, button, or contenteditable is focused
       if (isInputFocused()) {
-        // console.log("Input is focused, no spoofing."); // Log if we're skipping due to focus
+        // console.log("Input is focused, no spoofing.");
         return;
       }
 
