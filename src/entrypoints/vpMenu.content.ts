@@ -214,11 +214,8 @@ function injectStyles() {
   const style = document.createElement("style");
   style.textContent = `
     #vpNavigationMenu {
-      width:575px;
       display: none;
       position: absolute;
-      background-color: white;
-      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
       z-index: 1000;
       border: 2px 1px 0 1px solid var(--sc-dark-fixed-background-color);
       margin: 0;
@@ -238,7 +235,7 @@ function injectStyles() {
       max-height: 200px;
       overflow-y: auto;
       display: none;
-      z-index:500000
+      z-index:900000
     }
     .dropdown-item {
     display: block;
@@ -256,7 +253,7 @@ function injectStyles() {
     }
     .dropdown-item:hover,
     .dropdown-item.active {
-      background-color: #d3d3d3;
+      background-color: var(--sc-primary-color-light-transparent);
     }
   `;
   document.head.appendChild(style);
