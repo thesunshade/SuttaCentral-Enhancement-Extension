@@ -262,7 +262,7 @@ function injectStyles() {
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
-    const vpHamburger = document.createElement("div");
+    const vpHamburger = document.createElement("button");
     vpHamburger.id = "vpHamburger";
     vpHamburger.innerHTML = `
       <svg width="15" height="15" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">

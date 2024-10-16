@@ -331,9 +331,9 @@ aside {
 .scc-links li a:hover {
     text-decoration: none;
     transition: opacity 0.3s;
-    color:black;
+    color: black;
     background-color: var(--sc-primary-color-light-transparent);
-    text-shadow:none;
+    text-shadow: none;
 }
 
 
@@ -351,7 +351,7 @@ aside {
 
 chapterid {
     margin-right: 5px;
-        width: 75px;
+    width: 75px;
     padding-left: 15px;
 
 
@@ -382,7 +382,7 @@ chapterid {
     text-transform: uppercase;
     vertical-align: baseline;
     line-height: 22px;
-    padding-left:0;
+    padding-left: 0;
     font-weight: 600;
     letter-spacing: 0.3008px
 }
@@ -514,7 +514,7 @@ ul.third a.btn {
 
 
 
-.third li{
+.third li {
     font-size: 18px;
     line-height: 20px;
     font-weight: 500;
@@ -522,6 +522,7 @@ ul.third a.btn {
     padding-left: 0px;
     padding-bottom: 5px;
 }
+
 .third li:hover {
     border-bottom: 1px solid #fff;
     background-color: var(--sc-primary-color-light-transparent);
@@ -532,8 +533,9 @@ ul.third a.btn {
     padding-bottom: 0;
     color: #333;
 }
-.third li > button.expander{
-    margin-left:15px;
+
+.third li>button.expander {
+    margin-left: 15px;
 }
 
 
@@ -545,8 +547,9 @@ ul.third a.btn {
     padding-left: 19px;
 
 }
-.fourth li{
-    background-color:var(--sc-secondary-background-color);
+
+.fourth li {
+    background-color: var(--sc-secondary-background-color);
 }
 
 .fourth li,
@@ -738,19 +741,4 @@ blurb {
     color: white;
     text-shadow: none;
     z-index: 99999999999;
-}
-
-#setting_menu{
-  background-color: var(--sc-inverted-text-color);
-  display: inherit;
-  overflow: hidden scroll;
-  width: 385px;
-  right: 0px;
-  height: 60vh;
-  padding-left: 5px;
-  padding-bottom: 15px;
-  position: absolute;
-  border: 1px solid var(--sc-border-color);
-  box-shadow: var(--sc-shadow-elevation-1dp);
-  line-height: 190%;
 }
