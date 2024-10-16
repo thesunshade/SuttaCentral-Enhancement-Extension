@@ -26,8 +26,9 @@ export default defineContentScript({
             console.warn("No main element found in the document.");
             return null;
           }
-          const innerText = mainElement.innerText;
-
+          let innerText = mainElement.innerText;
+          innerText = innerText.replace(/⏱️.+?\)\n\n/, "");
+          console.log(innerText);
           // Log the inner text to the console
 
           navigator.clipboard
