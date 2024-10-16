@@ -1,4 +1,4 @@
-import { allSuttasPaliNameArray } from "./ddBlurbs.content/allSuttasPaliNameArray.js";
+import { allSuttasPaliNameArray } from "./data/allSuttasPaliNameArray.js";
 import { settingsConfig } from "./popup/settingsConfig.js";
 const typedSettingsConfig: SettingsConfigType = settingsConfig as SettingsConfigType;
 
@@ -333,21 +333,20 @@ export default defineBackground(() => {
   });
 
   // dynamically loading `hoverForBlurbs.content.ts`
+  async function updateHoverBlurbsContentScript() {
+    function processExcludeSites(sites: string): string[] {
+      console.log("Processing exclude sites:", sites);
+      const processed = sites
+        .split("\n")
+        .map(site => site.trim())
+        .map(site => site.replace(/^(https?:\/\/)?(www\.)?/, ""))
+        .map(site => site.split("/")[0])
+        .filter(Boolean)
+        .map(site => `*://${site}/*`);
+      console.log("Processed exclude sites:", processed);
+      return processed;
+    }
 
-  function processExcludeSites(sites: string): string[] {
-    console.log("Processing exclude sites:", sites);
-    const processed = sites
-      .split("\n")
-      .map(site => site.trim())
-      .map(site => site.replace(/^(https?:\/\/)?(www\.)?/, ""))
-      .map(site => site.split("/")[0])
-      .filter(Boolean)
-      .map(site => `*://${site}/*`);
-    console.log("Processed exclude sites:", processed);
-    return processed;
-  }
-
-  async function registerContentScript() {
     console.log("Attempting to register content script");
     try {
       const result = await chrome.storage.sync.get("showBlurbsExcludeSites");
@@ -390,7 +389,7 @@ export default defineBackground(() => {
   }
 
   // Call this function when your extension starts up
-  registerContentScript().catch(error => {
+  updateHoverBlurbsContentScript().catch(error => {
     console.error("Failed to register content script on startup:", error);
   });
 
@@ -398,7 +397,7 @@ export default defineBackground(() => {
   chrome.storage.onChanged.addListener((changes, area) => {
     if (area === "sync" && changes.showBlurbsExcludeSites) {
       console.log("showBlurbsExcludeSites changed. New value:", changes.showBlurbsExcludeSites.newValue);
-      registerContentScript().catch(error => {
+      updateHoverBlurbsContentScript().catch(error => {
         console.error("Failed to update content script after settings change:", error);
       });
     }
