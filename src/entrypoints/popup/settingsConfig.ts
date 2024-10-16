@@ -1,3 +1,5 @@
+import overrideHotkeysContent from "../overrideHotkeys.content";
+
 export const settingsConfig = {
   displayOptionsHeading: {
     label: "Display Options",
@@ -150,6 +152,29 @@ export const settingsConfig = {
     label: "<kbd>,</kbd> to <strong>select only root</strong> language",
     type: "checkbox",
     default: "true",
+  },
+  mirrorHotkeys: {
+    label: "Mirror the native SuttaCentral hotkeys to number keys. This could be useful for non-latin keyboard users. ⚠️ Experimental",
+    type: "checkbox",
+    default: "false",
+  },
+  mirrorHotkeysDetails: {
+    type: "details",
+    summary: "Key mapping",
+    content: `<p>The following keys will be mirrored. Original keys will still work.</p>
+    <ul>
+      <li><kbd>v</kbd> ⇒ <kbd>1</kbd></li>
+      <li><kbd>s</kbd> ⇒ <kbd>2</kbd></li>
+      <li><kbd>n</kbd> ⇒ <kbd>3</kbd></li>
+      <li><kbd>m</kbd> ⇒ <kbd>4</kbd></li>
+      <li><kbd>t</kbd> ⇒ <kbd>5</kbd></li>
+      <li><kbd>r</kbd> ⇒ <kbd>6</kbd></li>
+      <li><kbd>i</kbd> ⇒ <kbd>7</kbd></li>
+      <li><kbd>o</kbd> ⇒ <kbd>8</kbd></li>
+      <li><kbd>p</kbd> ⇒ <kbd>9</kbd></li>
+      <li><kbd>Escape</kbd> ⇒ <kbd>0</kbd></li>
+    </ul>
+    `,
   },
   displayOptionsContextHeading: {
     label: "Context Menu",
