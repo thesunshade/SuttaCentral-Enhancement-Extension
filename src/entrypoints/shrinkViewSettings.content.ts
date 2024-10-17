@@ -17,21 +17,22 @@ export default defineContentScript({
 
         const settingsStyleElement = document.createElement("style");
         settingsStyleElement.innerHTML = `#setting_menu{
-  background-color: var(--sc-inverted-text-color);
+                background-color: var(--sc-inverted-text-color);
 
-  overflow: hidden scroll;
-  width: 385px;
-  right: 0px;
-  height: 60vh;
-  padding-left: 5px;
-  padding-bottom: 15px;
-  position: absolute;
-  border: 1px solid var(--sc-border-color);
-  box-shadow: var(--sc-shadow-elevation-1dp);
-  line-height: 190%;
-}`;
-
-        outerSetting.parentNode.insertBefore(settingsStyleElement, outerSetting);
+                overflow: hidden scroll;
+                width: 385px;
+                right: 0px;
+                height: 60vh;
+                padding-left: 5px;
+                padding-bottom: 15px;
+                position: absolute;
+                border: 1px solid var(--sc-border-color);
+                box-shadow: var(--sc-shadow-elevation-1dp);
+                line-height: 190%;
+              }`;
+        if (outerSetting?.parentNode !== null && outerSetting !== null) {
+          outerSetting.parentNode.insertBefore(settingsStyleElement, outerSetting);
+        }
 
         // not sure if the below does anything
         const labelsWithRadio = innerSetting.querySelectorAll("div.tools div.form-controls label:has(md-radio)");
@@ -72,7 +73,7 @@ export default defineContentScript({
           (element as HTMLElement).style.borderRight = "0";
         });
         const settingsSectionToolsfirst = innerSetting.querySelectorAll(".tools:first-of-type");
-        settingsSectionTools.forEach(element => {
+        settingsSectionToolsfirst.forEach(element => {
           (element as HTMLElement).style.borderBottom = "margin-left:0";
         });
 
