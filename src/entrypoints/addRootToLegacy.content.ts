@@ -7,7 +7,7 @@ function insertRoot(path: string) {
   const authorUid = pathParts[3];
 
   const SUTTA_API_URL = `https://suttacentral.net/api/suttas/${uid}/${authorUid}`;
-  console.log(SUTTA_API_URL);
+
   fetch(SUTTA_API_URL)
     .then(response => {
       // Check if the response is ok (status in the range 200-299)
@@ -17,8 +17,6 @@ function insertRoot(path: string) {
       return response.json(); // Parse the response as JSON
     })
     .then(data => {
-      console.log(data.segmented);
-      console.log(data);
       if (data.segmented === true) {
         return;
       }

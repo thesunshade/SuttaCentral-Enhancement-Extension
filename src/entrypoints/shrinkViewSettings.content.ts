@@ -30,12 +30,12 @@ export default defineContentScript({
   box-shadow: var(--sc-shadow-elevation-1dp);
   line-height: 190%;
 }`;
-        console.log(outerSetting);
+
         outerSetting.parentNode.insertBefore(settingsStyleElement, outerSetting);
 
         // not sure if the below does anything
         const labelsWithRadio = innerSetting.querySelectorAll("div.tools div.form-controls label:has(md-radio)");
-        // console.log(labelsWithRadio);
+
         labelsWithRadio.forEach(label => {
           const labelElement = label as HTMLElement; // Cast to HTMLElement
 
@@ -49,7 +49,7 @@ export default defineContentScript({
         });
 
         const labelsWithCheckbox = innerSetting.querySelectorAll("div.tools div.form-controls label:has(md-checkbox)");
-        // console.log(labelsWithRadio);
+
         labelsWithCheckbox.forEach(label => {
           const labelElement = label as HTMLElement; // Cast to HTMLElement
 
