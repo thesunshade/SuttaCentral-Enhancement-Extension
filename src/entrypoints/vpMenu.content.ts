@@ -12,12 +12,35 @@ function createInstantLookup() {
   const container = document.createElement("div");
   container.className = "instant-lookup";
 
+  // Create wrapper to hold input and button
+  const wrapper = document.createElement("div");
+  wrapper.className = "input-wrapper";
+  container.appendChild(wrapper);
+
   const input = document.createElement("input");
   input.type = "text";
-  input.id = "searchInput";
-  input.className = "search-box";
+  input.id = "instantLookupInput";
+  input.className = "instant-lookup-box";
   input.placeholder = "Jump to a sutta…";
-  input.focus();
+
+  const label = document.createElement("label");
+  label.htmlFor = "instantLookupInput"; // Associate the label with the input field
+  label.textContent = "Enter citation or sutta name for instant lookup";
+  label.className = "sr-only"; // Apply hidden style
+
+  container.appendChild(label);
+  wrapper.appendChild(input);
+
+  // Create the clear button
+  const clearButton = document.createElement("button");
+  clearButton.className = "clear-button";
+  clearButton.innerHTML = "✖";
+  wrapper.appendChild(clearButton);
+
+  // Add event listener to clear the input when the button is clicked
+  clearButton.addEventListener("click", () => {
+    input.value = "";
+  });
 
   input.addEventListener("focus", function () {
     input.placeholder = "Enter a citation or text name";
@@ -40,8 +63,49 @@ function createInstantLookup() {
   dropdown.id = "dropdown";
   dropdown.className = "dropdown";
 
-  container.appendChild(input);
+  container.appendChild(wrapper);
   container.appendChild(dropdown);
+
+  // Style the input and button
+  const style = document.createElement("style");
+  style.innerHTML = `
+  .input-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+
+  .instant-lookup-box {
+    padding-right: 30px; /* Make room for the button inside the input */
+  }
+
+  .clear-button {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 18px; /* Adjust font size to match your design */
+    color: black
+  }
+
+  .clear-button:hover {
+    opacity: .6;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+`;
+  document.head.appendChild(style);
 
   let activeIndex = -1;
   let results: Array<{ normStr: string; exact: string }> = [];
@@ -145,7 +209,7 @@ function toggleMenuWithKey(vpMenu, vpHamburger) {
   document.addEventListener("keydown", (event: KeyboardEvent) => {
     if (onlyPressed(event, "=") && !isInputFocused()) {
       if (vpHamburger && vpMenu) {
-        toggleMenu(vpHamburger, vpMenu); // Toggle the menu visibility
+        toggleMenu(vpHamburger, vpMenu, event); // Toggle the menu visibility
       } else {
         console.log("Menu elements not found");
       }
@@ -198,7 +262,8 @@ function closeMenuOnScroll(navMenu: HTMLElement) {
   });
 }
 
-function toggleMenu(vpHamburger: HTMLElement, navMenu: HTMLElement) {
+function toggleMenu(vpHamburger: HTMLElement, navMenu: HTMLElement, event) {
+  console.log("menu toggle");
   if (navMenu) {
     const rect = vpHamburger.getBoundingClientRect();
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -207,6 +272,12 @@ function toggleMenu(vpHamburger: HTMLElement, navMenu: HTMLElement) {
     navMenu.style.top = `${rect.bottom + 14 + scrollTop}px`;
     navMenu.style.left = `${rect.left - 5 + scrollLeft}px`;
     navMenu.style.display = navMenu.style.display === "block" ? "none" : "block";
+    const inputBox = querySelectorDeep("#instantLookupInput");
+    console.log(inputBox);
+    event.preventDefault();
+    // setTimeout(() => {
+    inputBox.focus();
+    // }, 1050);
   }
 }
 
@@ -222,7 +293,7 @@ function injectStyles() {
       list-style: none;
       color: black;
     }
-    .search-box {
+    .instant-lookup-box {
       width: 575px;
       padding: 8px;
       border: 1px solid #ccc;
@@ -235,7 +306,8 @@ function injectStyles() {
       max-height: 200px;
       overflow-y: auto;
       display: none;
-      z-index:900000
+      z-index:900000;
+      background-color: var(--sc-secondary-background-color);
     }
     .dropdown-item {
     display: block;
@@ -273,6 +345,8 @@ export default defineContentScript({
     `;
     vpHamburger.style.cursor = "pointer";
     vpHamburger.style.marginLeft = "10px";
+    vpHamburger.style.setProperty("background-color", "transparent", "important");
+    vpHamburger.style.border = "solid 0px black";
 
     function handleBreadCrumb(breadcrumb: HTMLElement) {
       breadcrumb.insertBefore(vpHamburger, breadcrumb.firstChild);
@@ -288,7 +362,7 @@ export default defineContentScript({
 
       injectStyles();
 
-      vpHamburger.addEventListener("click", () => toggleMenu(vpHamburger, vpMenu));
+      vpHamburger.addEventListener("click", event => toggleMenu(vpHamburger, vpMenu, event));
 
       closeMenuOnClick(vpMenu.querySelectorAll("a"), vpMenu);
       closeMenuOnScroll(vpMenu);
