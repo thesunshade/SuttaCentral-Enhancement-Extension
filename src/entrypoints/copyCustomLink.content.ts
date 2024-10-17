@@ -99,7 +99,7 @@ export default defineContentScript({
   main() {
     chrome.storage.sync.get("copyCustomLink", ({ copyCustomLink }) => {
       if (copyCustomLink === "true") {
-        console.log("⌨️ 'l' to copy markdown link is active");
+        console.info("⌨️ 'l' to copy markdown link is active");
 
         observeDOMForUpdates();
         document.addEventListener("keydown", event => {
