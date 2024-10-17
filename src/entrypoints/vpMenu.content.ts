@@ -56,6 +56,7 @@ function createInstantLookup() {
       return;
     }
     // Prevent propagation for all other keys
+    e.preventDefault();
     e.stopPropagation();
   });
 
@@ -161,6 +162,14 @@ function createInstantLookup() {
     });
 
     dropdown.style.display = results.length > 0 ? "block" : "none";
+  };
+
+  const selectResult = (exactValue: string) => {
+    const baseUrl = "https://suttacentral.net/";
+    let firstPart = exactValue.split(" ")[0];
+    firstPart = firstPart.replace(/<\/?code>/g, "");
+    const url = `${baseUrl}${firstPart}/xx/xx`;
+    window.location.href = url;
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
