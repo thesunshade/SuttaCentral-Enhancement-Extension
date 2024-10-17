@@ -258,7 +258,19 @@ export const settingsConfig = {
     label: "The following are at your own risk. Only use if you know what you are doing",
     type: "paragraph",
   },
-
+  customCssDetails: {
+    type: "details",
+    summary: "Click for instructions",
+    content: `<p>Custom css will let you tailor the display of the site to your own needs. But beware! It's easy to break things. So if you ever have problems viewing the site, the first thing to try is to remove any of these.</p>
+    <p>Here are some ideas:</p>
+    <dl>
+    <dt>Change translation font size</dt>
+    <dd><code>.translation {font-size:140%}</code></dd>
+    <dt>Change notes font size</dt>
+    <dd><code>.comment {font-size:120%!important}</code></dd>
+    </dl>
+    `,
+  },
   customScCss: {
     label: "Add custom CSS to the main SuttaCentral.net website.",
     type: "textarea",
@@ -268,5 +280,13 @@ export const settingsConfig = {
     label: "Add custom CSS to the SC forum website.",
     type: "textarea",
     default: "",
+  },
+  supportHeading: {
+    label: "Support",
+    type: "heading",
+  },
+  supportDescription: {
+    label: `There are several ways to offer feedback and get support. The best is to post a comment in <a href="https://discourse.suttacentral.net/t/developing-a-browser-plugin-for-suttacentral/36074"  rel="noreferrer" target="_blank">this discussion</a> on the official SuttaCentral discussion forum. You can also use the <a href="https://readingfaithfully.org/contact/" rel="noreferrer" target="_blank">contact form</a> on ReadingFaithfully.org.`,
+    type: "paragraph",
   },
 };

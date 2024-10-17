@@ -28,7 +28,6 @@ export default defineContentScript({
           }
           let innerText = mainElement.innerText;
           innerText = innerText.replace(/⏱️.+?\)\n\n/, "");
-          console.log(innerText);
           // Log the inner text to the console
 
           navigator.clipboard

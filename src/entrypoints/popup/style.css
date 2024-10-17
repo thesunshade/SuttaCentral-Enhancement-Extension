@@ -78,7 +78,7 @@ h1 {
 }
 
 h2 {
-  margin-top: .5rem;
+  margin-top: 1rem;
   font-weight: bold;
 }
 
@@ -87,6 +87,10 @@ p {
   margin-bottom: .2rem;
   margin-top: .2rem;
   line-height: 1.2;
+}
+
+.form-group {
+  margin-top: .2rem;
 }
 
 .form-group:has(input[type="text"]) {
@@ -137,4 +141,18 @@ li {
 textarea {
   width: 90%;
   height: 4rem
+}
+
+code {
+  background-color: rgb(74, 74, 74);
+}
+
+details div {
+  border-left: solid 2px rgba(255, 255, 255, 0.87);
+  padding-left: 8px;
+  margin-left: 4px
+}
+
+a {
+  color: rgb(216, 148, 0);
 }

@@ -50,14 +50,16 @@ function createInstantLookup() {
     input.placeholder = "Jump to a sutta";
   });
 
+  // prevent hotkeys from firing
   input.addEventListener("keydown", (e: KeyboardEvent) => {
-    // Allow keyboard navigation within the dropdown
-    if (["ArrowUp", "ArrowDown", "Enter", "Escape"].includes(e.key)) {
-      return;
-    }
-    // Prevent propagation for all other keys
-    e.preventDefault();
+    // Stop event propagation for all single key presses (prevent site hotkeys)
     e.stopPropagation();
+
+    // Allow the default behavior to let the user type in the input field
+    // Only prevent the default for special actions (like Enter, Escape, etc.)
+    if (["ArrowUp", "ArrowDown", "Enter", "Escape"].includes(e.key)) {
+      e.preventDefault();
+    }
   });
 
   const dropdown = document.createElement("div");
@@ -284,9 +286,9 @@ function toggleMenu(vpHamburger: HTMLElement, navMenu: HTMLElement, event) {
     const inputBox = querySelectorDeep("#instantLookupInput");
     console.log(inputBox);
     event.preventDefault();
-    // setTimeout(() => {
-    inputBox.focus();
-    // }, 1050);
+    if (inputBox) {
+      inputBox.focus();
+    }
   }
 }
 
