@@ -113,11 +113,11 @@ function createInstantLookup() {
   let activeIndex = -1;
   let results: Array<{ normStr: string; exact: string }> = [];
 
-  const debounce = (fn: Function, delay: number) => {
-    let timeout: NodeJS.Timeout;
-    return (...args: any[]) => {
+  const debounce = <T extends (...args: any[]) => any>(fn: T, delay: number) => {
+    let timeout: ReturnType<typeof setTimeout>;
+    return (...args: Parameters<T>): void => {
       clearTimeout(timeout);
-      timeout = setTimeout(() => fn.apply(this, args), delay);
+      timeout = setTimeout(() => fn(...args), delay);
     };
   };
 

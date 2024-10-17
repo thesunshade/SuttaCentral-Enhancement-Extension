@@ -20,6 +20,11 @@ export const settingsConfig = {
     type: "checkbox",
     default: "true",
   },
+  viewOptionsShrink: {
+    label: "Shrink the view options so there is no horizontal scroll.",
+    type: "checkbox",
+    default: "true",
+  },
   colorOptionsDescriptions: {
     label: "Enter valid css colors below. Hit Enter to update. Leave blank to use default.",
     type: "paragraph",
