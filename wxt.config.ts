@@ -18,7 +18,7 @@ export default defineConfig({
       },
     ],
     name: "SuttaCentral Enhancement Extension",
-    permissions: ["clipboardWrite", "contextMenus", "tabs", "storage", "scripting"],
+    permissions: ["clipboardWrite", "contextMenus", "activeTab", "storage", "scripting"],
     host_permissions: ["<all_urls>"],
     omnibox: { keyword: "sc" },
     browser_specific_settings: {
