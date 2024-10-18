@@ -282,6 +282,27 @@ const themes = {
     "--sc-opposite-background-color": "#544f4f!important;",
     "--sc-opposite-text-color": "#eeeeee!important;",
   },
+  "Nord": {
+    "--sc-primary-color": "#2E3440!important;",
+    "--sc-primary-color-light": "#4C566A!important;",
+    "--sc-primary-color-light-transparent": "rgba(46, 52, 64, 0.4)!important;",
+    "--sc-primary-color-dark": "#3B4252!important;",
+    "--sc-primary-accent-color": "#8FBCBB!important;",
+    "--sc-primary-accent-color-light": "#88C0D0!important;",
+    "--sc-secondary-accent-color": "#BF616A!important;",
+    "--sc-secondary-accent-color-light": "#D08770!important;",
+    "--sc-primary-background-color": "#2E3440!important;",
+    "--sc-on-primary-primary-text-color": "#ECEFF4!important;",
+    "--sc-on-primary-secondary-text-color": "#D8DEE9!important;",
+    "--sc-secondary-background-color": "#434C5E!important;",
+    "--sc-on-secondary-primary-text-color": "#E5E9F0!important;",
+    "--sc-on-secondary-secondary-text-color": "#D8DEE9!important;",
+    "--sc-tertiary-background-color": "#4C566A!important;",
+    "--sc-on-tertiary-primary-text-color": "#ECEFF4!important;",
+    "--sc-on-tertiary-secondary-text-color": "#E5E9F0!important;",
+    "--sc-dark-fixed-background-color": "#3B4252!important;",
+    "--sc-darker-fixed-background-color": "#2E3440!important;",
+  },
 };
 
 export default defineContentScript({
