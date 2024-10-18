@@ -1,4 +1,4 @@
-import overrideHotkeysContent from "../overrideHotkeys.content";
+import overrideHotkeysContent from "../mirrorHotkeys.content";
 
 export const settingsConfig = {
   displayOptionsHeading: {
@@ -21,7 +21,7 @@ export const settingsConfig = {
     default: "true",
   },
   viewOptionsShrink: {
-    label: "Shrink the view options so there is no horizontal scroll.",
+    label: "Shrink the view options so there is no horizontal scroll. Refresh page to see.",
     type: "checkbox",
     default: "true",
   },
