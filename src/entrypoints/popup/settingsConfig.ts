@@ -26,7 +26,7 @@ export const settingsConfig = {
     default: "true",
   },
   colorOptionsDescriptions: {
-    label: "Enter valid css colors below. Hit Enter to update. Leave blank to use default.",
+    label: "Enter valid CSS colors below. Hit Enter to update. Leave blank to use default.",
     type: "paragraph",
   },
   rootColor: {
@@ -112,7 +112,7 @@ export const settingsConfig = {
     default: "true",
   },
   copyBareLink: {
-    label: "<kbd>u</kbd> to copy the bare url",
+    label: "<kbd>u</kbd> to copy the bare URL",
     type: "checkbox",
     default: "true",
   },
@@ -159,7 +159,7 @@ export const settingsConfig = {
     default: "true",
   },
   mirrorHotkeys: {
-    label: "Mirror the native SuttaCentral hotkeys to number keys. This could be useful for non-latin keyboard users. ⚠️ Experimental",
+    label: "Mirror the native SuttaCentral hotkeys to number keys. This could be useful for non-Latin keyboard users. ⚠️ Experimental",
     type: "checkbox",
     default: "false",
   },
@@ -266,7 +266,7 @@ export const settingsConfig = {
   customCssDetails: {
     type: "details",
     summary: "Click for instructions",
-    content: `<p>Custom css will let you tailor the display of the site to your own needs. But beware! It's easy to break things. So if you ever have problems viewing the site, the first thing to try is to remove any of these.</p>
+    content: `<p>Custom CSS will let you tailor the display of the site to your own needs. But beware! It's easy to break things. So if you ever have problems viewing the site, the first thing to try is to remove any of these.</p>
     <p>Here are some ideas:</p>
     <dl>
     <dt>Change translation font size</dt>
