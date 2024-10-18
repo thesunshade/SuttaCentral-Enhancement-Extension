@@ -13,7 +13,7 @@ export default defineConfig({
     ],
     content_scripts: [
       {
-        js: ["/js/bootstrap.bundle.min.js"],
+        js: ["/js/bootstrap.min.js"],
         matches: ["*://suttacentral.net/*"],
       },
     ],
