@@ -1,3 +1,13 @@
+// The easiest way to create a new theme is to open the SuttaCentral.net
+// website and go into dev tools. Click on the body tag and a long list of
+// css variables will appear. You can then use the color picker
+// to test out different colours. navigating to new pages (without a real page refresh)
+// should keep the changed colors. Be sure to test out a variety of different pages.
+//
+// Unfortunately it is necessary to add the `!important` flag on all the colors.
+//
+// To make the theme available to users, you will need to add the exact name to the list of options in the src\entrypoints\popup\settingsConfig.ts file.
+
 const themes = {
   none: {},
   "Shamrock Shake Dark": {
@@ -282,7 +292,7 @@ const themes = {
     "--sc-opposite-background-color": "#544f4f!important;",
     "--sc-opposite-text-color": "#eeeeee!important;",
   },
-  "Nord": {
+  Nord: {
     "--sc-primary-color": "#2E3440!important;",
     "--sc-primary-color-light": "#4C566A!important;",
     "--sc-primary-color-light-transparent": "rgba(46, 52, 64, 0.4)!important;",
