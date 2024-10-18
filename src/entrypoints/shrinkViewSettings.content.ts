@@ -5,20 +5,17 @@ export default defineContentScript({
   main() {
     console.info("📐 shrink view menu");
 
-    setTimeout(() => {
-      const outerSetting = querySelectorDeep("#setting_menu");
-      const innerSetting = querySelectorDeep("#setting_menu section");
+    function shrinkViewPannel() {
+      setTimeout(() => {
+        const outerSetting = querySelectorDeep("#setting_menu");
+        const innerSetting = querySelectorDeep("#setting_menu section");
 
-      if (innerSetting !== null) {
-        innerSetting.style.display = "inline-block";
-        innerSetting.style.width = "365px";
-        innerSetting.style.paddingLeft = "5px";
-        innerSetting.style.paddingBottom = "15px";
-
-        const settingsStyleElement = document.createElement("style");
-        settingsStyleElement.innerHTML = `#setting_menu{
+        if (innerSetting !== null) {
+          const outerSettingsStyleElement = document.createElement("style");
+          outerSettingsStyleElement.id = "outer-view-interface-changes";
+          outerSettingsStyleElement.innerHTML = `
+              #setting_menu{
                 background-color: var(--sc-inverted-text-color);
-
                 overflow: hidden scroll;
                 width: 385px;
                 right: 0px;
@@ -30,58 +27,77 @@ export default defineContentScript({
                 box-shadow: var(--sc-shadow-elevation-1dp);
                 line-height: 190%;
               }`;
-        if (outerSetting?.parentNode !== null && outerSetting !== null) {
-          outerSetting.parentNode.insertBefore(settingsStyleElement, outerSetting);
+          if (outerSetting?.parentNode !== null && outerSetting !== null) {
+            outerSetting.parentNode.insertBefore(outerSettingsStyleElement, outerSetting);
+          }
+
+          const innerSettingsStyleElement = document.createElement("style");
+          innerSettingsStyleElement.id = "inner-view-interface-changes";
+          innerSettingsStyleElement.innerHTML = `
+              section {
+              display:inline-block!important; 
+              width:365px;
+              padding-left:5px;
+              padding-bottom:15px
+              }
+              div.form-controls label:has(md-radio){
+              display: inline;
+              margin-top: 1px;
+              margin-left: 0px;
+              margin-right: 10px;
+              line-height: 1em;
+              white-space: nowrap;
+              margin-top: 20px;
+              }
+              div.form-controls label:has(md-checkbox){
+              line-height:125%;
+              padding-bottom:1em;
+              margin-top:0px;
+              margin-left:0px;
+              maxWidth:70%;
+              }
+              .tools{
+              border-bottom:1px solid var(--sc-border-color);
+              border-right: 0;
+              }
+              .tools:first-of-type {
+              border-bottom: 0
+              }
+              .form-controls.four-column{
+              column-count: 2
+              }
+              `;
+          if (innerSetting?.parentNode !== null && innerSetting !== null) {
+            innerSetting.parentNode.insertBefore(innerSettingsStyleElement, innerSetting);
+          }
         }
+      }, 2000);
+    }
 
-        // not sure if the below does anything
-        const labelsWithRadio = innerSetting.querySelectorAll("div.tools div.form-controls label:has(md-radio)");
+    function restoreViewPannel() {
+      const innerViewInterfaceChangesStyle = querySelectorDeep("inner-view-interface-changes");
+      const outerViewInterfaceChangesStyle = querySelectorDeep("outer-view-interface-changes");
 
-        labelsWithRadio.forEach(label => {
-          const labelElement = label as HTMLElement; // Cast to HTMLElement
+      innerViewInterfaceChangesStyle?.remove();
+      outerViewInterfaceChangesStyle?.remove();
+    }
 
-          labelElement.style.display = "inline";
-          labelElement.style.marginTop = "1px";
-          labelElement.style.marginLeft = "0px";
-          labelElement.style.marginRight = "10px";
-          labelElement.style.lineHeight = "1em";
-          labelElement.style.whiteSpace = "nowrap";
-          // labelElement.style.marginTop = "20px";
-        });
-
-        const labelsWithCheckbox = innerSetting.querySelectorAll("div.tools div.form-controls label:has(md-checkbox)");
-
-        labelsWithCheckbox.forEach(label => {
-          const labelElement = label as HTMLElement; // Cast to HTMLElement
-
-          labelElement.style.lineHeight = "125%";
-          labelElement.style.paddingBottom = "1em";
-          labelElement.style.marginTop = "0px";
-          labelElement.style.marginLeft = "0px";
-          labelElement.style.maxWidth = "70%";
-        });
-
-        const alphabetSelect = innerSetting.querySelector("#selPaliScripts") as HTMLElement;
-        if (alphabetSelect) {
-          alphabetSelect.style.width = "inherit";
-        } else {
-          console.error("💥 #selPaliScripts not found");
-        }
-        const settingsSectionTools = innerSetting.querySelectorAll(".tools");
-        settingsSectionTools.forEach(element => {
-          (element as HTMLElement).style.borderBottom = "1px solid var(--sc-border-color)";
-          (element as HTMLElement).style.borderRight = "0";
-        });
-        const settingsSectionToolsfirst = innerSetting.querySelectorAll(".tools:first-of-type");
-        settingsSectionToolsfirst.forEach(element => {
-          (element as HTMLElement).style.borderBottom = "margin-left:0";
-        });
-
-        const paliWordLookup = innerSetting.querySelectorAll(".form-controls.four-column");
-        paliWordLookup.forEach(element => {
-          (element as HTMLElement).style.columnCount = "2";
-        });
+    chrome.storage.sync.get("viewOptionsShrink", result => {
+      if (result.viewOptionsShrink === "true") {
+        shrinkViewPannel();
+      } else {
+        restoreViewPannel();
       }
-    }, 2000);
+    });
+
+    chrome.storage.onChanged.addListener((changes, area) => {
+      if (area === "sync" && changes.viewOptionsShrink) {
+        if (changes.viewOptionsShrink.newValue === "true") {
+          shrinkViewPannel();
+        } else {
+          restoreViewPannel();
+        }
+      }
+    });
   },
 });
