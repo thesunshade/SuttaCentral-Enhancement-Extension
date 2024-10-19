@@ -12,7 +12,7 @@ export const settingsConfig = {
   theme: {
     label: "Theme",
     type: "select",
-    choices: ["none", "Grimace", "Shamrock Shake", "Birdie", "Burglar", "Ronnie", "OB Mack", "Shamrock Shake Dark", "Bubblegum", "Sonora", "Pumpkin Spice", "Spooky", "Isi", "Steeling", "Nord"],
+    choices: ["none", "Grimace", "Shamrock Shake", "Birdie", "Burglar", "Ronnie", "OB Mack", "Shamrock Shake Dark", "Bubblegum", "Sonora", "Pumpkin Spice", "Spooky", "Isi", "Steeling", "Nord", "Frosty"],
     default: "none",
   },
   languageSwap: {
@@ -70,7 +70,7 @@ export const settingsConfig = {
   rootOnLegacy: {
     label: "Add root to legacy translation. Page refresh required. Not configurable through regular view options.",
     type: "checkbox",
-    default: "true",
+    default: "false",
   },
   clickSegmentNumbersToCopyUrl: {
     label: "Clicking segment number copies URL to that segment to the clipboard.",
@@ -90,7 +90,7 @@ export const settingsConfig = {
   showReadingTime: {
     label: "Show reading time",
     type: "checkbox",
-    default: "true",
+    default: "false",
   },
   wordsPerMinute: {
     label: "Words Per Minute to calculate reading time",
