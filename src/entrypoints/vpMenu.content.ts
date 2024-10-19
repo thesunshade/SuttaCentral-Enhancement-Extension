@@ -7,51 +7,40 @@ import "./VpMenu/sc-custommenu.css";
 import { exactData } from "./data/exact.js";
 import { normalizedData } from "./data/normalized";
 import normalizeString from "./functions/normalizeString.js";
+import { domBuilder } from "./VpMenu/domBuilder";
 
 function createInstantLookup() {
-  const container = document.createElement("div");
-  container.className = "instant-lookup";
-
-  // Create wrapper to hold input and button
-  const wrapper = document.createElement("div");
-  wrapper.className = "input-wrapper";
-  container.appendChild(wrapper);
-
-  const input = document.createElement("input");
-  input.type = "text";
-  input.id = "instantLookupInput";
-  input.className = "instant-lookup-box";
-  input.placeholder = "Jump to a sutta…";
-
-  const label = document.createElement("label");
-  label.htmlFor = "instantLookupInput"; // Associate the label with the input field
-  label.textContent = "Enter citation or sutta name for instant lookup";
-  label.className = "sr-only"; // Apply hidden style
-
-  container.appendChild(label);
-  wrapper.appendChild(input);
-
-  // Create the clear button
-  const clearButton = document.createElement("button");
-  clearButton.className = "clear-button";
-  clearButton.innerHTML = "✖";
-  wrapper.appendChild(clearButton);
+  const containerInstantLookup = domBuilder.containerInstantLookup();
+  const wrapperInstantLookupInput = domBuilder.wrapperInstantLookupInput();
+  containerInstantLookup.appendChild(wrapperInstantLookupInput);
+  const inputInstantLookup = domBuilder.inputInstantLookup();
+  const labelInstantLookup = domBuilder.labelInstantLookup();
+  containerInstantLookup.appendChild(labelInstantLookup);
+  wrapperInstantLookupInput.appendChild(inputInstantLookup);
+  const clearButtonInstantLookup = domBuilder.clearButtonInstantLookup();
+  wrapperInstantLookupInput.appendChild(clearButtonInstantLookup);
+  const dropdownInstantLookupResults = domBuilder.dropdownInstantLookupResults();
+  containerInstantLookup.appendChild(wrapperInstantLookupInput);
+  containerInstantLookup.appendChild(dropdownInstantLookupResults);
+  const styleForInstantLookup = domBuilder.styleForInstantLookup();
+  document.head.appendChild(styleForInstantLookup);
 
   // Add event listener to clear the input when the button is clicked
-  clearButton.addEventListener("click", () => {
-    input.value = "";
+  clearButtonInstantLookup.addEventListener("click", () => {
+    inputInstantLookup.value = "";
+    dropdownInstantLookupResults.innerHTML = "";
   });
 
-  input.addEventListener("focus", function () {
-    input.placeholder = "Enter a citation or text name";
+  inputInstantLookup.addEventListener("focus", function () {
+    inputInstantLookup.placeholder = "Enter a citation or text name";
   });
 
-  input.addEventListener("blur", function () {
-    input.placeholder = "Jump to a sutta";
+  inputInstantLookup.addEventListener("blur", function () {
+    inputInstantLookup.placeholder = "Jump to a sutta";
   });
 
   // prevent hotkeys from firing
-  input.addEventListener("keydown", (e: KeyboardEvent) => {
+  inputInstantLookup.addEventListener("keydown", (e: KeyboardEvent) => {
     // Stop event propagation for all single key presses (prevent site hotkeys)
     e.stopPropagation();
 
@@ -61,54 +50,6 @@ function createInstantLookup() {
       e.preventDefault();
     }
   });
-
-  const dropdown = document.createElement("div");
-  dropdown.id = "dropdown";
-  dropdown.className = "dropdown";
-
-  container.appendChild(wrapper);
-  container.appendChild(dropdown);
-
-  // Style the input and button
-  const style = document.createElement("style");
-  style.innerHTML = `
-  .input-wrapper {
-    position: relative;
-    display: inline-block;
-  }
-
-  .instant-lookup-box {
-    padding-right: 30px; /* Make room for the button inside the input */
-  }
-
-  .clear-button {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    border: none;
-    background: none;
-    cursor: pointer;
-    font-size: 18px; /* Adjust font size to match your design */
-    color: black
-  }
-
-  .clear-button:hover {
-    opacity: .6;
-  }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-  }
-`;
-  document.head.appendChild(style);
 
   let activeIndex = -1;
   let results: Array<{ normStr: string; exact: string }> = [];
@@ -137,12 +78,12 @@ function createInstantLookup() {
 
       displayResults(results);
     } else {
-      dropdown.style.display = "none";
+      dropdownInstantLookupResults.style.display = "none";
     }
   };
 
   const displayResults = (results: Array<{ normStr: string; exact: string }>) => {
-    dropdown.innerHTML = "";
+    dropdownInstantLookupResults.innerHTML = "";
     results.forEach(result => {
       const item = document.createElement("a"); // Change to 'a' element
       item.classList.add("dropdown-item");
@@ -160,10 +101,10 @@ function createInstantLookup() {
       // Remove the click listener as it's no longer needed
       // item.addEventListener("click", () => selectResult(result.exact));
 
-      dropdown.appendChild(item);
+      dropdownInstantLookupResults.appendChild(item);
     });
 
-    dropdown.style.display = results.length > 0 ? "block" : "none";
+    dropdownInstantLookupResults.style.display = results.length > 0 ? "block" : "none";
   };
 
   const selectResult = (exactValue: string) => {
@@ -175,7 +116,7 @@ function createInstantLookup() {
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    const items = dropdown.querySelectorAll(".dropdown-item");
+    const items = dropdownInstantLookupResults.querySelectorAll(".dropdown-item");
     if (items.length === 0) return;
 
     switch (e.key) {
@@ -192,8 +133,8 @@ function createInstantLookup() {
         selectResult(results[activeIndex].exact);
         break;
       case "Escape":
-        input.value = "";
-        dropdown.style.display = "none";
+        inputInstantLookup.value = "";
+        dropdownInstantLookupResults.style.display = "none";
         activeIndex = -1;
         break;
       default:
@@ -209,10 +150,10 @@ function createInstantLookup() {
 
   const debouncedSearch = debounce(performSearch, 300);
 
-  input.addEventListener("input", e => debouncedSearch((e.target as HTMLInputElement).value));
-  input.addEventListener("keydown", handleKeyDown);
+  inputInstantLookup.addEventListener("input", e => debouncedSearch((e.target as HTMLInputElement).value));
+  inputInstantLookup.addEventListener("keydown", handleKeyDown);
 
-  return container;
+  return containerInstantLookup;
 }
 
 function toggleMenuWithKey(vpMenu, vpHamburger) {
@@ -293,71 +234,14 @@ function toggleMenu(vpHamburger: HTMLElement, navMenu: HTMLElement, event) {
 }
 
 function injectStyles() {
-  const style = document.createElement("style");
-  style.textContent = `
-    #vpNavigationMenu {
-      display: none;
-      position: absolute;
-      z-index: 1000;
-      border: 2px 1px 0 1px solid var(--sc-dark-fixed-background-color);
-      margin: 0;
-      list-style: none;
-      color: black;
-    }
-    .instant-lookup-box {
-      width: 575px;
-      padding: 8px;
-      border: 1px solid #ccc;
-      font-size: 20px;
-    }
-    .dropdown {
-      border: 1px solid #ccc;
-      width: 575px;
-      position: absolute;
-      max-height: 200px;
-      overflow-y: auto;
-      display: none;
-      z-index:900000;
-      background-color: var(--sc-secondary-background-color);
-    }
-    .dropdown-item {
-    display: block;
-      padding: 8px;
-      cursor: pointer;
-      text-decoration:none;
-      color:black;
-      background-color:white;
-    }
-    .dropdown-item code {
-      background-color: rgb(222, 222, 222);
-      border-radius: 5px;
-      border: solid 0px;
-      padding: 0 4px;
-    }
-    .dropdown-item:hover,
-    .dropdown-item.active {
-      background-color: var(--sc-primary-color-light-transparent);
-    }
-  `;
-  document.head.appendChild(style);
+  const styleVpMenu = domBuilder.styleVpMenu();
+  document.head.appendChild(styleVpMenu);
 }
 
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
-    const vpHamburger = document.createElement("button");
-    vpHamburger.id = "vpHamburger";
-    vpHamburger.innerHTML = `
-      <svg width="15" height="15" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
-        <rect width="30" height="4" rx="2" fill="white" />
-        <rect y="13" width="30" height="4" rx="2" fill="white" />
-        <rect y="26" width="30" height="4" rx="2" fill="white" />
-      </svg>
-    `;
-    vpHamburger.style.cursor = "pointer";
-    vpHamburger.style.marginLeft = "10px";
-    vpHamburger.style.setProperty("background-color", "transparent", "important");
-    vpHamburger.style.border = "solid 0px black";
+    const vpHamburger = domBuilder.vpHamburger();
 
     function handleBreadCrumb(breadcrumb: HTMLElement) {
       breadcrumb.insertBefore(vpHamburger, breadcrumb.firstChild);
