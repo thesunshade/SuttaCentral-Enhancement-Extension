@@ -250,6 +250,13 @@ export default defineContentScript({
       vpMenu.id = "vpNavigationMenu";
       vpMenu.innerHTML = menu;
 
+      setTimeout(() => {
+        const breadcrumbWrapper = querySelectorDeep(".breadcrumbs-wrapper");
+        if (breadcrumbWrapper !== null) {
+          breadcrumbWrapper.style.marginLeft = "90px";
+        }
+      }, 100);
+
       const lookupComponent = createInstantLookup();
       vpMenu.insertBefore(lookupComponent, vpMenu.firstChild);
 
