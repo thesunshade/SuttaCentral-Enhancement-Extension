@@ -1,3 +1,9 @@
+![banner](./images/marquee.png)
+
+![screenshot](./images/screenshot-legacy.png)
+
+- Install for [FireFox](https://addons.mozilla.org/en-US/firefox/addon/suttacentral-enhancements/)
+
 # Development
 
 ## installing
