@@ -1,3 +1,5 @@
+// Swaps position of root and translation
+
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {

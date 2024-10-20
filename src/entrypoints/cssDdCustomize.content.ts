@@ -1,3 +1,5 @@
+// Allows the user to insert custom css into the discussion forum
+
 export default defineContentScript({
   matches: ["*://discourse.suttacentral.net/*"],
   main() {

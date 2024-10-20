@@ -1,3 +1,5 @@
+// This function adds a new navigation system to SuttaCentral.net that includes an instant lookup for sutta names and citations.
+
 import { querySelectorDeep } from "query-selector-shadow-dom";
 import ally from "ally.js";
 import isInputFocused from "./functions/isInputFocused";

@@ -1,3 +1,6 @@
+// This allows the user to change the root text (e.g. Pāli) or translation text color
+/// to any valid color value
+
 import validateCSSColor from "./functions/validateCSSColor";
 
 export default defineContentScript({

@@ -1,3 +1,5 @@
+// Allows number keys to mirror native hotkeys
+
 import isInputFocused from "./functions/isInputFocused.js";
 
 export default defineContentScript({

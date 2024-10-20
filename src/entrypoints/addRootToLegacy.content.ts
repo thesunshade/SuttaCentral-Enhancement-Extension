@@ -1,3 +1,5 @@
+// This adds root texts (e.g. Pāli) to legacy texts
+
 function insertRoot(path: string) {
   const pathParts = path.split("/");
   if (pathParts.length !== 4) {

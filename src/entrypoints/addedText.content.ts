@@ -1,3 +1,5 @@
+// This adds brackets using css to elements with class .add
+
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {

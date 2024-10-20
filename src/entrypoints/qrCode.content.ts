@@ -1,3 +1,5 @@
+// Lets user generate QR code to current url
+
 import isInputFocused from "./functions/isInputFocused";
 import onlyPressed from "./functions/onlyPressed";
 import { createQrCodePopup, closeQrPopup, isQrPopupOpen } from "./qrCode.content/qrPopup";

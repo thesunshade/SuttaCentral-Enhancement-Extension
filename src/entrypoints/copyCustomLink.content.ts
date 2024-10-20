@@ -1,3 +1,6 @@
+// This allows users to construct custom copy strings using
+// templates of data regarding the page
+
 import isInputFocused from "./functions/isInputFocused";
 import showToastNotification from "./functions/showToastNotification";
 import onlyPressed from "./functions/onlyPressed";
