@@ -1,7 +1,7 @@
 import { ids } from "./random.content/ids.js";
 
 export default defineContentScript({
-  matches: ["*://suttacentral.net/"],
+  matches: ["*://suttacentral.net/*"],
   main() {
     // Check the randomLink setting and return if it's not enabled
     function isRandomLinkEnabled(callback: () => void): void {
