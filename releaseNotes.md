@@ -1,6 +1,7 @@
 # Verson 0.0.4
 
 - Nord theme
+- Fix endless loop on parallel count
 
 # Version 0.0.3
 
