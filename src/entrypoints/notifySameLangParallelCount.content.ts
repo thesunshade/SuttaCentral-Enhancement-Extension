@@ -44,75 +44,90 @@ export default defineContentScript({
       }
 
       function runScript() {
-        // Check if reduxState exists in localStorage
-        const reduxStateString = localStorage.getItem("reduxState");
-        if (!reduxStateString) {
-          // console.warn("reduxState is not available in localStorage.");
-          return;
-        }
+        const currentPath = window.location.pathname;
+        // console.log({ currentPath });
 
-        let reduxState: ReduxState;
-        try {
-          reduxState = JSON.parse(reduxStateString);
-        } catch (error) {
-          console.warn("Failed to parse reduxState:", error);
-          return;
-        }
+        const parallelButton = querySelectorDeep("#btnShowParallels");
 
-        // Ensure that suttaPublicationInfo exists before trying to destructure it
-        if (!reduxState.suttaPublicationInfo || !reduxState.suttaPublicationInfo.uid) {
-          // console.warn("suttaPublicationInfo is null or missing necessary data:", reduxState.suttaPublicationInfo);
-          return;
-        }
+        if (parallelButton) {
+          // If we've already processed this URL, don't do it again
+          // console.log(parallelButton.dataset.processedUrl);
+          if (parallelButton.dataset.processedUrl === currentPath) {
+            // console.log("should be returning");
+            return;
+          }
+          parallelButton.dataset.processedUrl = currentPath;
 
-        const { uid } = reduxState.suttaPublicationInfo;
+          // Check if reduxState exists in localStorage
+          const reduxStateString = localStorage.getItem("reduxState");
+          if (!reduxStateString) {
+            // console.warn("reduxState is not available in localStorage.");
+            return;
+          }
 
-        function fetchParallels(uid: string): Promise<any> {
-          const url = `https://suttacentral.net/api/parallels/${uid}`;
+          let reduxState: ReduxState;
+          try {
+            reduxState = JSON.parse(reduxStateString);
+          } catch (error) {
+            console.warn("Failed to parse reduxState:", error);
+            return;
+          }
 
-          return fetch(url)
-            .then(response => {
-              if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+          // Ensure that suttaPublicationInfo exists before trying to destructure it
+          if (!reduxState.suttaPublicationInfo || !reduxState.suttaPublicationInfo.uid) {
+            // console.warn("suttaPublicationInfo is null or missing necessary data:", reduxState.suttaPublicationInfo);
+            return;
+          }
+
+          const { uid } = reduxState.suttaPublicationInfo;
+
+          function fetchParallels(uid: string): Promise<any> {
+            const url = `https://suttacentral.net/api/parallels/${uid}`;
+
+            return fetch(url)
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+              })
+              .catch(error => {
+                console.error("There was a problem with the fetch operation:", error);
+                return null;
+              });
+          }
+
+          function countPliLang(obj: any): number {
+            let count = 0;
+
+            if (obj && obj.to && obj.to.root_lang === "pli") {
+              count++;
+            }
+
+            for (let key in obj) {
+              if (Array.isArray(obj[key])) {
+                for (let item of obj[key]) {
+                  count += countPliLang(item);
+                }
+              } else if (typeof obj[key] === "object" && obj[key] !== null) {
+                count += countPliLang(obj[key]);
               }
-              return response.json();
+            }
+
+            return count;
+          }
+
+          fetchParallels(uid)
+            .then(data => {
+              if (data) {
+                const paliCount = countPliLang(data);
+                updateParallelButton(paliCount);
+              }
             })
             .catch(error => {
-              console.error("There was a problem with the fetch operation:", error);
-              return null;
+              // console.log("Error fetching parallels data:", error);
             });
         }
-
-        function countPliLang(obj: any): number {
-          let count = 0;
-
-          if (obj && obj.to && obj.to.root_lang === "pli") {
-            count++;
-          }
-
-          for (let key in obj) {
-            if (Array.isArray(obj[key])) {
-              for (let item of obj[key]) {
-                count += countPliLang(item);
-              }
-            } else if (typeof obj[key] === "object" && obj[key] !== null) {
-              count += countPliLang(obj[key]);
-            }
-          }
-
-          return count;
-        }
-
-        fetchParallels(uid)
-          .then(data => {
-            if (data) {
-              const paliCount = countPliLang(data);
-              updateParallelButton(paliCount);
-            }
-          })
-          .catch(error => {
-            console.log("Error fetching parallels data:", error);
-          });
       }
 
       function updateParallelButton(paliCount: number) {
@@ -141,6 +156,7 @@ export default defineContentScript({
                 padding: 4px 4px auto auto;
                 z-index: 5000;
               `;
+            paliCountElement.dataset.processedUrl = window.location.pathname;
 
             parallelButton.style.position = "relative";
             parallelButton.appendChild(paliCountElement);
@@ -156,16 +172,16 @@ export default defineContentScript({
 
       observer.observe(document, { subtree: true, childList: true });
 
-      setInterval(() => {
-        chrome.storage.sync.get("notifyPaliParallels", data => {
-          const isEnabled = data["notifyPaliParallels"] === "true"; // Convert to boolean
-          if (!isEnabled) {
-            stopNotifyPaliParallels();
-          } else {
-            runScript();
-          }
-        });
-      }, 1000);
+      // setInterval(() => {
+      //   chrome.storage.sync.get("notifyPaliParallels", data => {
+      //     const isEnabled = data["notifyPaliParallels"] === "true"; // Convert to boolean
+      //     if (!isEnabled) {
+      //       stopNotifyPaliParallels();
+      //     } else {
+      //       runScript();
+      //     }
+      //   });
+      // }, 1000);
 
       runScript();
 
