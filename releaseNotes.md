@@ -1,4 +1,4 @@
-# Verson 0.0.4
+# Verson 0.0.5
 
 - Nord theme
 - Frosty theme
