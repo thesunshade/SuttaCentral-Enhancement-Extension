@@ -1,3 +1,5 @@
+// Allows the user to insert custom css into the main site
+
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {

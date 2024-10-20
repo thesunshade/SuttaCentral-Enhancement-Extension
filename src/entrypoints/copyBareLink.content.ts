@@ -1,3 +1,5 @@
+// This allows user to copy the link to the current page without any parameters
+
 import isInputFocused from "./functions/isInputFocused";
 import showToastNotification from "./functions/showToastNotification";
 import onlyPressed from "./functions/onlyPressed";

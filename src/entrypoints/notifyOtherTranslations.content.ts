@@ -1,3 +1,5 @@
+// Adds a notification of number of translations in the user's language
+
 import { querySelectorDeep } from "query-selector-shadow-dom";
 
 // Your existing interfaces

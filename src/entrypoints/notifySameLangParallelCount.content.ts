@@ -1,3 +1,5 @@
+// Adds a notification of number of Pali parallels the current sutta has
+
 import { querySelectorDeep } from "query-selector-shadow-dom";
 
 interface ReduxState {

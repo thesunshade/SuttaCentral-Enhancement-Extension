@@ -1,3 +1,5 @@
+// Adds the current user's site language to the top bar
+
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {

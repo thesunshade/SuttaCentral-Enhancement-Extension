@@ -1,3 +1,6 @@
+// Normally the view settings pannel is horizontal and must be scrolled left to right.
+// This compacts it so that it scrolls vertically.
+
 import { querySelectorDeep } from "query-selector-shadow-dom";
 
 export default defineContentScript({

@@ -1,3 +1,5 @@
+// Clicking segment id copies the link to the clipboard
+
 import showToastNotification from "./functions/showToastNotification";
 
 export default defineContentScript({
@@ -8,10 +10,9 @@ export default defineContentScript({
       const isEnabled = data["clickSegmentNumbersToCopyUrl"] === "true"; // Convert to boolean
 
       if (!isEnabled) {
-        console.log("❌ Click to copy URL is disabled");
         return; // Exit if the setting is not enabled
       }
-      console.log("click to copy ids enabled");
+
       document.addEventListener("click", event => {
         const target = event.target as HTMLElement;
 

@@ -1,3 +1,5 @@
+// gives the discussion forum its own favicon
+
 export default defineContentScript({
   matches: ["*://discourse.suttacentral.net/*"],
   main() {

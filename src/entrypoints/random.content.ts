@@ -1,3 +1,5 @@
+// Adds a link to a random sutta to the homepage
+
 import { ids } from "./random.content/ids.js";
 
 export default defineContentScript({

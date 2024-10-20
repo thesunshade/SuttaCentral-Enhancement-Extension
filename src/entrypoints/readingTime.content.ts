@@ -1,3 +1,5 @@
+// Adds reading time to texts
+
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {

@@ -1,3 +1,6 @@
+// When root text and translatins are displayed, normally text selection includes both.
+// This function allows the user to only select one or the other.
+
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {

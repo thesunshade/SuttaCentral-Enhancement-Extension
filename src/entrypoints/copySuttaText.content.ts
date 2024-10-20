@@ -1,3 +1,5 @@
+// copies the text of the sutta to the clipboard
+
 import isInputFocused from "./functions/isInputFocused";
 import showToastNotification from "./functions/showToastNotification";
 import onlyPressed from "./functions/onlyPressed";
