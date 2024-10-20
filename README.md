@@ -4,6 +4,8 @@
 
 - Install for [FireFox](https://addons.mozilla.org/en-US/firefox/addon/suttacentral-enhancements/)
 
+[Release notes](./releaseNotes.md)
+
 # Development
 
 ## installing

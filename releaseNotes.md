@@ -1,7 +1,10 @@
 # Verson 0.0.4
 
 - Nord theme
+- Frosty theme
 - Fix endless loop on parallel count
+- only run random on homepage
+- fix breadcrumb alignment
 
 # Version 0.0.3
 

@@ -75,7 +75,7 @@ export const settingsConfig = {
   clickSegmentNumbersToCopyUrl: {
     label: "Clicking segment number copies URL to that segment to the clipboard.",
     type: "checkbox",
-    default: "true",
+    default: "false",
   },
   addedTextBrackets: {
     label: "Adds brackets around text added by translator",
@@ -146,17 +146,17 @@ export const settingsConfig = {
   qrCode: {
     label: "<kbd>q</kbd> to open a popup with a <strong>QR Code</strong>",
     type: "checkbox",
-    default: "true",
+    default: "false",
   },
   selectOnlyTranslation: {
     label: "<kbd>.</kbd> to <strong>select only translation</strong>",
     type: "checkbox",
-    default: "true",
+    default: "false",
   },
   selectOnlyRoot: {
     label: "<kbd>,</kbd> to <strong>select only root</strong> language",
     type: "checkbox",
-    default: "true",
+    default: "false",
   },
   mirrorHotkeys: {
     label: "Mirror the native SuttaCentral hotkeys to number keys. This could be useful for non-Latin keyboard users. ⚠️ Experimental",
