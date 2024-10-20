@@ -16,7 +16,7 @@
   "devDependencies": {
     "@types/query-selector-shadow-dom": "^1.0.4",
     "typescript": "^5.5.4",
-    "wxt": "^0.19.1"
+    "wxt": "^0.19.12"
   },
   "dependencies": {
     "@ayatkyo/vite-plugin-html-import": "^0.1.2",
