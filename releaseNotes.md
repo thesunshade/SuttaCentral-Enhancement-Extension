@@ -1,3 +1,13 @@
+# Version 0.0.6
+
+New
+
+- add ability to show segment ids for all levels of headings
+
+Bugs
+
+- fixed clicking to copy id to clipboard
+
 # Verson 0.0.5
 
 - Nord theme

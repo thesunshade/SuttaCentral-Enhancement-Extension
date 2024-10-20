@@ -1,5 +1,3 @@
-import overrideHotkeysContent from "../mirrorHotkeys.content";
-
 export const settingsConfig = {
   displayOptionsHeading: {
     label: "Display Options",
@@ -24,6 +22,11 @@ export const settingsConfig = {
     label: "Shrink the view options so there is no horizontal scroll. Refresh page to see.",
     type: "checkbox",
     default: "true",
+  },
+  viewHeadingIds: {
+    label: "Show segment ids for headings.",
+    type: "checkbox",
+    default: "false",
   },
   colorOptionsDescriptions: {
     label: "Enter valid CSS colors below. Hit Enter to update. Leave blank to use default.",

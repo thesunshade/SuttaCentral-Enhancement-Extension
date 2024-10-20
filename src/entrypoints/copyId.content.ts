@@ -8,10 +8,10 @@ export default defineContentScript({
       const isEnabled = data["clickSegmentNumbersToCopyUrl"] === "true"; // Convert to boolean
 
       if (!isEnabled) {
-        console.info("❌ Click to copy URL is disabled");
+        console.log("❌ Click to copy URL is disabled");
         return; // Exit if the setting is not enabled
       }
-
+      console.log("click to copy ids enabled");
       document.addEventListener("click", event => {
         const target = event.target as HTMLElement;
 
@@ -30,7 +30,7 @@ export default defineContentScript({
               .catch(err => {
                 console.error("Failed to copy URL:", err);
               });
-          }, 0); // Use setTimeout to wait for the default action to complete
+          }, 10); // Use setTimeout to wait for the default action to complete
         }
       });
     });
