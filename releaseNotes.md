@@ -5,6 +5,7 @@
 - Fix endless loop on parallel count
 - only run random on homepage
 - fix breadcrumb alignment
+- remove unnecessary permissions
 
 # Version 0.0.3
 
