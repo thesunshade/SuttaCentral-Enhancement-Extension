@@ -78,8 +78,8 @@ export default defineContentScript({
       window.addEventListener("popstate", handleNavigationUpdate);
 
       const originalPushState = history.pushState;
-      history.pushState = function (...args) {
-        originalPushState.apply(this, args);
+      history.pushState = (...args) => {
+        originalPushState.apply(history, args);
         handleNavigationUpdate();
       };
     };
