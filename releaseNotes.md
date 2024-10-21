@@ -8,6 +8,11 @@ Bugs
 
 - fixed clicking to copy id to clipboard
 
+Improvements
+
+- Rewrote random sutta script
+- improved api call to get root on legacy
+
 # Verson 0.0.5
 
 - Nord theme
