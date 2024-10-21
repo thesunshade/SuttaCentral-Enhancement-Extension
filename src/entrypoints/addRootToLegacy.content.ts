@@ -7,8 +7,9 @@ function insertRoot(path: string) {
   }
   const uid = pathParts[1];
   const authorUid = pathParts[3];
+  const lang = pathParts[2];
 
-  const SUTTA_API_URL = `https://suttacentral.net/api/suttas/${uid}/${authorUid}`;
+  const SUTTA_API_URL = `https://suttacentral.net/api/suttas/${uid}/${authorUid}?lang=${lang}`;
 
   fetch(SUTTA_API_URL)
     .then(response => {
@@ -24,6 +25,7 @@ function insertRoot(path: string) {
       }
 
       const BILARA_SUTTAS_API_URL = `https://suttacentral.net/api/bilarasuttas/${uid}/${authorUid}`;
+
       fetch(BILARA_SUTTAS_API_URL)
         .then(response => {
           if (!response.ok) {
