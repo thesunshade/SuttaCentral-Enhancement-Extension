@@ -52,17 +52,9 @@ export default defineContentScript({
     };
 
     const handleNavigationUpdate = (): void => {
-      const navHost = searchInShadowDOM("#static_pages_nav_menu", document);
-      if (!navHost || !(navHost instanceof HTMLElement) || !navHost.shadowRoot) {
-        return;
-      }
-
-      const navElement = searchInShadowDOM("nav", navHost.shadowRoot);
-      const ulElement = navElement?.querySelector("ul") as HTMLUListElement | null;
-
-      if (ulElement) {
-        insertRandomSuttaLink(ulElement);
-      }
+      const navHost = searchInShadowDOM("#static_pages_nav_menu nav ul", document) as HTMLUListElement | null;
+      if (!navHost) return;
+      insertRandomSuttaLink(navHost);
     };
 
     const observeDOMChanges = () => {
