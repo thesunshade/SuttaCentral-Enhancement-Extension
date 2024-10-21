@@ -7,7 +7,9 @@ export default defineContentScript({
   main() {
     const checkRandomLinkEnabled = (callback: () => void): void => {
       chrome.storage.sync.get(["randomLink"], ({ randomLink }) => {
-        randomLink === "true" ? callback() : console.info("💥 Random Sutta feature is disabled");
+        if (randomLink === "true") {
+          callback();
+        } else console.info("💥 Random Sutta feature is disabled");
       });
     };
 
@@ -31,9 +33,7 @@ export default defineContentScript({
       const randomSuttaUrl = generateRandomSuttaUrl();
       const existingRandomItem: HTMLAnchorElement | null = ulElement.querySelector("li.random-item a");
 
-      existingRandomItem
-        ? (existingRandomItem.href = randomSuttaUrl)
-        : ulElement.appendChild(createRandomSuttaLinkElement(randomSuttaUrl));
+      existingRandomItem ? (existingRandomItem.href = randomSuttaUrl) : ulElement.appendChild(createRandomSuttaLinkElement(randomSuttaUrl));
     };
 
     const searchInShadowDOM = (selector: string, root: Document | ShadowRoot): Element | null => {
@@ -43,7 +43,7 @@ export default defineContentScript({
         const element = currentRoot?.querySelector(selector);
         if (element) return element;
 
-        const shadowHosts = currentRoot?.querySelectorAll('*') || [];
+        const shadowHosts = currentRoot?.querySelectorAll("*") || [];
         for (const host of shadowHosts) {
           if (host instanceof HTMLElement && host.shadowRoot) {
             queue.push(host.shadowRoot);
