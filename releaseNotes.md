@@ -1,3 +1,9 @@
+# Version 0.0.7
+
+New
+
+- Add hotkey map. Press ? to display
+
 # Version 0.0.6
 
 New
