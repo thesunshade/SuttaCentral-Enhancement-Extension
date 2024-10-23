@@ -67,7 +67,7 @@ export default defineContentScript({
               border-bottom: 0
               }
               .form-controls.four-column{
-              column-count: 2
+              column-count: 1
               }
               `;
           if (innerSetting?.parentNode !== null && innerSetting !== null) {
