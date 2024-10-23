@@ -106,7 +106,7 @@ export const settingsConfig = {
     type: "heading",
   },
   hotkeysOptionsContextDescription: {
-    label: "Single keys to do things on SuttaCentral.net.",
+    label: "Single keys to do things on SuttaCentral.net. <kbd>?</kbd> to open a table of all hotkeys.",
     type: "paragraph",
   },
   copyWholeText: {

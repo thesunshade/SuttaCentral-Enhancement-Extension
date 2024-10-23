@@ -21,14 +21,21 @@ export default defineContentScript({
         .filter(item => item.extensionKey) // Only items with an extensionKey
         .map(item => item.extensionKey);
 
+      keysToCheck.push("mirrorHotkeys");
+
       const storedValues = await chrome.storage.sync.get(keysToCheck);
 
       // Add data to the table
       data.forEach(item => {
         const row = document.createElement("tr");
         const cell1 = document.createElement("td");
+        cell1.classList.add("key-names");
         const cell2 = document.createElement("td");
-        cell1.innerHTML = `<kbd>${item.shortcut}</kbd>`;
+        let keyNames = `<kbd>${item.shortcut}</kbd>`;
+        if (item.mirror && storedValues["mirrorHotkeys"] === "true") {
+          keyNames += ` or <kbd>${item.mirror}</kbd>`;
+        }
+        cell1.innerHTML = keyNames;
 
         let actionRow = item.action;
         if (item.extensionKey && storedValues[item.extensionKey] === "false") {
@@ -52,7 +59,7 @@ export default defineContentScript({
       max-width: 90vw;
       max-height:90vh;
       overflow-y: auto;
-      z-index:1000000;
+      z-index:1001;
       `;
       dialog.appendChild(table);
 
@@ -89,7 +96,14 @@ export default defineContentScript({
           background-color: var(--sc-primary-color-dark);
           color: white;
         }
-          .disabled {
+        td.key-names:first-child {
+          font-weight:normal
+          }
+        .key-names {
+          white-space:nowrap;
+          font-weight:normal;
+          }
+        .disabled {
           color: gray;
           }
         @media (max-width: 600px) {
@@ -103,16 +117,17 @@ export default defineContentScript({
 
     // Define the data
     const shortcutsData = [
-      { shortcut: "s", action: "Open the top search bar and place cursor ready to search" },
-      { shortcut: "v", action: "Toggle through three view states for aligned texts (plain/side by side/line by line)" },
-      { shortcut: "n", action: "Toggle through notes view (on asterisk/side notes/none)" },
-      { shortcut: "m", action: "Toggle main reference numbers on and off" },
-      { shortcut: "t", action: "Toggle PTS reference numbers on and off" },
-      { shortcut: "r", action: "Toggle all reference numbers on and off" },
-      { shortcut: "i", action: "Opens Info panel" },
-      { shortcut: "o", action: "Opens Views panel (aka options)" },
-      { shortcut: "p", action: "Opens Parallel panel" },
-      { shortcut: "esc", action: "Close all overlays" },
+      { shortcut: "v", action: "Toggle through three view states for aligned texts (plain/side by side/line by line)", mirror: "1" },
+      { shortcut: "s", action: "Open the top search bar and place cursor ready to search", mirror: "2" },
+      { shortcut: "n", action: "Toggle through notes view (on asterisk/side notes/none)", mirror: "3" },
+      { shortcut: "m", action: "Toggle main reference numbers on and off", mirror: "4" },
+      { shortcut: "t", action: "Toggle PTS reference numbers on and off", mirror: "5" },
+      { shortcut: "r", action: "Toggle all reference numbers on and off", mirror: "6" },
+      { shortcut: "i", action: "Opens Info panel", mirror: "7" },
+      { shortcut: "o", action: "Opens Views panel (aka options)", mirror: "8" },
+      { shortcut: "p", action: "Opens Parallel panel", mirror: "9" },
+      { shortcut: "esc", action: "Close all overlays", mirror: "0" },
+      { shortcut: "=", action: "Opens alternate menu system", extensionKey: "vpMenuShow" },
       { shortcut: "c", action: "copies the heading and body of the entire text to the clipboard. Visible root and notes (even on asterisks) will get copied too.", extensionKey: "copyWholeText" },
       { shortcut: "u", action: "copy the bare URL", extensionKey: "copyBareLink" },
       { shortcut: "l", action: "copy a link to the current page in a custom format", extensionKey: "copyCustomLink" },
@@ -137,12 +152,60 @@ export default defineContentScript({
       anchor: "body",
       onMount: async container => {
         const existingTable = container.querySelector("#hotkey-map");
+        const existingCloseButton = container.querySelector(".close-button");
+        const existingOverlay = document.querySelector(".ui-overlay");
+
         if (existingTable) {
           existingTable.remove();
         }
+        if (existingCloseButton) {
+          existingCloseButton.remove();
+        }
+        if (existingOverlay) {
+          existingOverlay.remove();
+        }
 
         const tableElement = await createTable(shortcutsData);
+
+        // Create the "X" button
+        const closeButton = document.createElement("button");
+        closeButton.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>`;
+        closeButton.classList.add("close-button");
+        closeButton.style.position = "absolute";
+        closeButton.style.top = "10px";
+        closeButton.style.right = "10px";
+        closeButton.style.zIndex = "1002";
+        closeButton.style.backgroundColor = "white";
+        closeButton.style.color = "black";
+        closeButton.style.border = "none";
+        closeButton.style.padding = "5px 5px 0px 5px";
+        closeButton.style.cursor = "pointer";
+
+        closeButton.addEventListener("click", closeUi); // Close the UI when clicked
+
+        // Create a gray overlay
+        const overlay = document.createElement("div");
+        overlay.classList.add("ui-overlay");
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100%";
+        overlay.style.height = "100%";
+        overlay.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+        overlay.style.zIndex = "1000";
+
+        overlay.addEventListener("click", closeUi);
+
+        document.body.append(overlay);
+        container.append(closeButton);
         container.append(tableElement);
+
+        document.body.style.overflow = "hidden";
+
         uiContainer = container;
 
         // Add scroll event listener
@@ -175,6 +238,16 @@ export default defineContentScript({
       if (isUiMounted()) {
         ui.remove();
         uiContainer = null;
+
+        // Remove the overlay
+        const overlay = document.querySelector(".ui-overlay");
+        if (overlay) {
+          overlay.remove();
+        }
+
+        // Restore scrolling for the underlying page
+        document.body.style.overflow = "";
+
         window.removeEventListener("scroll", handleScrollToRemoveUi); // Clean up scroll listener
         document.removeEventListener("click", handleClickOutsideUi); // Clean up click listener
       }
@@ -188,6 +261,10 @@ export default defineContentScript({
         } else {
           closeUi(); // Use closeUi() to handle cleanup
         }
+      }
+
+      if (event.key === "Escape" && isUiMounted()) {
+        closeUi(); // Use closeUi() to handle cleanup
       }
     });
   },
