@@ -107,7 +107,6 @@ kbd {
   display: inline-block;
   text-align: center;
   margin: 0px 0.1em;
-  /* padding: 0 0.3em 0.05em; */
   min-width: 1.2rem;
   border-radius: 3px;
   border: 1px solid rgb(204, 204, 204);
