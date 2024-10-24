@@ -42,7 +42,6 @@ img {
   line-height: 1.3;
   font-weight: 400;
 
-  color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
@@ -58,6 +57,10 @@ body {
   min-width: 620px;
   min-height: 100vh;
   font-size: 1rem;
+}
+
+strong {
+  color: white
 }
 
 .settingsForm {
