@@ -1,20 +1,21 @@
 # Version 0.0.7
 
-New
+## New
 
-- Add hotkey map. Press ? to display
+- Add hotkey map. Press ? to display.
+- Added welcome and updates page.
 
 # Version 0.0.6
 
-New
+## New
 
 - add ability to show segment ids for all levels of headings
 
-Bugs
+## Bugs
 
 - fixed clicking to copy id to clipboard
 
-Improvements
+## Improvements
 
 - Rewrote random sutta script
 - improved api call to get root on legacy

@@ -27,6 +27,9 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0
     devDependencies:
+      '@types/chrome':
+        specifier: ^0.0.278
+        version: 0.0.278
       '@types/query-selector-shadow-dom':
         specifier: ^1.0.4
         version: 1.0.4
@@ -366,6 +369,9 @@ packages:
 
   '@types/chrome@0.0.269':
     resolution: {integrity: sha512-vF7x8YywnhXX2F06njQ/OE7a3Qeful43C5GUOsUksXWk89WoSFUU3iLeZW8lDpVO9atm8iZIEiLQTRC3H7NOXQ==, tarball: https://registry.npmjs.org/@types/chrome/-/chrome-0.0.269.tgz}
+
+  '@types/chrome@0.0.278':
+    resolution: {integrity: sha512-PDIJodOu7o54PpSOYLybPW/MDZBCjM1TKgf31I3Q/qaEbNpIH09rOM3tSEH3N7Q+FAqb1933LhF8ksUPYeQLNg==, tarball: https://registry.npmjs.org/@types/chrome/-/chrome-0.0.278.tgz}
 
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==, tarball: https://registry.npmjs.org/@types/estree/-/estree-1.0.6.tgz}
@@ -2290,6 +2296,11 @@ snapshots:
       defer-to-connect: 2.0.1
 
   '@types/chrome@0.0.269':
+    dependencies:
+      '@types/filesystem': 0.0.36
+      '@types/har-format': 1.2.16
+
+  '@types/chrome@0.0.278':
     dependencies:
       '@types/filesystem': 0.0.36
       '@types/har-format': 1.2.16

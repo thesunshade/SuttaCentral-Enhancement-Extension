@@ -17,6 +17,20 @@ type SettingsConfigType = {
 export default defineBackground(() => {
   console.log("Hello background!", { id: browser.runtime.id });
 
+  chrome.runtime.onInstalled.addListener(function (object) {
+    let installlUrl = "extension-pages/welcome.html";
+    let updatelUrl = chrome.runtime.getURL("extension-pages/updates.html");
+
+    if (object.reason === chrome.runtime.OnInstalledReason.INSTALL) {
+      chrome.tabs.create({ url: installlUrl }, function (tab) {
+              });
+    }
+    if (object.reason === chrome.runtime.OnInstalledReason.UPDATE) {
+      chrome.tabs.create({ url: updatelUrl }, function (tab) {
+      });
+    }
+  });
+
   // Initiate settings
   chrome.runtime.onInstalled.addListener(details => {
     const defaultSettings: { [key: string]: any } = {};
