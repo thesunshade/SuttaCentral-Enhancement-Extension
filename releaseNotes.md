@@ -2,7 +2,7 @@
 
 ## New
 
-- Suriya, Addharatta themes
+- Suriya, Addharatta, Soreyya themes
 
 # Version 0.0.7
 
