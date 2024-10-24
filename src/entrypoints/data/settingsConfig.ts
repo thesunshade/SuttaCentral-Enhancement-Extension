@@ -19,12 +19,12 @@ export const settingsConfig = {
     default: "true",
   },
   viewOptionsShrink: {
-    label: "Shrink the view options so there is no horizontal scroll. Refresh page to see.",
+    label: "Shrink the <strong>view options</strong> so there is no horizontal scroll. Refresh page to see.",
     type: "checkbox",
     default: "true",
   },
   viewHeadingIds: {
-    label: "Show segment ids for headings.",
+    label: "Show <strong>segment ids</strong> for headings.",
     type: "checkbox",
     default: "false",
   },
@@ -33,12 +33,12 @@ export const settingsConfig = {
     type: "paragraph",
   },
   rootColor: {
-    label: "Color of root language text (e.g. Pāli, Sanskrit, Classical Chinese).",
+    label: "Color of <strong>root language</strong> text (e.g. Pāli, Sanskrit, Classical Chinese).",
     type: "text",
     default: "",
   },
   translationColor: {
-    label: "Color of translation text.",
+    label: "Color of <strong>translation<strong> text.",
     type: "text",
     default: "",
   },
@@ -51,12 +51,12 @@ export const settingsConfig = {
     type: "paragraph",
   },
   vpMenuShow: {
-    label: "Add new navigation menu under three bar menu icon in top left. <kbd>=</kbd> to toggle.",
+    label: "Add <strong>new navigation menu</strong> under three bar menu icon in top left. <kbd>=</kbd> to toggle.",
     type: "checkbox",
     default: "true",
   },
   randomLink: {
-    label: "Add link to random sutta on home page",
+    label: "Add link to <strong>random sutta</strong> on home page",
     type: "checkbox",
     default: "true",
   },
@@ -71,22 +71,22 @@ export const settingsConfig = {
     default: "true",
   },
   rootOnLegacy: {
-    label: "Add root to legacy translation. Page refresh required. Not configurable through regular view options.",
+    label: "Add <strong>root to legacy</strong> translation. Page refresh required. Not configurable through regular view options.",
     type: "checkbox",
     default: "false",
   },
   clickSegmentNumbersToCopyUrl: {
-    label: "Clicking segment number copies URL to that segment to the clipboard.",
+    label: "Clicking <strong>segment number copies URL</strong> to that segment to the clipboard.",
     type: "checkbox",
     default: "false",
   },
   addedTextBrackets: {
-    label: "Adds brackets around text added by translator",
+    label: "Adds brackets around <strong>text added</strong> by translator",
     type: "checkbox",
     default: "true",
   },
   showUserLanguage: {
-    label: "Show current site language above the three dot menu icon",
+    label: "Show <strong>current site language</strong> above the three dot menu icon",
     type: "checkbox",
     default: "true",
   },

@@ -1,4 +1,4 @@
-import { settingsConfig } from "./popup/settingsConfig.js";
+import { settingsConfig } from "./data/settingsConfig.js";
 import checkOmniboxSetting from "./functions/checkOmniboxSetting.js";
 
 const typedSettingsConfig: SettingsConfigType = settingsConfig as SettingsConfigType;

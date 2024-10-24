@@ -1,5 +1,5 @@
 import "./style.css";
-import { settingsConfig } from "./settingsConfig";
+import { settingsConfig } from "../data/settingsConfig";
 
 // Generate the settings form dynamically
 function generateSettingsForm(config: any) {
