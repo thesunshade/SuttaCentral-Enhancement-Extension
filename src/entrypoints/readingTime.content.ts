@@ -23,7 +23,7 @@ export default defineContentScript({
 
       const text = article.textContent?.trim() || "";
       if (!text) {
-        console.log("exiting because article is still empty");
+        // console.log("exiting because article is still empty");
         isProcessing = false;
         return;
       }
@@ -35,13 +35,13 @@ export default defineContentScript({
       }
 
       lastProcessedContent = text;
-      console.log("start count");
+      // console.log("start count");
 
       const wordMatchRegExp = /[^\s]+/g;
       const words = text.matchAll(wordMatchRegExp);
       const wordCount = [...words].length;
       const readingTime = Math.round(wordCount / WPM);
-      console.log("reading time", readingTime);
+      // console.log("reading time", readingTime);
 
       // Create or update the badge
       if (!badge) {
@@ -63,7 +63,7 @@ export default defineContentScript({
     };
 
     const checkSettings = (forceUpdate = false) => {
-      console.log("check settings");
+      // console.log("check settings");
       chrome.storage.sync.get(["showReadingTime", "wordsPerMinute"], data => {
         const isEnabled = data["showReadingTime"] === "true";
         const WPM = Number(data["wordsPerMinute"]) || 200;
