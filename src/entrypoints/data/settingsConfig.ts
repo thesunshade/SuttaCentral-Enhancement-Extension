@@ -151,6 +151,11 @@ export const settingsConfig = {
     type: "checkbox",
     default: "false",
   },
+  previousNext: {
+    label: "<kbd>←</kbd> <kbd>→</kbd> to go to previous and next sutta.</strong>",
+    type: "checkbox",
+    default: "true",
+  },
   selectOnlyTranslation: {
     label: "<kbd>.</kbd> to <strong>select only translation</strong>",
     type: "checkbox",
