@@ -134,6 +134,8 @@ export default defineContentScript({
       { shortcut: "q", action: "open a popup with a QR Code", extensionKey: "qrCode" },
       { shortcut: ".", action: "select only translation", extensionKey: "selectOnlyTranslation" },
       { shortcut: ",", action: "select only root language", extensionKey: "selectOnlyRoot" },
+      { shortcut: "←", action: "(left arrow) Go to previous text", extensionKey: "previousNext" },
+      { shortcut: "→", action: "(right arrow) Go to next text", extensionKey: "previousNext" },
       { shortcut: "?", action: "Show this table" },
     ];
 

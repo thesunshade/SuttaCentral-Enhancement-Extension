@@ -2,6 +2,7 @@
 
 ## New
 
+- left and right arrows go to previous and next text
 - Suriya, Addharatta, Soreyya themes
 
 # Version 0.0.7
