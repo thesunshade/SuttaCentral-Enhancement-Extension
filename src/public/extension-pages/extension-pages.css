@@ -20,7 +20,9 @@
         25px 50px 62.9px -2.5px hsl(var(--shadow-color) / 0.34);
 }
 
-
+p {
+    font-size: 16px;
+}
 
 article {
     max-width: 900px;
