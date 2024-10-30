@@ -30,3 +30,7 @@ todo.md
 *.old
 old/*
 templates/*
+.env.submit
+.env.submit.backup-1730321761563
+.env.submit.backup-1730323341555
+.env.submit
