@@ -6,6 +6,10 @@
 - left and right arrows go to previous and next text
 - Suriya, Addharatta, Soreyya themes
 
+## Fixed
+
+- context menu should now always work when enabled
+
 # Version 0.0.7
 
 ## New
