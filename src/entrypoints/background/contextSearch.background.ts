@@ -1,11 +1,11 @@
 export default defineBackground(() => {
   // Function to create context menu items based on settings
   const createContextMenus = (settings: any) => {
-    console.log("Creating context menus with settings:", settings); // Debug log
+    console.info("Creating context menus with settings:", settings); // Debug log
 
     // Remove all existing context menus first
     chrome.contextMenus.removeAll(() => {
-      console.log("Existing context menus removed"); // Debug log
+      console.info("Existing context menus removed"); // Debug log
 
       // Convert the settings to proper booleans
       const contextSearchSuttacentral = settings.contextSearchSuttacentral === "true";
@@ -13,7 +13,7 @@ export default defineBackground(() => {
       const contextGoToSuttaplex = settings.contextGoToSuttaplex === "true";
       const contextGoToSutta = settings.contextGoToSutta === "true";
       const contextSearchPts = settings.contextSearchPts === "true";
-      const contextSearchDpd = settings.contextSearchPts === "true";
+      const contextSearchDpd = settings.contextSearchDpd === "true";
 
       if (contextSearchSuttacentral) {
         chrome.contextMenus.create({
@@ -63,16 +63,18 @@ export default defineBackground(() => {
   // Function to load settings from storage or use defaults from settingsConfig.ts
   function loadSettings(callback: (settings: any) => void) {
     chrome.storage.sync.get(["contextSearchSuttacentral", "contextSearchForum", "contextGoToSuttaplex", "contextGoToSutta", "contextSearchPts", "contextSearchDpd"], storedSettings => {
-      // Merge stored settings with defaults, stored settings take precedence
       const finalSettings = { ...storedSettings };
       callback(finalSettings);
     });
   }
 
-  // Load settings and create context menus on installation
-  chrome.runtime.onInstalled.addListener(() => {
+  // Load settings and create context menus on installation or startup
+  const initializeContextMenus = () => {
     loadSettings(createContextMenus);
-  });
+  };
+
+  chrome.runtime.onInstalled.addListener(initializeContextMenus);
+  chrome.runtime.onStartup.addListener(initializeContextMenus); // Adds listener at browser startup
 
   // Listen for changes to the settings and update menus dynamically
   chrome.storage.onChanged.addListener((changes, area) => {
@@ -84,7 +86,6 @@ export default defineBackground(() => {
 
       console.log("Settings changed:", updatedSettings); // Debug log
 
-      // Fetch the latest settings, merging updated ones
       loadSettings(settings => {
         const mergedSettings = { ...settings, ...updatedSettings };
         createContextMenus(mergedSettings);
@@ -94,37 +95,27 @@ export default defineBackground(() => {
 
   // Handle context menu item clicks
   chrome.contextMenus.onClicked.addListener((info, tab) => {
-    if (!info.selectionText) {
-      // If selectionText is undefined or empty, exit early.
-      return;
-    }
+    if (!info.selectionText) return;
+
     const citation = sanitizePotentialCitation(info.selectionText);
     const searchString = encodeURIComponent(info.selectionText);
-    if (info.selectionText) {
-      if (info.menuItemId === "searchSuttaCentral") {
-        const searchUrl = `https://suttacentral.net/search?query=${searchString}`;
-        chrome.tabs.create({ url: searchUrl });
-      } else if (info.menuItemId === "searchDD") {
-        const searchUrl = `https://discourse.suttacentral.net/search?q=${searchString}`;
-        chrome.tabs.create({ url: searchUrl });
-      } else if (info.menuItemId === "goToCitationSuttaplex") {
-        const url = `https://suttacentral.net/${citation}`;
-        chrome.tabs.create({ url: url });
-      } else if (info.menuItemId === "goToCitation") {
-        const url = `https://suttacentral.net/${citation}/xx/xx`;
-        chrome.tabs.create({ url: url });
-      } else if (info.menuItemId === "searchPtsCitation") {
-        const searchUrl = `https://suttacentral.net/search?query=volpage:${searchString}`;
-        chrome.tabs.create({ url: searchUrl });
-      } else if (info.menuItemId === "searchDpdCitation") {
-        const searchUrl = `https://www.dpdict.net/?q=${searchString}`;
-        chrome.tabs.create({ url: searchUrl });
-      }
+
+    if (info.menuItemId === "searchSuttaCentral") {
+      chrome.tabs.create({ url: `https://suttacentral.net/search?query=${searchString}` });
+    } else if (info.menuItemId === "searchDD") {
+      chrome.tabs.create({ url: `https://discourse.suttacentral.net/search?q=${searchString}` });
+    } else if (info.menuItemId === "goToCitationSuttaplex") {
+      chrome.tabs.create({ url: `https://suttacentral.net/${citation}` });
+    } else if (info.menuItemId === "goToCitation") {
+      chrome.tabs.create({ url: `https://suttacentral.net/${citation}/xx/xx` });
+    } else if (info.menuItemId === "searchPtsCitation") {
+      chrome.tabs.create({ url: `https://suttacentral.net/search?query=volpage:${searchString}` });
+    } else if (info.menuItemId === "searchDpdCitation") {
+      chrome.tabs.create({ url: `https://www.dpdict.net/?q=${searchString}` });
     }
   });
 
   function sanitizePotentialCitation(potentialCitation: string) {
-    let citation = potentialCitation.replace(/ /g, "").replace(":", ".").trim().toLowerCase();
-    return encodeURIComponent(citation);
+    return encodeURIComponent(potentialCitation.replace(/ /g, "").replace(":", ".").trim().toLowerCase());
   }
 });
