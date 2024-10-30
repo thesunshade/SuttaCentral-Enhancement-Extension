@@ -13,6 +13,7 @@ export default defineBackground(() => {
       const contextGoToSuttaplex = settings.contextGoToSuttaplex === "true";
       const contextGoToSutta = settings.contextGoToSutta === "true";
       const contextSearchPts = settings.contextSearchPts === "true";
+      const contextSearchDpd = settings.contextSearchPts === "true";
 
       if (contextSearchSuttacentral) {
         chrome.contextMenus.create({
@@ -49,12 +50,19 @@ export default defineBackground(() => {
           contexts: ["selection"],
         });
       }
+      if (contextSearchDpd) {
+        chrome.contextMenus.create({
+          id: "searchDpdCitation",
+          title: "📖 Lookup DPD entry for '%s'",
+          contexts: ["selection"],
+        });
+      }
     });
   };
 
   // Function to load settings from storage or use defaults from settingsConfig.ts
   function loadSettings(callback: (settings: any) => void) {
-    chrome.storage.sync.get(["contextSearchSuttacentral", "contextSearchForum", "contextGoToSuttaplex", "contextGoToSutta", "contextSearchPts"], storedSettings => {
+    chrome.storage.sync.get(["contextSearchSuttacentral", "contextSearchForum", "contextGoToSuttaplex", "contextGoToSutta", "contextSearchPts", "contextSearchDpd"], storedSettings => {
       // Merge stored settings with defaults, stored settings take precedence
       const finalSettings = { ...storedSettings };
       callback(finalSettings);
@@ -107,6 +115,9 @@ export default defineBackground(() => {
         chrome.tabs.create({ url: url });
       } else if (info.menuItemId === "searchPtsCitation") {
         const searchUrl = `https://suttacentral.net/search?query=volpage:${searchString}`;
+        chrome.tabs.create({ url: searchUrl });
+      } else if (info.menuItemId === "searchDpdCitation") {
+        const searchUrl = `https://www.dpdict.net/?q=${searchString}`;
         chrome.tabs.create({ url: searchUrl });
       }
     }
