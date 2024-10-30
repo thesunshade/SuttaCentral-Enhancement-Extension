@@ -2,6 +2,7 @@
 
 ## New
 
+- add DPD lookup to context menu
 - left and right arrows go to previous and next text
 - Suriya, Addharatta, Soreyya themes
 

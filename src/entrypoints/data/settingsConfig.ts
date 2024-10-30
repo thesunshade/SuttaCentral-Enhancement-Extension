@@ -222,6 +222,11 @@ export const settingsConfig = {
     type: "checkbox",
     default: "true",
   },
+  contextSearchDpd: {
+    label: "Context menu search DPD",
+    type: "checkbox",
+    default: "true",
+  },
   blurbOptionsContextHeading: {
     label: "Sutta summary popups",
     type: "heading",
