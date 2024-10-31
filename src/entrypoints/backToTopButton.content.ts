@@ -1,17 +1,13 @@
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
-  async main(cxt) {
+  async main() {
     // Variables to store the button and event listener references
     let scrollToTopButton: HTMLButtonElement | null = null;
     let hideTimeout: NodeJS.Timeout;
     let scrollListener: () => void;
     let clickListener: () => void;
 
-    // Functions to execute based on the setting
     function addButtonFunctionality() {
-      console.log("thing done");
-
-      // Create the button
       scrollToTopButton = document.createElement("button");
       scrollToTopButton.innerHTML = `<svg width="30" height="30" viewBox="0 0 24 24" fill="var(--sc-primary-background-color)" stroke-width=".168">
           <path d="M17.657 15.657a1 1 0 0 1-.707-.293L12 10.414l-4.95 4.95a1 1 0 0 1-1.414-1.414l5.657-5.657a1 1 0 0 1 1.414 0l5.657 5.657a1 1 0 0 1-.707 1.707z"/>
@@ -31,10 +27,8 @@ export default defineContentScript({
           transition: opacity 500ms ease;
         `;
 
-      // Add button to the page
       document.body.appendChild(scrollToTopButton);
 
-      // Define the scroll and click event listeners
       scrollListener = () => {
         if (window.scrollY > 200) {
           scrollToTopButton!.style.opacity = ".8";
@@ -49,7 +43,6 @@ export default defineContentScript({
         window.scrollTo({ top: 0, behavior: "smooth" });
       };
 
-      // Add the event listeners
       window.addEventListener("scroll", scrollListener);
       scrollToTopButton.addEventListener("click", clickListener);
     }
