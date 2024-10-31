@@ -90,6 +90,11 @@ export const settingsConfig = {
     type: "checkbox",
     default: "true",
   },
+  backToTopButton: {
+    label: "Add <strong>back to top</strong> button",
+    type: "checkbox",
+    default: "true",
+  },
   showReadingTime: {
     label: "Show reading time",
     type: "checkbox",
