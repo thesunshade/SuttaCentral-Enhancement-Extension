@@ -8,55 +8,59 @@ export default defineContentScript({
     let clickListener: () => void;
 
     function addButtonFunctionality() {
-      scrollToTopButton = document.createElement("button");
-      scrollToTopButton.innerHTML = `<svg width="30" height="30" viewBox="0 0 24 24" fill="var(--sc-primary-background-color)" stroke-width=".168">
-          <path d="M17.657 15.657a1 1 0 0 1-.707-.293L12 10.414l-4.95 4.95a1 1 0 0 1-1.414-1.414l5.657-5.657a1 1 0 0 1 1.414 0l5.657 5.657a1 1 0 0 1-.707 1.707z"/>
-        </svg>`;
-      scrollToTopButton.style.cssText = `
-          position: fixed;
-          bottom: 20px;
-          right: 20px;
-          padding: 10px 10px 5px 10px;
-          font-size: 16px;
-          background-color: var(--sc-primary-color);
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-          z-index: 1000;
-          opacity: 0;
-          transition: opacity 500ms ease;
-        `;
+      if (!scrollToTopButton) {
+        scrollToTopButton = document.createElement("button");
+        scrollToTopButton.innerHTML = `<svg width="30" height="30" viewBox="0 0 24 24" fill="var(--sc-primary-background-color)" stroke-width=".168">
+              <path d="M17.657 15.657a1 1 0 0 1-.707-.293L12 10.414l-4.95 4.95a1 1 0 0 1-1.414-1.414l5.657-5.657a1 1 0 0 1 1.414 0l5.657 5.657a1 1 0 0 1-.707 1.707z"/>
+            </svg>`;
+        scrollToTopButton.style.cssText = `
+              position: fixed;
+              bottom: 20px;
+              right: 20px;
+              padding: 10px 10px 5px 10px;
+              font-size: 16px;
+              background-color: var(--sc-primary-color);
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+              z-index: 1000;
+              opacity: 0;
+              display: none;
+              transition: opacity 500ms ease;
+            `;
 
-      document.body.appendChild(scrollToTopButton);
+        document.body.appendChild(scrollToTopButton);
+
+        clickListener = () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        };
+        scrollToTopButton.addEventListener("click", clickListener);
+      }
 
       scrollListener = () => {
         if (window.scrollY > 200) {
-          scrollToTopButton!.style.opacity = ".8";
+          scrollToTopButton!.style.display = "block";
+          scrollToTopButton!.style.opacity = "0.8";
           clearTimeout(hideTimeout);
           hideTimeout = setTimeout(() => {
             scrollToTopButton!.style.opacity = "0";
+            hideTimeout = setTimeout(() => {
+              scrollToTopButton!.style.display = "none";
+            }, 500); // Matches the opacity transition duration
           }, 2000);
         }
       };
 
-      clickListener = () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      };
-
       window.addEventListener("scroll", scrollListener);
-      scrollToTopButton.addEventListener("click", clickListener);
     }
 
     function cleanupListeners() {
-      console.log("stop the thing");
-
-      // Remove the event listeners and button if they exist
       if (scrollToTopButton) {
         window.removeEventListener("scroll", scrollListener);
         scrollToTopButton.removeEventListener("click", clickListener);
         clearTimeout(hideTimeout);
-        scrollToTopButton.remove(); // Remove the button from the DOM
-        scrollToTopButton = null; // Clear the reference
+        scrollToTopButton.remove();
+        scrollToTopButton = null;
       }
     }
 
