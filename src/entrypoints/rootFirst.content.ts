@@ -173,27 +173,27 @@ export default defineContentScript({
 
     // ---------------- history issues
 
-    // Save the original methods
-    const originalPushState = history.pushState;
-    const originalReplaceState = history.replaceState;
+    // // Save the original methods
+    // const originalPushState = history.pushState;
+    // const originalReplaceState = history.replaceState;
 
-    // Override pushState
-    history.pushState = function (state: any, title: string, url?: string | null) {
-      console.log("Intercepted pushState:", url); // Log or modify as needed
-      // Call the original function with the correct parameters
-      return originalPushState.call(history, state, title, url);
-    };
+    // // Override pushState
+    // history.pushState = function (state: any, title: string, url?: string | null) {
+    //   console.log("Intercepted pushState:", url); // Log or modify as needed
+    //   // Call the original function with the correct parameters
+    //   return originalPushState.call(history, state, title, url);
+    // };
 
-    // Override replaceState
-    history.replaceState = function (state: any, title: string, url?: string | null) {
-      console.log("Intercepted replaceState:", url); // Log or modify as needed
-      return originalReplaceState.call(history, state, title, url);
-    };
+    // // Override replaceState
+    // history.replaceState = function (state: any, title: string, url?: string | null) {
+    //   console.log("Intercepted replaceState:", url); // Log or modify as needed
+    //   return originalReplaceState.call(history, state, title, url);
+    // };
 
-    // Optionally, listen for popstate events
-    window.addEventListener("popstate", function (event) {
-      console.log("Intercepted popstate:", event.state); // Log or handle as needed
-    });
+    // // Optionally, listen for popstate events
+    // window.addEventListener("popstate", function (event) {
+    //   console.log("Intercepted popstate:", event.state); // Log or handle as needed
+    // });
 
     // ----------- additional code
     // Function to check the layout parameter
@@ -222,9 +222,9 @@ export default defineContentScript({
     layoutObserver.observe(document.body, { childList: true, subtree: true });
 
     // Optionally, listen for popstate events if necessary
-    window.addEventListener("popstate", () => {
-      checkLayoutParameter();
-    });
+    // window.addEventListener("popstate", () => {
+    //   checkLayoutParameter();
+    // });
 
     // ---------------- end history issues
 
