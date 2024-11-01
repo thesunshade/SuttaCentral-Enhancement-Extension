@@ -1,5 +1,7 @@
 // Adds the current user's site language to the top bar
 
+import { querySelectorDeep } from "query-selector-shadow-dom";
+
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
@@ -31,37 +33,19 @@ export default defineContentScript({
 
     // Insert the languageDiv after the target button
     const insertLanguageDiv = () => {
-      const targetElement = findButtonInShadowDOM(document.body);
+      const targetElement = querySelectorDeep("md-icon-button#more-menu-button");
       if (targetElement) {
         // Insert the languageDiv after the targetElement
         targetElement.insertAdjacentElement("afterend", languageDiv);
       }
     };
 
-    // Recursive function to find the button inside shadow roots
-    const findButtonInShadowDOM = (node: Node): HTMLElement | null => {
-      // Check if this node is the button we're looking for
-      if (node instanceof HTMLElement && node.matches("md-icon-button#more-menu-button")) {
-        return node as HTMLElement;
-      }
-
-      // If the node has a shadow root, traverse it
-      if (node instanceof HTMLElement && node.shadowRoot) {
-        const shadowElements = node.shadowRoot.childNodes;
-        for (const shadowNode of shadowElements) {
-          const found = findButtonInShadowDOM(shadowNode);
-          if (found) return found;
-        }
-      }
-
-      // Traverse child nodes
-      for (const child of node.childNodes) {
-        const found = findButtonInShadowDOM(child);
-        if (found) return found;
-      }
-
-      return null;
-    };
+    window.addEventListener("load", function () {
+      this.setTimeout(() => {
+        updateLanguageDisplay();
+        insertLanguageDiv();
+      }, 1000);
+    });
 
     // Check the setting before running the script
     chrome.storage.sync.get("showUserLanguage", data => {
@@ -77,40 +61,27 @@ export default defineContentScript({
         return; // Exit if the setting is not enabled
       }
 
-      // Use a MutationObserver to watch for changes to localStorage
-      const observer = new MutationObserver(mutations => {
-        for (const mutation of mutations) {
-          if (mutation.type === "childList") {
-            updateLanguageDisplay();
+      // this listens for changes to changes to the language and re-renders the notification when it does
+      const targetNode = document.getElementById("main_html_root");
+
+      if (targetNode) {
+        // Create an observer instance
+        const observer = new MutationObserver(mutationsList => {
+          for (const mutation of mutationsList) {
+            if (mutation.type === "attributes" && mutation.attributeName === "lang") {
+              updateLanguageDisplay();
+            }
           }
-        }
-      });
+        });
 
-      // Create a target node to observe
-      const targetNode = document.body;
-
-      // Configuration of the observer:
-      const config = { childList: true, subtree: true };
-
-      // Start observing the target node for configured mutations
-      observer.observe(targetNode, config);
-
-      // Also listen to storage events
-      window.addEventListener("storage", event => {
-        if (event.key === "reduxState") {
-          updateLanguageDisplay();
-        }
-      });
-
-      // Insert the div again if the button is re-rendered
-      const buttonObserver = new MutationObserver(insertLanguageDiv);
-      buttonObserver.observe(targetNode, config);
+        // Configuration of the observer: watch for attribute changes
+        observer.observe(targetNode, { attributes: true, attributeFilter: ["lang"] });
+      }
 
       // Watch for changes to the setting and update the display
       chrome.storage.onChanged.addListener((changes, area) => {
         if (area === "sync" && changes.showUserLanguage) {
           const newValue = changes.showUserLanguage.newValue === "true"; // Convert to boolean
-
           if (newValue) {
             console.info("🔤 Language displayed");
             updateLanguageDisplay();
