@@ -15,8 +15,7 @@ export default defineContentScript({
       }
     `;
 
-    // Function to dynamically inject the side-by-side layout styles
-    const addSideBySideStyles = () => {
+    function addSideBySideStyles() {
       const urlParams = new URLSearchParams(window.location.search);
       const layout = urlParams.get("layout");
 
@@ -29,18 +28,16 @@ export default defineContentScript({
           document.head.appendChild(styleElement);
         }
       }
-    };
+    }
 
-    // Function to remove the side-by-side layout styles
-    const removeSideBySideStyles = () => {
+    function removeSideBySideStyles() {
       const styleElement = document.getElementById("side-by-side-styles");
       if (styleElement) {
         styleElement.remove();
       }
-    };
+    }
 
-    // Function to swap elements back to their original order
-    const resetSwap = () => {
+    function resetSwap() {
       const segments = Array.from(document.querySelectorAll(".segment"));
       segments.forEach(segment => {
         const translation = segment.querySelector(".translation");
@@ -50,16 +47,16 @@ export default defineContentScript({
           segment.insertBefore(translation, root);
         }
       });
-    };
+    }
 
-    // Swap function that handles elements in batches
-    const progressiveSwap = () => {
+    function progressiveSwap() {
       const segments = Array.from(document.querySelectorAll(".segment"));
-      const batchSize = 50; // Number of segments to process per frame
+      const batchSize = 50;
       let index = 0;
 
-      const swapBatch = () => {
+      function swapBatch() {
         const end = Math.min(index + batchSize, segments.length);
+        console.log(end);
         for (let i = index; i < end; i++) {
           const segment = segments[i];
           const translation = segment.querySelector(".translation");
@@ -77,43 +74,30 @@ export default defineContentScript({
         if (index < segments.length) {
           requestAnimationFrame(swapBatch); // Schedule the next batch
         }
-      };
+      }
 
       requestAnimationFrame(swapBatch); // Start the first batch
-    };
+    }
 
     // Function to check the setting and run or clean up the script
-    const checkSettingAndRun = () => {
+    function checkSettingAndRun() {
       chrome.storage.sync.get("languageSwap", data => {
-        const isEnabled = data["languageSwap"] === "true"; // Convert to boolean
-
+        const isEnabled = data["languageSwap"] === "true";
         if (!isEnabled) {
-          console.info("❌ Language swap is disabled");
-          removeStylesAndCleanup();
+          console.log("❌ Language swap is disabled");
+          removeSideBySideStyles();
+          resetSwap();
+          if (observer) {
+            observer.disconnect();
+            observer = null;
+          }
         } else {
-          console.info("🔀 Progressive swap of .translation and .root active");
-          applyStylesAndSwap();
+          console.log("🔀 Progressive swap of .translation and .root active");
+          progressiveSwap();
+          addSideBySideStyles();
         }
       });
-    };
-
-    // Function to apply styles and reorder the elements
-    const applyStylesAndSwap = () => {
-      progressiveSwap(); // Apply the reordering
-      addSideBySideStyles(); // Conditionally apply the side-by-side CSS
-    };
-
-    // Function to remove styles and reset the element order
-    const removeStylesAndCleanup = () => {
-      removeSideBySideStyles(); // Remove side-by-side CSS
-      resetSwap(); // Reset the translation/root order
-
-      // Disconnect the observer if it exists
-      if (observer) {
-        observer.disconnect();
-        observer = null;
-      }
-    };
+    }
 
     // Initial check
     checkSettingAndRun();
@@ -121,28 +105,8 @@ export default defineContentScript({
     // Listen for changes to the languageSwap setting
     chrome.storage.onChanged.addListener((changes, namespace) => {
       if (namespace === "sync" && changes.languageSwap) {
-        checkSettingAndRun(); // Run the script if the languageSwap setting changes
+        checkSettingAndRun();
       }
     });
-
-    // Optional: Monitor dynamic content changes as a fallback
-    const observeMutations = () => {
-      observer = new MutationObserver(mutations => {
-        mutations.forEach(mutation => {
-          if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
-            progressiveSwap(); // Re-apply swap if content is dynamically added
-            addSideBySideStyles(); // Re-check layout on dynamic content change
-          }
-        });
-      });
-
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true,
-      });
-    };
-
-    // Observe mutations
-    observeMutations();
   },
 });
