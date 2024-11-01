@@ -155,7 +155,7 @@ export default defineContentScript({
         } else {
           // If `article` is not found, reset observation
           articleObserver.disconnect(); // Stop current observation
-          startObserving(); // Restart observing for `article` addition
+          observeArticleChanges(); // Restart observing for `article` addition
         }
       });
 
@@ -163,44 +163,14 @@ export default defineContentScript({
       articleObserver.observe(document.body, { childList: true, subtree: true });
     }
 
-    // Function to start observing for the `article` element
-    function startObserving() {
-      observeArticleChanges();
-    }
-
     // Start the observation
-    startObserving();
+    observeArticleChanges();
 
-    // ---------------- history issues
-
-    // // Save the original methods
-    // const originalPushState = history.pushState;
-    // const originalReplaceState = history.replaceState;
-
-    // // Override pushState
-    // history.pushState = function (state: any, title: string, url?: string | null) {
-    //   console.log("Intercepted pushState:", url); // Log or modify as needed
-    //   // Call the original function with the correct parameters
-    //   return originalPushState.call(history, state, title, url);
-    // };
-
-    // // Override replaceState
-    // history.replaceState = function (state: any, title: string, url?: string | null) {
-    //   console.log("Intercepted replaceState:", url); // Log or modify as needed
-    //   return originalReplaceState.call(history, state, title, url);
-    // };
-
-    // // Optionally, listen for popstate events
-    // window.addEventListener("popstate", function (event) {
-    //   console.log("Intercepted popstate:", event.state); // Log or handle as needed
-    // });
-
-    // ----------- additional code
     // Function to check the layout parameter
-    function checkLayoutParameter() {
+    function changeLayoutStyleBasedOnParameter() {
       const urlParams = new URLSearchParams(window.location.search);
       const layout = urlParams.get("layout");
-      console.log("Current layout parameter:", layout);
+      // console.log("Current layout parameter:", layout);
 
       if (layout === "linebyline") {
         // Call your function for layout=linebyline
@@ -211,20 +181,15 @@ export default defineContentScript({
     }
 
     // Check on initial load
-    checkLayoutParameter();
+    changeLayoutStyleBasedOnParameter();
 
     // Observe URL changes using MutationObserver (if applicable)
     const layoutObserver = new MutationObserver(() => {
-      checkLayoutParameter();
+      changeLayoutStyleBasedOnParameter();
     });
 
     // Start observing the body for child list changes
     layoutObserver.observe(document.body, { childList: true, subtree: true });
-
-    // Optionally, listen for popstate events if necessary
-    // window.addEventListener("popstate", () => {
-    //   checkLayoutParameter();
-    // });
 
     // ---------------- end history issues
 
