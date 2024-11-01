@@ -1,6 +1,12 @@
 # Unreleased Version 0.0.9
 
+## New
+
 - add back to top button
+
+## Fixed
+
+- improve code for language notification display
 
 # Latest Version 0.0.8
 
