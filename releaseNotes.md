@@ -2,11 +2,12 @@
 
 ## New
 
-- add back to top button
+- add "back to top" button
 
 ## Fixed
 
 - improve code for language notification display
+- improve root position swapping code to resolve problem where the browser would hang
 
 # Latest Version 0.0.8
 

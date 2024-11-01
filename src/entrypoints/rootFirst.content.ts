@@ -51,18 +51,28 @@ export default defineContentScript({
 
     function progressiveSwap() {
       const segments = Array.from(document.querySelectorAll(".segment"));
+
+      // Check if the .root element is already first in the first segment
+      const firstSegment = segments[0];
+      const firstTranslation = firstSegment?.querySelector(".translation");
+      const firstRoot = firstSegment?.querySelector(".root");
+
+      if (firstTranslation && firstRoot && firstRoot.nextSibling === firstTranslation) {
+        // If root is already correctly positioned in the first segment, exit early
+        return;
+      }
+
       const batchSize = 50;
       let index = 0;
 
       function swapBatch() {
         const end = Math.min(index + batchSize, segments.length);
-        console.log(end);
         for (let i = index; i < end; i++) {
           const segment = segments[i];
           const translation = segment.querySelector(".translation");
           const root = segment.querySelector(".root");
 
-          // Swap the root before translation
+          // Swap the root before translation if needed
           if (translation && root && root.nextSibling !== translation) {
             segment.insertBefore(root, translation);
           }
@@ -72,11 +82,11 @@ export default defineContentScript({
 
         // If there are more segments, schedule the next batch
         if (index < segments.length) {
-          requestAnimationFrame(swapBatch); // Schedule the next batch
+          requestAnimationFrame(swapBatch);
         }
       }
 
-      requestAnimationFrame(swapBatch); // Start the first batch
+      requestAnimationFrame(swapBatch);
     }
 
     // Function to check the setting and run or clean up the script
@@ -98,6 +108,127 @@ export default defineContentScript({
         }
       });
     }
+
+    // Helper function for debouncing
+    function debounce(func: () => void, delay: number) {
+      let timerId: number | undefined;
+      return () => {
+        clearTimeout(timerId);
+        timerId = window.setTimeout(() => func(), delay);
+      };
+    }
+
+    // Function to run after the `article` content is stable
+    function applyArticleChanges() {
+      console.log("Applying changes to the article content.");
+      progressiveSwap(); // Re-apply swap if content is dynamically added
+      addSideBySideStyles();
+    }
+
+    // Debounced version of the apply function
+    const debouncedApplyChanges = debounce(applyArticleChanges, 500);
+
+    // Function to observe changes to the `article` element
+    function observeArticleChanges() {
+      const articleObserver = new MutationObserver(mutationsList => {
+        const article = document.querySelector("article");
+
+        if (article) {
+          // Start observing changes within the `article` element
+          const innerObserver = new MutationObserver(debouncedApplyChanges);
+          innerObserver.observe(article, {
+            childList: true,
+            subtree: true,
+            characterData: true,
+          });
+
+          // If the article is removed, disconnect the inner observer
+          mutationsList.forEach(mutation => {
+            if (mutation.removedNodes.length) {
+              mutation.removedNodes.forEach(node => {
+                if (node instanceof HTMLElement && node.tagName === "ARTICLE") {
+                  innerObserver.disconnect();
+                }
+              });
+            }
+          });
+        } else {
+          // If `article` is not found, reset observation
+          articleObserver.disconnect(); // Stop current observation
+          startObserving(); // Restart observing for `article` addition
+        }
+      });
+
+      // Start observing the body for changes to find the `article` element
+      articleObserver.observe(document.body, { childList: true, subtree: true });
+    }
+
+    // Function to start observing for the `article` element
+    function startObserving() {
+      observeArticleChanges();
+    }
+
+    // Start the observation
+    startObserving();
+
+    // ---------------- history issues
+
+    // Content script
+
+    // Save the original methods
+    const originalPushState = history.pushState;
+    const originalReplaceState = history.replaceState;
+
+    // Override pushState
+    history.pushState = function (state: any, title: string, url?: string | null) {
+      console.log("Intercepted pushState:", url); // Log or modify as needed
+      // Call the original function with the correct parameters
+      return originalPushState.call(history, state, title, url);
+    };
+
+    // Override replaceState
+    history.replaceState = function (state: any, title: string, url?: string | null) {
+      console.log("Intercepted replaceState:", url); // Log or modify as needed
+      return originalReplaceState.call(history, state, title, url);
+    };
+
+    // Optionally, listen for popstate events
+    window.addEventListener("popstate", function (event) {
+      console.log("Intercepted popstate:", event.state); // Log or handle as needed
+    });
+
+    // ----------- additional code
+    // Function to check the layout parameter
+    const checkLayoutParameter = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const layout = urlParams.get("layout");
+      console.log("Current layout parameter:", layout);
+
+      if (layout === "linebyline") {
+        // Call your function for layout=linebyline
+        removeSideBySideStyles();
+      } else if (layout === "sidebyside") {
+        addSideBySideStyles();
+      }
+    };
+
+    // Check on initial load
+    checkLayoutParameter();
+
+    // Observe URL changes using MutationObserver (if applicable)
+    const layoutObserver = new MutationObserver(() => {
+      checkLayoutParameter();
+    });
+
+    // Start observing the body for child list changes
+    layoutObserver.observe(document.body, { childList: true, subtree: true });
+
+    // Optionally, listen for popstate events if necessary
+    window.addEventListener("popstate", () => {
+      checkLayoutParameter();
+    });
+
+    // ---------------- end history issues
 
     // Initial check
     checkSettingAndRun();
