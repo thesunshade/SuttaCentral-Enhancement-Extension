@@ -197,7 +197,7 @@ export default defineContentScript({
 
     // ----------- additional code
     // Function to check the layout parameter
-    const checkLayoutParameter = () => {
+    function checkLayoutParameter() {
       const urlParams = new URLSearchParams(window.location.search);
       const layout = urlParams.get("layout");
       console.log("Current layout parameter:", layout);
@@ -208,7 +208,7 @@ export default defineContentScript({
       } else if (layout === "sidebyside") {
         addSideBySideStyles();
       }
-    };
+    }
 
     // Check on initial load
     checkLayoutParameter();
