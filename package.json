@@ -1,7 +1,7 @@
 {
   "description": "A collection of enhancements for SuttaCentral.net and related websites",
   "private": true,
-  "version": "0.0.8",
+  "version": "0.0.9",
   "type": "module",
   "scripts": {
     "dev": "wxt",
