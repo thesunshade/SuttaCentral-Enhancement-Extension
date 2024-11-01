@@ -173,8 +173,6 @@ export default defineContentScript({
 
     // ---------------- history issues
 
-    // Content script
-
     // Save the original methods
     const originalPushState = history.pushState;
     const originalReplaceState = history.replaceState;
