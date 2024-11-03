@@ -156,6 +156,10 @@ details div {
   margin-left: 4px
 }
 
+details p {
+  font-style: normal;
+}
+
 a {
   color: rgb(216, 148, 0);
 }

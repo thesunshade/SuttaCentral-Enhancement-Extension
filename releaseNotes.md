@@ -3,11 +3,13 @@
 ## New
 
 - add "back to top" button
+- add icon too extenssion toasts for clarity
 
 ## Fixed
 
 - improve code for language notification display
 - improve root position swapping code to resolve problem where the browser would hang
+- improve click segment to copy
 
 # Latest Version 0.0.8
 

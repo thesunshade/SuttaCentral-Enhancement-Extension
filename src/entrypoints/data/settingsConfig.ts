@@ -292,6 +292,7 @@ export const settingsConfig = {
     <dt>Change notes font size</dt>
     <dd><code>.comment {font-size:120%!important}</code></dd>
     </dl>
+    <p>NOTE: On the main site there are many elements inside a shadow-root. Theses may not be accessible through this feature. You can try adding <code>* {border: solid 1px red}</code>. If an element has a red border <em>directly</em> around it, then you can probably access it.</p>
     `,
   },
   customScCss: {
