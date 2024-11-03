@@ -16,12 +16,8 @@ export default defineContentScript({
         styleTag.id = "added-text-brackets";
 
         styleTag.textContent = `
-          .add:before {
-            content: "[";
-          }
-          .add:after {
-            content: "]";
-          }`;
+          .add:before { content: "[";}
+          .add:after { content: "]";}`;
         document.head.appendChild(styleTag);
       }
     }
