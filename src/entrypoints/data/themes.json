@@ -323,7 +323,7 @@
         "--sc-on-tertiary-secondary-text-color": "#dddddd!important;",
         "--sc-dark-fixed-background-color": "#082023!important;",
         "--sc-darker-fixed-background-color": "#002b36!important;",
-        "--sc-inverted-text-color": "#839496!important;",
+        "--sc-inverted-text-color": "#fdf6e3!important;",
         "--sc-opposite-background-color": "#ffffff!important;",
         "--sc-opposite-text-color": "#201b13!important;",
         "--sc-icon-color": "#adb5bd!important;",
