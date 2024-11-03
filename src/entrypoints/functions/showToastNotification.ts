@@ -15,18 +15,15 @@ export default function showToastNotification(message: string) {
 
   document.body.appendChild(toast);
 
-  // Create and style the icon element
   const icon = document.createElement("img");
   icon.src = chrome.runtime.getURL("icon/96.png");
   icon.style.width = "18px";
   icon.style.height = "18px";
   icon.style.marginRight = "10px";
 
-  // Append icon and message to the toast
   toast.appendChild(icon);
   toast.appendChild(document.createTextNode(message));
 
-  // Remove the toast after 3 seconds
   setTimeout(() => {
     toast.remove();
   }, 3000);
