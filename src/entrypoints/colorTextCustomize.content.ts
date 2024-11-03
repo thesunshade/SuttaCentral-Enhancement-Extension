@@ -7,7 +7,7 @@ export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
     // Apply styles for a given setting and selector
-    function applyStyle(setting: string, selector: string): void {
+    function createAndAddStyleTag(setting: string, selector: string): void {
       let styleTag = document.querySelector(`#${setting}Style`);
       if (styleTag) {
         styleTag.remove();
@@ -29,7 +29,7 @@ export default defineContentScript({
     // Function to handle multiple settings and selectors
     function applyStylesForOverrides(overrides: { setting: string; selector: string }[]): void {
       overrides.forEach(override => {
-        applyStyle(override.setting, override.selector);
+        createAndAddStyleTag(override.setting, override.selector);
       });
     }
 
@@ -41,7 +41,7 @@ export default defineContentScript({
           if (change && change.newValue) {
             const override = cssOverrides.find(o => o.setting === setting);
             if (override) {
-              applyStyle(setting, override.selector);
+              createAndAddStyleTag(setting, override.selector);
             }
           }
         }

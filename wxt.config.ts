@@ -7,8 +7,8 @@ export default defineConfig({
   manifest: {
     web_accessible_resources: [
       {
-        resources: ["icon/ddFavicon.png", "icon/favicon.ico"],
-        matches: ["*://discourse.suttacentral.net/*"],
+        resources: ["icon/ddFavicon.png", "icon/favicon.ico", "icon/96.png"],
+        matches: ["*://discourse.suttacentral.net/*", "*://suttacentral.net/*"],
       },
     ],
     content_scripts: [
