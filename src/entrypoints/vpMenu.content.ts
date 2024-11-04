@@ -6,10 +6,13 @@ import isInputFocused from "./functions/isInputFocused";
 import onlyPressed from "./functions/onlyPressed";
 import menu from "./VpMenu/index.html?raw";
 import "./VpMenu/sc-custommenu.css";
+import "./VpMenu/bootstrap.css";
 import { exactData } from "./data/exact.js";
 import { normalizedData } from "./data/normalized";
 import normalizeString from "./functions/normalizeString.js";
 import { domBuilder } from "./VpMenu/domBuilder";
+import Collapse from "bootstrap/js/dist/collapse";
+import Tooltip from "bootstrap/js/dist/tooltip";
 
 function createInstantLookup() {
   const containerInstantLookup = domBuilder.containerInstantLookup();
@@ -251,6 +254,12 @@ export default defineContentScript({
       const vpMenu = document.createElement("div");
       vpMenu.id = "vpNavigationMenu";
       vpMenu.innerHTML = menu;
+      vpMenu.querySelectorAll(".accordion-collapse").forEach(element => {
+        new Collapse(element, { toggle: false });
+      });
+      vpMenu.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(element => {
+        new Tooltip(element);
+      });
 
       setTimeout(() => {
         const breadcrumbWrapper = querySelectorDeep(".breadcrumbs-wrapper");
