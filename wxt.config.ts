@@ -11,12 +11,12 @@ export default defineConfig({
         matches: ["*://discourse.suttacentral.net/*", "*://suttacentral.net/*"],
       },
     ],
-    content_scripts: [
-      {
-        js: ["/js/bootstrap.min.js"],
-        matches: ["*://suttacentral.net/*"],
-      },
-    ],
+    // content_scripts: [
+    //   {
+    //     js: ["/js/bootstrap.min.js"],
+    //     matches: ["*://suttacentral.net/*"],
+    //   },
+    // ],
     name: "SuttaCentral Enhancement Extension",
     permissions: ["clipboardWrite", "contextMenus", "storage"],
     omnibox: { keyword: "sc" },
