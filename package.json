@@ -22,6 +22,7 @@
   "dependencies": {
     "@ayatkyo/vite-plugin-html-import": "^0.1.2",
     "ally.js": "^1.4.1",
+    "bootstrap": "^5.3.3",
     "qr-creator": "^1.0.0",
     "query-selector-shadow-dom": "^1.0.1",
     "tippy.js": "^6.3.7",
