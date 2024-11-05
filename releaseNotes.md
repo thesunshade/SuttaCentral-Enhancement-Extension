@@ -10,6 +10,7 @@
 - improve code for language notification display
 - improve root position swapping code to resolve problem where the browser would hang
 - improve click segment to copy
+- fixed tooltips in new menu
 
 # Latest Version 0.0.8
 
