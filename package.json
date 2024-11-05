@@ -14,6 +14,7 @@
     "postinstall": "wxt prepare"
   },
   "devDependencies": {
+    "@types/bootstrap": "^5.2.10",
     "@types/chrome": "^0.0.278",
     "@types/query-selector-shadow-dom": "^1.0.4",
     "typescript": "^5.5.4",

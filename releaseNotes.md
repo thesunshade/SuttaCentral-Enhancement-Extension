@@ -3,7 +3,7 @@
 ## New
 
 - add "back to top" button
-- add icon too extenssion toasts for clarity
+- add icon to extenssion toasts for clarity
 
 ## Fixed
 
