@@ -46,7 +46,6 @@ export default defineContentScript({
 
       function runScript() {
         const currentPath = window.location.pathname;
-        // console.log({ currentPath });
 
         const parallelButton = querySelectorDeep("#btnShowParallels");
 
@@ -172,17 +171,6 @@ export default defineContentScript({
       });
 
       observer.observe(document, { subtree: true, childList: true });
-
-      // setInterval(() => {
-      //   chrome.storage.sync.get("notifyPaliParallels", data => {
-      //     const isEnabled = data["notifyPaliParallels"] === "true"; // Convert to boolean
-      //     if (!isEnabled) {
-      //       stopNotifyPaliParallels();
-      //     } else {
-      //       runScript();
-      //     }
-      //   });
-      // }, 1000);
 
       runScript();
 
