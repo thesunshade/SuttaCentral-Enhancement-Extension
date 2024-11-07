@@ -186,7 +186,7 @@ export default defineContentScript({
 
     // Function to run after the `article` content is stable
     function applyArticleChanges() {
-      console.log("Applying changes to the article content.");
+      // console.log("Applying changes to the article content.");
       progressiveSwap();
       addSideBySideStyles();
     }
