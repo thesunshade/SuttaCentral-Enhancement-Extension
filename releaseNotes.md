@@ -2,6 +2,12 @@
 
 # Unreleased Version 0.0.10
 
+## New
+
+## Fixed
+
+- improved Suriya theme
+
 # Version 0.0.9
 
 ## New
