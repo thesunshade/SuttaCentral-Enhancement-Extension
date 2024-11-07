@@ -1,4 +1,6 @@
-# Unreleased Version 0.0.9
+**Note:** Not all browsers are running the latest version.
+
+# Version 0.0.9
 
 ## New
 
@@ -11,6 +13,7 @@
 - improve root position swapping code to resolve problem where the browser would hang
 - improve click segment to copy
 - fixed tooltips in new menu
+- restored previous version of additional translation notification
 
 # Latest Version 0.0.8
 
