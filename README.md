@@ -8,6 +8,7 @@ Install on:
 
 - [Chrome](https://chromewebstore.google.com/detail/suttacentral-enhancement/lfkeephdohbmmbinhckfdeoajdbbkian)
 - [FireFox](https://addons.mozilla.org/en-US/firefox/addon/suttacentral-enhancements/)
+- [Edge](https://microsoftedge.microsoft.com/addons/detail/suttacentral-enhancement-/pcfibmblmflmdhdaaeojhldgcandgdob)
 
 # Development
 
