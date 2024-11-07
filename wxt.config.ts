@@ -30,6 +30,9 @@ export default defineConfig({
     name: "SC-Enhancement",
   },
   vite: configEnv => ({
-    plugins: [configEnv.mode === "production" && removeConsole({ includes: ["log"] }), configEnv.mode === "development" && removeConsole({ includes: ["info"] })],
+    plugins: [configEnv.mode === "production" && removeConsole({ includes: ["log"] })],
   }),
 });
+
+// old
+// configEnv.mode === "development" && removeConsole({ includes: ["info"] })
