@@ -1,5 +1,7 @@
 **Note:** Not all browsers are running the latest version. To see what version you are running, go to Manage Extensions in your browser's settings.
 
+# Unreleased Version 0.0.10
+
 # Version 0.0.9
 
 ## New
@@ -14,6 +16,7 @@
 - improve click segment to copy
 - fixed tooltips in new menu
 - restored previous version of additional translation notification
+- improvements to the tooltips in the new menu
 
 # Latest Version 0.0.8
 
