@@ -16,7 +16,7 @@ export const settingsConfig = {
   languageSwap: {
     label: "Root language appears first or on the left",
     type: "checkbox",
-    default: "true",
+    default: "false",
   },
   viewOptionsShrink: {
     label: "Shrink the <strong>view options</strong> so there is no horizontal scroll. Refresh page to see.",
