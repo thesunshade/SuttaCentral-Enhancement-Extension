@@ -33,26 +33,47 @@ export default defineContentScript({
     function startNotifications() {
       if (!isRunning) {
         isRunning = true;
-        runNotifyAdditionalTranslations();
+        runNotifyAdditionalTranslations(); // Run the main script logic
       }
     }
 
     function stopNotifications() {
       if (isRunning) {
         isRunning = false;
-        const parallelButton = querySelectorDeep("#btnShowParallels");
-        if (parallelButton) {
-          const otherCount = parallelButton.querySelector(".otherCount");
-          if (otherCount) {
-            otherCount.remove(); // Remove the count display
-          }
-        }
+        stopNotifyAdditionalTranslations(); // Stop any running processes
         if (observer) {
-          observer.disconnect();
-          observer = null;
+          observer.disconnect(); // Stop observing if it's active
+          observer = null; // Reset the observer reference
         }
       }
     }
+
+    // Initial check for the setting
+    chrome.storage.sync.get("notifyAdditionalTranslation", data => {
+      const isEnabled = data["notifyAdditionalTranslation"] === "true"; // Convert to boolean
+
+      if (isEnabled) {
+        startNotifications();
+      } else {
+        console.info("❌ Additional translation notification is disabled");
+        stopNotifications();
+      }
+    });
+
+    // Listen for changes in the storage
+    chrome.storage.onChanged.addListener((changes, area) => {
+      if (area === "sync" && changes["notifyAdditionalTranslation"]) {
+        const newValue = changes["notifyAdditionalTranslation"].newValue === "true"; // Convert to boolean
+
+        if (newValue) {
+          console.info("✅ Additional translation notifications enabled");
+          startNotifications(); // Start the notification logic
+        } else {
+          console.info("❌ Additional translation notifications disabled");
+          stopNotifications(); // Stop the notification logic
+        }
+      }
+    });
 
     function runNotifyAdditionalTranslations() {
       let lastProcessedState: string | null = null;
@@ -65,10 +86,7 @@ export default defineContentScript({
         };
       }
 
-      function debouncedRunScript() {
-        // Wait 500ms after last state change
-        return debounce(runScript, 500);
-      }
+      const debouncedRunScript = debounce(runScript, 500); // Wait 500ms after last state change
 
       function processStateChange() {
         const currentState = localStorage.reduxState;
@@ -130,6 +148,41 @@ export default defineContentScript({
           });
       }
 
+      function updateParallelButton(translationCount: number) {
+        const parallelButton = querySelectorDeep("#btnShowParallels");
+        if (parallelButton) {
+          let otherCount = parallelButton.querySelector(".otherCount") as HTMLElement;
+
+          if (translationCount === 0 && otherCount) {
+            otherCount.remove();
+            return;
+          }
+
+          if (!otherCount) {
+            otherCount = document.createElement("translation-counter");
+            otherCount.classList.add("otherCount");
+            otherCount.style.cssText = `
+              background-color: var(--sc-primary-color-dark);
+              font-size: .8rem;
+              border-radius: 5px;
+              color: white;
+              position: absolute;
+              top: 6px;
+              right: -5px;
+              height: 1rem;
+              width: 1.2rem;
+              padding: 4px 4px auto auto;
+              z-index: 5000;
+            `;
+
+            parallelButton.style.position = "relative";
+            parallelButton.appendChild(otherCount);
+          }
+
+          otherCount.innerHTML = `+${translationCount}`;
+        }
+      }
+
       observer = new MutationObserver(() => {
         processStateChange();
       });
@@ -140,66 +193,16 @@ export default defineContentScript({
       runScript();
     }
 
-    function updateParallelButton(translationCount: number) {
+    // Stop function to clean up if the setting is unchecked
+    function stopNotifyAdditionalTranslations() {
       const parallelButton = querySelectorDeep("#btnShowParallels");
       if (parallelButton) {
-        let otherCount = parallelButton.querySelector(".otherCount") as HTMLElement;
-
-        if (translationCount === 0 && otherCount) {
-          otherCount.remove();
-          return;
+        const otherCount = parallelButton.querySelector(".otherCount");
+        if (otherCount) {
+          otherCount.remove(); // Remove the count display
         }
-
-        if (!otherCount) {
-          otherCount = document.createElement("translation-counter");
-          otherCount.classList.add("otherCount");
-          otherCount.style.cssText = `
-            background-color: var(--sc-primary-color-dark);
-            font-size: .8rem;
-            border-radius: 5px;
-            color: white;
-            position: absolute;
-            top: 6px;
-            right: -5px;
-            height: 1rem;
-            width: 1.2rem;
-            padding: 4px 4px auto auto;
-            z-index: 5000;
-          `;
-
-          parallelButton.style.position = "relative";
-          parallelButton.appendChild(otherCount);
-        }
-
-        otherCount.innerHTML = `+${translationCount}`;
       }
+      console.info("🚫 Stopped notifyAdditionalTranslations script");
     }
-
-    // Initial check for the setting
-    chrome.storage.sync.get("notifyAdditionalTranslation", data => {
-      const isEnabled = data["notifyAdditionalTranslation"] === "true"; // Convert to boolean
-
-      if (isEnabled) {
-        startNotifications();
-      } else {
-        console.info("❌ Additional translation notification is disabled");
-        stopNotifications();
-      }
-    });
-
-    // Listen for changes in the storage
-    chrome.storage.onChanged.addListener((changes, area) => {
-      if (area === "sync" && changes["notifyAdditionalTranslation"]) {
-        const newValue = changes["notifyAdditionalTranslation"].newValue === "true";
-
-        if (newValue) {
-          console.info("✅ Additional translation notifications enabled");
-          startNotifications(); // Start the notification logic
-        } else {
-          console.info("❌ Additional translation notifications disabled");
-          stopNotifications(); // Stop the notification logic
-        }
-      }
-    });
   },
 });
