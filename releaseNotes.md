@@ -1,4 +1,4 @@
-**Note:** Not all browsers are running the latest version.
+**Note:** Not all browsers are running the latest version. To see what version you are running, go to Manage Extensions in your browser's settings.
 
 # Version 0.0.9
 
