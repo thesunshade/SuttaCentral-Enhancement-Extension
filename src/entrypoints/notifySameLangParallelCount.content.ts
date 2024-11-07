@@ -14,8 +14,6 @@ interface ReduxState {
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
-    console.info("➕ show Pali parallels count active");
-
     // Check the setting before running the script
     chrome.storage.sync.get("notifyPaliParallels", data => {
       const isEnabled = data["notifyPaliParallels"] === "true"; // Convert to boolean
@@ -24,6 +22,7 @@ export default defineContentScript({
         console.info("❌ Pali parallels notification is disabled");
         return; // Stop if the feature is disabled
       }
+      console.info("➕ show Pali parallels count active");
 
       let lastProcessedState: string | null = null;
       let debounceTimer: NodeJS.Timeout | null = null;
