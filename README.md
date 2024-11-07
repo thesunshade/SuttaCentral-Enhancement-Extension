@@ -12,6 +12,8 @@ Install on:
 
 # Development
 
+All of the instructions below are only needed if you plan on working on coding the extension. If you simplly want to use the plugin, choose your browser from the links above.
+
 ## installing
 
 After opening your local clone of the repository:
