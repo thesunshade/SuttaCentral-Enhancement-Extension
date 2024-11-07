@@ -340,7 +340,7 @@
         "--sc-secondary-accent-color-light": "#CC5959!important;",
         "--sc-primary-background-color": "#000000!important;",
         "--sc-on-primary-primary-text-color": "#eeeeee!important;",
-        "--sc-on-primary-secondary-text-color": "#cccccc!important;",
+        "--sc-on-primary-secondary-text-color": "#888888!important;",
         "--sc-secondary-background-color": "#151516!important;",
         "--sc-on-secondary-primary-text-color": "#efefef!important;",
         "--sc-on-secondary-secondary-text-color": "#cdcdcd!important;",
