@@ -6,7 +6,7 @@
 
 ## Fixed
 
-- improved Suriya theme
+- improved Suriya, Addharatta themes
 
 # Version 0.0.9
 
