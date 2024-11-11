@@ -270,7 +270,7 @@ export const settingsConfig = {
   ddFavicon: {
     label: "Give the forum a unique favicon. ⚠️Experimental",
     type: "checkbox",
-    default: "true",
+    default: "false",
   },
 
   advancedHeading: {
