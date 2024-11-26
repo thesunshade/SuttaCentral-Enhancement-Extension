@@ -11,6 +11,12 @@ export default defineConfig({
         matches: ["*://discourse.suttacentral.net/*", "*://suttacentral.net/*"],
       },
     ],
+    content_scripts: [
+      {
+        matches: ["*://suttacentral.net/*"],
+        css: ["styles/content.css"],
+      },
+    ],
     // content_scripts: [
     //   {
     //     js: ["/js/bootstrap.min.js"],
