@@ -287,8 +287,13 @@ export const settingsConfig = {
     content: `<p>Custom CSS will let you tailor the display of the site to your own needs. But beware! It's easy to break things. So if you ever have problems viewing the site, the first thing to try is to remove any of these.</p>
     <p>Here are some ideas:</p>
     <dl>
-    <dt>Change translation font size</dt>
-    <dd><code>.translation {font-size:140%}</code></dd>
+    <dt>Change translation font size, weight, color, family</dt>
+    <dd><code>.translation {font-size:140%; font-weight:normal; color:gray; font-family: var(--sc-sans-font)}</code></dd>
+    <dt>Change root weight, color, font family</dt>
+    <dd><code>.root * {font-weight:bold; color:black; font-family: var(--sc-serif-font)}</code></dd>
+    <dt>Hide translation and reveal on hover</dt>
+    <dd><code>.translation .text {visibility: hidden}</br>
+.translation:hover .text {visibility: visible}</code></dd>
     <dt>Change notes font size</dt>
     <dd><code>.comment {font-size:120%!important}</code></dd>
     </dl>
