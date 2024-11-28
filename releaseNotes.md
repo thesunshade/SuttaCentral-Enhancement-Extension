@@ -7,6 +7,7 @@
 ## Fixed
 
 - improved Suriya, Addharatta themes
+- improved the root swap script
 
 # Version 0.0.9
 
