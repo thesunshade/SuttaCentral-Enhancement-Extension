@@ -1,0 +1,17 @@
+.sidebyside-layout.language-swap-active .translation {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+}
+
+.sidebyside-layout.language-swap-active .root {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+}
+
+.linebyline-layout.language-swap-active .root {
+  grid-row: 1 !important;
+}
+
+.linebyline-layout.language-swap-active .translation {
+  grid-row: 2 !important;
+}
