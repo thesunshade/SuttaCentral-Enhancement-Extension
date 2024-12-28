@@ -95,6 +95,11 @@ export const settingsConfig = {
     type: "checkbox",
     default: "true",
   },
+  showDifficultyLevel: {
+    label: "Show difficulty level on sutta",
+    type: "checkbox",
+    default: "false",
+  },
   showReadingTime: {
     label: "Show reading time",
     type: "checkbox",

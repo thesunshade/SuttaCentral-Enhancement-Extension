@@ -31,7 +31,7 @@ async function fetchAndStoreSuttaData(uid: string, authorUid: string) {
   try {
     const response = await fetch(`https://suttacentral.net/api/suttaplex/${uid}`);
     const data = await response.json();
-    const { translations, original_title, acronym } = data[0];
+    const { translations, original_title, acronym, difficulty } = data[0];
     const foundTranslation = translations.find((translation: { author_uid: string }) => translation.author_uid === authorUid);
 
     const storedData = {
@@ -41,6 +41,7 @@ async function fetchAndStoreSuttaData(uid: string, authorUid: string) {
       originalTitle: original_title,
       publication_date: foundTranslation?.publication_date ?? null,
       language: foundTranslation?.lang_name ?? null,
+      difficulty,
       uid,
     };
 
