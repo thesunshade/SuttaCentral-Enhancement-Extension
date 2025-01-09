@@ -45,3 +45,7 @@
   text-transform: capitalize;
   margin: 0;
 }
+
+.hide {
+  opacity: 0;
+}

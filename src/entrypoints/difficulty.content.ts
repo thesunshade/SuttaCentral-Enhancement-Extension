@@ -6,9 +6,10 @@ export default defineContentScript({
       name: string;
     }
 
-    const featureEnabled = async (article) => {
+    const featureEnabled = async () => {
+      const article = document.querySelector("article");
       const { showDifficultyLevel } = await chrome.storage.sync.get("showDifficultyLevel");
-      if (showDifficultyLevel === "true") {
+      if (showDifficultyLevel === "true" && article) {
         return insertDifficulty(article);
       }
       removeDifficultyContainer();
@@ -19,7 +20,7 @@ export default defineContentScript({
     document.addEventListener("DOMContentLoaded", () => {
       new MutationObserver(() => {
         const article = document.querySelector("article");
-        if (article) featureEnabled(article);
+        if (article) featureEnabled();
       }).observe(document.body, { childList: true, subtree: true });
     });
 
