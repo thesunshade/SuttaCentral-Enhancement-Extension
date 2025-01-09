@@ -15,3 +15,37 @@
 .linebyline-layout.language-swap-active .translation {
   grid-row: 2 !important;
 }
+
+.difficulty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1em;
+}
+
+.difficulty-bars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 0.5em;
+}
+
+.difficulty-bar {
+  width: 20px;
+  height: 7px;
+  border-radius: 2px;
+  border: 1px solid var(--sc-on-primary-secondary-text-color);
+}
+
+.difficulty-bar.active {
+  border: none;
+  background-color: var(--sc-on-primary-secondary-text-color);
+}
+
+.difficulty-text {
+  text-transform: capitalize;
+  margin: 0;
+}
+
+.hide {
+  visibility: hidden;
+}

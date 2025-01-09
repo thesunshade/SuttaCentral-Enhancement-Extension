@@ -7,6 +7,15 @@ import onlyPressed from "./functions/onlyPressed";
 export default defineContentScript({
   matches: ["*://suttacentral.net/*"],
   main() {
+    const hideClasses = (hide: boolean) => {
+      const classes = ["difficulty-container", "reading-time-badge"];
+      const article = document.querySelector("article") as HTMLElement;
+      const action = hide ? "add" : "remove";
+      classes.forEach(className => {
+        article.querySelector(`.${className}`)?.classList[action]("hide");
+      });
+    };
+
     // Check the setting before running the script
     chrome.storage.sync.get("copyWholeText", data => {
       const isEnabled = data["copyWholeText"] === "true"; // Convert to boolean
@@ -28,13 +37,13 @@ export default defineContentScript({
             console.warn("No main element found in the document.");
             return null;
           }
-          let innerText = mainElement.innerText;
-          innerText = innerText.replace(/⏱️.+?\)\n\n/, "");
-          // Log the inner text to the console
+          hideClasses(true);
+          const { innerText } = mainElement;
 
           navigator.clipboard
             .writeText(innerText)
             .then(() => {
+              hideClasses(false) 
               showToastNotification("Sutta text copied to clipboard!");
             })
             .catch(err => {
