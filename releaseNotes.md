@@ -1,8 +1,10 @@
 **Note:** Not all browsers are running the latest version. To see what version you are running, go to Manage Extensions in your browser's settings.
 
-# Unreleased Version 0.0.10
+# Version 0.0.10
 
 ## New
+
+- add feature to show sutta difficulty. Currently Data only exists for DN and MN.
 
 ## Fixed
 
