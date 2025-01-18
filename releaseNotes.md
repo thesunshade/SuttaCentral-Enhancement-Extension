@@ -1,5 +1,11 @@
 **Note:** Not all browsers are running the latest version. To see what version you are running, go to Manage Extensions in your browser's settings.
 
+# Version 0.0.11 Unpublished
+
+# New
+
+- Rosely theme (https://rosely.hellotham.com)
+
 # Version 0.0.10
 
 ## New
