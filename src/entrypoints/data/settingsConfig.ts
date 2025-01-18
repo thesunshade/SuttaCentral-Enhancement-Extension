@@ -10,7 +10,7 @@ export const settingsConfig = {
   theme: {
     label: "Theme",
     type: "select",
-    choices: ["none", "Grimace", "Shamrock Shake", "Birdie", "Burglar", "Ronnie", "OB Mack", "Bubblegum", "Sonora", "Pumpkin Spice", "Spooky", "Isi", "Frosty", "Soreyya", "Steeling", "Nord", "Suriya", "Addharatta", "Shamrock Shake Dark"],
+    choices: ["none", "Grimace", "Shamrock", "Birdie", "Rosely", "Burglar", "Ronnie", "OB Mack", "Bubblegum", "Sonora", "Pumpkin Spice", "Spooky", "Isi", "Frosty", "Soreyya", "Steeling", "Nord", "Suriya", "Addharatta", "Shamrock Dark"],
     default: "none",
   },
   languageSwap: {

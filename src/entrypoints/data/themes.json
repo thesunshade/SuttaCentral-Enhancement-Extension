@@ -1,6 +1,6 @@
 {
     "none": {},
-    "Shamrock Shake Dark": {
+    "Shamrock Dark": {
         "--sc-primary-color": "hsl(120deg 99% 25.32%)!important;",
         "--sc-primary-color-light": "hsl(120deg 85.35% 37.22%)!important;",
         "--sc-primary-color-light-transparent": "hsl(120deg 94% 79% / 20%)!important;",
@@ -38,7 +38,7 @@
         "--sc-on-secondary-secondary-text-color": "#807567!important;",
         "--sc-tertiary-background-color": "hsl(288 65% 92% / 1)!important;"
     },
-    "Shamrock Shake": {
+    "Shamrock": {
         "--sc-primary-color": "#00a600!important;",
         "--sc-primary-color-light": "#00f200!important;",
         "--sc-primary-color-light-transparent": "rgba(0, 204, 0, 0.4)!important;",
@@ -406,5 +406,35 @@
         "--sc-icon-color": "#A8A49C!important;",
         "--sc-border-color": "#cdc5bd!important;",
         "--sc-toast-error-color": "#ba1a1a!important;"
+    },
+    "Rosely": {
+        "--sc-primary-color": "#b565a7!important;",
+        "--sc-primary-color-light": "#be9cc1!important;",
+        "--sc-primary-color-light-transparent": "rgb(247 202 202 / 40%)!important;",
+        "--sc-primary-color-dark": "#85677b!important;",
+        "--sc-primary-accent-color": "#3CADD4!important;",
+        "--sc-primary-accent-color-light": "#49d0ff!important;",
+        "--sc-secondary-accent-color": "#d2386c!important;",
+        "--sc-secondary-accent-color-light": "#ff568f!important;",
+        "--sc-primary-background-color": "#f4eee8!important;",
+        "--sc-on-primary-primary-text-color": "#27272a!important;",
+        "--sc-on-primary-secondary-text-color": "#7c766f!important;",
+        "--sc-secondary-background-color": "#fffbff!important;",
+        "--sc-on-secondary-primary-text-color": "#211400!important;",
+        "--sc-on-secondary-secondary-text-color": "#807567!important;",
+        "--sc-tertiary-background-color": "#f4dede!important;",
+        "--sc-on-tertiary-primary-text-color": "#00192f!important;",
+        "--sc-on-tertiary-secondary-text-color": "#675d4f!important;",
+        "--sc-dark-fixed-background-color": "#615f5f!important;",
+        "--sc-darker-fixed-background-color": "#403c3c!important;",
+        "--sc-inverted-text-color": "#ffffff!important;",
+        "--sc-opposite-background-color": "#544f4f!important;",
+        "--sc-opposite-text-color": "#eeeeee!important;",
+        "--sc-icon-color": "#A8A49C!important;",
+        "--sc-border-color": "#cdc5bd!important;",
+        "--sc-toast-error-color": "#ba1a1a!important;",
+        "--sc-toast-success-color": "var(--sc-primary-accent-color-light)!important;",
+        "--sc-pie-chart-bg-color": "var(--sc-primary-accent-color-light)!important;",
+        "--sc-pie-chart-fill-color": "var(--sc-primary-accent-color)!important;"
     }
 }
