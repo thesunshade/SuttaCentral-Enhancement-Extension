@@ -10,7 +10,7 @@ export const settingsConfig = {
   theme: {
     label: "Theme",
     type: "select",
-    choices: ["none", "Grimace", "Shamrock Shake", "Birdie", "Burglar", "Ronnie", "OB Mack", "Bubblegum", "Sonora", "Pumpkin Spice", "Spooky", "Isi", "Frosty", "Soreyya", "Steeling", "Nord", "Suriya", "Addharatta", "Shamrock Shake Dark"],
+    choices: ["none", "Grimace", "Shamrock", "Birdie", "Rosely", "Burglar", "Ronnie", "OB Mack", "Bubblegum", "Sonora", "Pumpkin Spice", "Spooky", "Isi", "Frosty", "Soreyya", "Steeling", "Nord", "Suriya", "Addharatta", "Shamrock Dark"],
     default: "none",
   },
   languageSwap: {
@@ -268,16 +268,6 @@ export const settingsConfig = {
     type: "checkbox",
     default: "true",
   },
-  ddSettingsHeading: {
-    label: "D&D Forum settings",
-    type: "heading",
-  },
-  ddFavicon: {
-    label: "Give the forum a unique favicon. ⚠️Experimental",
-    type: "checkbox",
-    default: "false",
-  },
-
   advancedHeading: {
     label: "Advanced",
     type: "heading",

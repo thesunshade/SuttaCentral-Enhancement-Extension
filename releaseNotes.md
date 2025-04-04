@@ -1,5 +1,15 @@
 **Note:** Not all browsers are running the latest version. To see what version you are running, go to Manage Extensions in your browser's settings.
 
+# Version 0.0.11
+
+# New
+
+- Rosely theme (https://rosely.hellotham.com)
+
+## Fixed
+
+- Removed D&D favicon change. Forum now has its own favicon native.
+
 # Version 0.0.10
 
 ## New
