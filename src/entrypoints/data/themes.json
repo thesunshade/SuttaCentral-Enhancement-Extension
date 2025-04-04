@@ -353,7 +353,8 @@
         "--sc-opposite-background-color": "#ffffff!important;",
         "--sc-opposite-text-color": "#201b13!important;",
         "--sc-icon-color": "#ababab!important;",
-        "--sc-border-color": "#777!important;"
+        "--sc-border-color": "#777!important;",
+        ".search-result-item .search-result-title": "#cd3131!important"
     },
     "Frosty": {
         "--sc-primary-color": "#8fbcbb!important;",
