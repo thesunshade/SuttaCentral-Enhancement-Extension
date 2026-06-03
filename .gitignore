@@ -34,3 +34,5 @@ templates/*
 .env.submit.backup-1730321761563
 .env.submit.backup-1730323341555
 .env.submit
+.env*
+git-filter-repo.py
