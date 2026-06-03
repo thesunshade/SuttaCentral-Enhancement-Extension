@@ -17,12 +17,6 @@ export default defineConfig({
         css: ["styles/content.css"],
       },
     ],
-    // content_scripts: [
-    //   {
-    //     js: ["/js/bootstrap.min.js"],
-    //     matches: ["*://suttacentral.net/*"],
-    //   },
-    // ],
     name: "SuttaCentral Enhancement Extension",
     permissions: ["clipboardWrite", "contextMenus", "storage"],
     omnibox: { keyword: "sc" },
@@ -38,6 +32,9 @@ export default defineConfig({
   vite: configEnv => ({
     plugins: [configEnv.mode === "production" && removeConsole({ includes: ["log"] })],
   }),
+  runner: {
+    chromiumArgs: ["--disable-features=DisableLoadExtensionCommandLineSwitch"],
+  },
 });
 
 // old
